@@ -20,7 +20,7 @@ allprojects {
             pkg {
                 repo = 'kotlin-simplexml-rss'
                 name = 'kotlin-simplexml-rss'
-                licenses = ['GPL-v3']
+                licenses = ['GPL v3']
                 labels = ['kotlin', 'rss', 'simplexml', 'xml']
                 vcsUrl = 'https://github.com/magneticflux-/kotlin-simplexml-rss.git'
             }
