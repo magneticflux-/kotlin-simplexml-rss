@@ -15,7 +15,6 @@ fabric.properties
 /build/
 gradle-app.setting
 .gradletasknamecache
-*.class
 *.log
 *.ctxt
 .mtj.tmp/
@@ -26,4 +25,5 @@ gradle-app.setting
 *.tar.gz
 *.rar
 hs_err_pid*
+*.iml
 !gradle-wrapper.jar
