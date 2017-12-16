@@ -12,15 +12,16 @@ buildscript {
 
 plugins {
     id "java"
+    id "java-library"
     id "maven-publish"
-    //id "org.shipkit.java" version "0.9.152"
+    id "com.jfrog.bintray" version "1.8.0"
+    id "org.shipkit.java" version "0.9.152"
 }
 
 apply plugin: 'kotlin'
 apply plugin: 'org.junit.platform.gradle.plugin'
 
 group 'com.github.magneticflux'
-version '0.1.0-SNAPSHOT'
 
 repositories {
     jcenter()
@@ -37,8 +38,12 @@ junitPlatform {
 
 publishing {
     publications {
-        maven(MavenPublication) {
+        myPublication(MavenPublication) {
             from components.java
+            //noinspection GroovyAssignabilityCheck
+            artifact sourcesJar
+            //noinspection GroovyAssignabilityCheck
+            artifact javadocJar
         }
     }
 }
