@@ -32,4 +32,6 @@ script:
   - ./gradlew build -s && ./gradlew ciPerformRelease
 
 after_script:
-  - ./cc-test-reporter after-build -p "/home/travis/build/magneticflux-/kotlin-simplexml-rss/build/reports/jacoco/test" -t jacoco --exit-code $TRAVIS_TEST_RESULT
+  - mv "build/reports/jacoco/test/jacocoTestReport.xml" "src/main/kotlin/jacoco.xml"
+  - cd src/main/kotlin/
+  - ../../../cc-test-reporter after-build -t jacoco --exit-code $TRAVIS_TEST_RESULT

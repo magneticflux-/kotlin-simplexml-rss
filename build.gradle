@@ -89,7 +89,6 @@ jacocoTestReport {
         //noinspection GroovyAssignabilityCheck
         xml {
             enabled true
-            destination file("$buildDir/reports/jacoco/test/jacoco.xml")
         }
     }
 }
