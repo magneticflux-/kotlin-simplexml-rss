@@ -13,9 +13,11 @@ buildscript {
 plugins {
     id "java"
     id "java-library"
+    id "jacoco"
     id "maven-publish"
     id "com.jfrog.bintray" version "1.8.0"
     id "org.shipkit.java" version "0.9.152"
+    id "com.diffplug.gradle.spotless" version "3.7.0"
 }
 
 apply plugin: 'kotlin'
@@ -48,6 +50,12 @@ publishing {
     }
 }
 
+spotless {
+    kotlin {
+        ktlint()
+    }
+}
+
 dependencies {
     compile "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
     compile "org.jetbrains.kotlin:kotlin-reflect:$kotlin_version"
@@ -61,3 +69,13 @@ dependencies {
     testCompile 'org.jetbrains.spek:spek-api:1.1.5'
     testRuntime 'org.jetbrains.spek:spek-junit-platform-engine:1.1.5'
 }
+
+jacoco {
+    applyTo junitPlatformTest
+}
+
+task jacocoJunitPlatformTestReport(type: JacocoReport, dependsOn: junitPlatformTest) {
+    executionData junitPlatformTest
+    sourceSets sourceSets.main
+}
+check.dependsOn(jacocoJunitPlatformTestReport)
