@@ -86,15 +86,11 @@ jacocoTestReport {
     dependsOn(junitPlatformTest)
 
     reports {
-        xml.enabled true
-        csv.enabled true
+        //noinspection GroovyAssignabilityCheck
+        xml {
+            enabled true
+            destination file("$buildDir/reports/jacoco/test/jacoco.xml")
+        }
     }
 }
 check.dependsOn(jacocoTestReport)
-/*
-
-task jacocoJunitPlatformTestReport(type: JacocoReport, dependsOn: junitPlatformTest) {
-    executionData junitPlatformTest
-    sourceSets sourceSets.main
-}
-check.dependsOn(jacocoJunitPlatformTestReport)*/
