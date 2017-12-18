@@ -74,8 +74,27 @@ jacoco {
     applyTo junitPlatformTest
 }
 
+junitPlatformTest {
+    jacoco {
+        destinationFile = file("$buildDir/jacoco/test.exec")
+    }
+}
+
+jacocoTestReport {
+    executionData junitPlatformTest
+    sourceSets sourceSets.main
+    dependsOn(junitPlatformTest)
+
+    reports {
+        xml.enabled true
+        csv.enabled true
+    }
+}
+check.dependsOn(jacocoTestReport)
+/*
+
 task jacocoJunitPlatformTestReport(type: JacocoReport, dependsOn: junitPlatformTest) {
     executionData junitPlatformTest
     sourceSets sourceSets.main
 }
-check.dependsOn(jacocoJunitPlatformTestReport)
+check.dependsOn(jacocoJunitPlatformTestReport)*/
