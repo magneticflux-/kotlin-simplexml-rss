@@ -16,7 +16,7 @@ import org.threeten.bp.DayOfWeek
 import org.threeten.bp.ZonedDateTime
 import org.threeten.bp.format.DateTimeFormatter
 import java.net.URL
-import java.util.*
+import java.util.Locale
 
 /**
  * Created by Mitchell Skaggs on 12/18/2017.

@@ -1,11 +1,15 @@
 package com.github.magneticflux.rss
 
-import org.simpleframework.xml.*
+import org.simpleframework.xml.Attribute
+import org.simpleframework.xml.Element
+import org.simpleframework.xml.ElementList
+import org.simpleframework.xml.Root
+import org.simpleframework.xml.Text
 import org.simpleframework.xml.convert.Convert
 import org.threeten.bp.DayOfWeek
 import org.threeten.bp.ZonedDateTime
 import java.net.URL
-import java.util.*
+import java.util.Locale
 
 /**
  * Created by Mitchell Skaggs on 12/18/2017.

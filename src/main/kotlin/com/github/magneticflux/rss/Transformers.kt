@@ -6,12 +6,11 @@ import org.threeten.bp.format.DateTimeFormatter
 import org.threeten.bp.format.DateTimeFormatterBuilder
 import org.threeten.bp.format.TextStyle
 import org.threeten.bp.temporal.ChronoField
-import java.util.*
+import java.util.Locale
 
 /**
  * Created by Mitchell Skaggs on 12/19/2017.
  */
-
 
 object DayOfWeekTransform : Transform<DayOfWeek> {
     override fun read(value: String): DayOfWeek {
