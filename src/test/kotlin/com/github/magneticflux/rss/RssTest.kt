@@ -27,8 +27,8 @@ class RssTest : Spek({
                     this.bind(DayOfWeek::class.java, DayOfWeekTransform)
                 })
 
-        on("sample RSS feed read") {
-            val rssFeed = persister.read(RssFeed::class.java, getSample("sample.xml"))
+        on("sample_ffa RSS feed read") {
+            val rssFeed = persister.read(RssFeed::class.java, getSample("sample_ffa.xml"))
 
             it("should have the correct version") {
                 assertThat(rssFeed.version, equalTo("2.0"))
@@ -140,7 +140,7 @@ class RssTest : Spek({
         }
 
         on("read-write-read") {
-            val rssFeed = persister.read(RssFeed::class.java, getSample("sample.xml"))
+            val rssFeed = persister.read(RssFeed::class.java, getSample("sample_ffa.xml"))
 
             val rssText = StringWriter()
             persister.write(rssFeed, rssText)
@@ -150,6 +150,10 @@ class RssTest : Spek({
             it("should equal original RSS feed read") {
                 assertThat(rereadRssFeed, equalTo(rssFeed))
             }
+        }
+
+        on("sample_phs RSS feed read") {
+            val rssFeed = persister.read(RssFeed::class.java, getSample("sample_podcast.xml"))
         }
     }
 })

@@ -38,9 +38,12 @@ data class Channel @JvmOverloads constructor(
         @param:Element(name = "title")
         @get:Element(name = "title")
         val title: String,
-        @param:Element(name = "description")
-        @get:Element(name = "description")
-        val description: String,
+        /**
+         * Not nullable, but not required in XML to fallback to an empty string.
+         */
+        @param:Element(name = "description", required = false)
+        @get:Element(name = "description", required = false)
+        val description: String = "",
         @param:[Element(name = "link") Convert(URLConverter::class)]
         @get:[Element(name = "link") Convert(URLConverter::class)]
         val link: URL,
