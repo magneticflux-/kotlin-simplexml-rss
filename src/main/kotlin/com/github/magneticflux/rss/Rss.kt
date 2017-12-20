@@ -11,10 +11,6 @@ import org.threeten.bp.ZonedDateTime
 import java.net.URL
 import java.util.Locale
 
-/**
- * Created by Mitchell Skaggs on 12/18/2017.
- */
-
 @Root(name = "rss", strict = false)
 data class RssFeed(
         @param:Attribute(name = "version")
