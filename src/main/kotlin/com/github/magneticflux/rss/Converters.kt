@@ -9,9 +9,11 @@ import java.net.URL
 import java.util.Locale
 
 /**
- * Created by Mitchell Skaggs on 12/18/2017.
+ * This converts a string such as `en-us` to a [Locale] based on the language code.
+ *
+ * @author Mitchell Skaggs
+ * @since 1.0.0
  */
-
 class LocaleLanguageConverter : Converter<Locale> {
     override fun read(node: InputNode): Locale {
         return Locale.forLanguageTag(node.value)
@@ -22,6 +24,12 @@ class LocaleLanguageConverter : Converter<Locale> {
     }
 }
 
+/**
+ * This converts a string that forms a URL to a [URL] object.
+ *
+ * @author Mitchell Skaggs
+ * @since 1.0.0
+ */
 class URLConverter : Converter<URL> {
     override fun read(node: InputNode): URL {
         return URL(node.value)
@@ -32,6 +40,12 @@ class URLConverter : Converter<URL> {
     }
 }
 
+/**
+ * This converts an RFC-1123 datetime to a [ZonedDateTime] object.
+ *
+ * @author Mitchell Skaggs
+ * @since 1.0.0
+ */
 class ZonedDateTimeConverter : Converter<ZonedDateTime> {
     override fun read(node: InputNode): ZonedDateTime {
         return ZonedDateTime.from(DateTimeFormatter.RFC_1123_DATE_TIME.parse(node.value))

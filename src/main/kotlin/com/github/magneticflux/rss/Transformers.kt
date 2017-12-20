@@ -9,9 +9,9 @@ import org.threeten.bp.temporal.ChronoField
 import java.util.Locale
 
 /**
- * Created by Mitchell Skaggs on 12/19/2017.
+ * @author Mitchell Skaggs
+ * @since 1.0.0
  */
-
 object DayOfWeekTransform : Transform<DayOfWeek> {
     override fun read(value: String): DayOfWeek {
         return DayOfWeek.from(FORMATTER.parse(value))

@@ -19,9 +19,6 @@ import java.io.StringWriter
 import java.net.URL
 import java.util.Locale
 
-/**
- * Created by Mitchell Skaggs on 12/18/2017.
- */
 class RssTest : Spek({
     given("a simple Persister") {
         val persister = Persister(

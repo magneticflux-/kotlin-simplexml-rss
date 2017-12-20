@@ -11,6 +11,12 @@ import org.threeten.bp.ZonedDateTime
 import java.net.URL
 import java.util.Locale
 
+/**
+ * This class represents an RSS feed.
+ *
+ * @author Mitchell Skaggs
+ * @since 1.0.0
+ */
 @Root(name = "rss", strict = false)
 data class RssFeed(
         @param:Attribute(name = "version")
@@ -21,6 +27,12 @@ data class RssFeed(
         val channel: Channel
 )
 
+/**
+ * This class represents a channel in an RSS feed.
+ *
+ * @author Mitchell Skaggs
+ * @since 1.0.0
+ */
 @Root(name = "channel", strict = false)
 data class Channel @JvmOverloads constructor(
         @param:Element(name = "title")
@@ -82,6 +94,12 @@ data class Channel @JvmOverloads constructor(
         val items: List<Item>
 )
 
+/**
+ * This class represents a category in either a [Channel] or an [Item].
+ *
+ * @author Mitchell Skaggs
+ * @since 1.0.0
+ */
 @Root(name = "category", strict = false)
 data class Category @JvmOverloads constructor(
         @param:Attribute(name = "domain")
@@ -92,6 +110,12 @@ data class Category @JvmOverloads constructor(
         val text: String
 )
 
+/**
+ * This class represents an image in a [Channel].
+ *
+ * @author Mitchell Skaggs
+ * @since 1.0.0
+ */
 @Root(name = "image", strict = false)
 data class Image @JvmOverloads constructor(
         @param:[Element(name = "url") Convert(URLConverter::class)]
@@ -114,6 +138,12 @@ data class Image @JvmOverloads constructor(
         val height: Int = 31
 )
 
+/**
+ * This class represents a cloud object in a [Channel].
+ *
+ * @author Mitchell Skaggs
+ * @since 1.0.0
+ */
 @Root(name = "cloud", strict = false)
 data class Cloud(
         @param:Attribute(name = "domain")
@@ -133,6 +163,12 @@ data class Cloud(
         val registerProcedure: String
 )
 
+/**
+ * This class represents a text input object in a [Channel].
+ *
+ * @author Mitchell Skaggs
+ * @since 1.0.0
+ */
 @Root(name = "textInput", strict = false)
 data class TextInput(
         @param:Element(name = "title")
@@ -149,6 +185,12 @@ data class TextInput(
         val link: URL
 )
 
+/**
+ * This class represents an item in a [Channel].
+ *
+ * @author Mitchell Skaggs
+ * @since 1.0.0
+ */
 @Root(name = "item", strict = false)
 data class Item @JvmOverloads constructor(
         @param:Element(name = "title", required = false)
@@ -183,6 +225,12 @@ data class Item @JvmOverloads constructor(
         val source: Source? = null
 )
 
+/**
+ * This class represents an enclosure in an [Item].
+ *
+ * @author Mitchell Skaggs
+ * @since 1.0.0
+ */
 @Root(name = "enclosure", strict = false)
 data class Enclosure(
         @param:Attribute(name = "url")
@@ -196,6 +244,12 @@ data class Enclosure(
         val type: String
 )
 
+/**
+ * This class represents a guid in an [Item].
+ *
+ * @author Mitchell Skaggs
+ * @since 1.0.0
+ */
 @Root(name = "guid", strict = false)
 data class Guid @JvmOverloads constructor(
         @param:Attribute(name = "isPermaLink", required = false)
@@ -206,6 +260,12 @@ data class Guid @JvmOverloads constructor(
         val text: String
 )
 
+/**
+ * This class represents a source in an [Item].
+ *
+ * @author Mitchell Skaggs
+ * @since 1.0.0
+ */
 @Root(name = "source", strict = false)
 data class Source @JvmOverloads constructor(
         @param:Attribute(name = "url")
