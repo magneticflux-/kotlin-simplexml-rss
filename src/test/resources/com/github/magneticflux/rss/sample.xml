@@ -47,6 +47,12 @@
             <category domain="www.dmoz.com">Computers/Software/Internet/Site Management/Content Management</category>
             <comments>http://www.feedforall.com/forum</comments>
             <pubDate>Tue, 19 Oct 2004 11:09:11 -0400</pubDate>
+            <author>lawyer@boyer.net (Lawyer Boyer)</author>
+            <guid isPermaLink="true">http://inessential.com/2002/09/01.php#a2</guid>
+            <enclosure length="12216320"
+                type="audio/mpeg"
+                url="http://www.scripting.com/mp3s/weatherReportSuite.mp3" />
+            <source url="http://www.tomalak.org/links2.xml">Tomalak's Realm</source>
         </item>
         <item>
             <title>RSS Solutions for Schools and Colleges</title>

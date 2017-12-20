@@ -62,10 +62,10 @@ data class Channel @JvmOverloads constructor(
         val image: Image? = null,
         @param:[Element(name = "lastBuildDate", required = false) Convert(ZonedDateTimeConverter::class)]
         @get:[Element(name = "lastBuildDate", required = false) Convert(ZonedDateTimeConverter::class)]
-        val lastBuildDate: ZonedDateTime,
+        val lastBuildDate: ZonedDateTime? = null,
         @param:[Element(name = "pubDate", required = false) Convert(ZonedDateTimeConverter::class)]
         @get:[Element(name = "pubDate", required = false) Convert(ZonedDateTimeConverter::class)]
-        val pubDate: ZonedDateTime,
+        val pubDate: ZonedDateTime? = null,
         @param:Element(name = "ttl", required = false)
         @get:Element(name = "ttl", required = false)
         val ttl: Int? = null,
@@ -80,7 +80,10 @@ data class Channel @JvmOverloads constructor(
         val cloud: Cloud? = null,
         @param:Element(name = "textInput", required = false)
         @get:Element(name = "textInput", required = false)
-        val textInput: TextInput? = null
+        val textInput: TextInput? = null,
+        @param:ElementList(inline = true)
+        @get:ElementList(inline = true)
+        val items: List<Item>
 )
 
 @Root(name = "category", strict = false)
@@ -148,4 +151,71 @@ data class TextInput(
         @param:[Element(name = "link") Convert(URLConverter::class)]
         @get:[Element(name = "link") Convert(URLConverter::class)]
         val link: URL
+)
+
+@Root(name = "item", strict = false)
+data class Item @JvmOverloads constructor(
+        @param:Element(name = "title", required = false)
+        @get:Element(name = "title", required = false)
+        val title: String? = null,
+        @param:Element(name = "description", required = false)
+        @get:Element(name = "description", required = false)
+        val description: String? = null,
+        @param:Element(name = "link", required = false)
+        @get:Element(name = "link", required = false)
+        val link: URL? = null,
+        @param:ElementList(inline = true)
+        @get:ElementList(inline = true)
+        val categories: List<Category> = emptyList(),
+        @param:Element(name = "comments", required = false)
+        @get:Element(name = "comments", required = false)
+        val comments: URL? = null,
+        @param:[Element(name = "pubDate", required = false) Convert(ZonedDateTimeConverter::class)]
+        @get:[Element(name = "pubDate", required = false) Convert(ZonedDateTimeConverter::class)]
+        val pubDate: ZonedDateTime? = null,
+        @param:Element(name = "author", required = false)
+        @get:Element(name = "author", required = false)
+        val author: String? = null,
+        @param:Element(name = "guid", required = false)
+        @get:Element(name = "guid", required = false)
+        val guid: Guid? = null,
+        @param:Element(name = "enclosure", required = false)
+        @get:Element(name = "enclosure", required = false)
+        val enclosure: Enclosure? = null,
+        @param:Element(name = "source", required = false)
+        @get:Element(name = "source", required = false)
+        val source: Source? = null
+)
+
+@Root(name = "enclosure", strict = false)
+data class Enclosure(
+        @param:Attribute(name = "url")
+        @get:Attribute(name = "url")
+        val url: URL,
+        @param:Attribute(name = "length")
+        @get:Attribute(name = "length")
+        val length: Long,
+        @param:Attribute(name = "type")
+        @get:Attribute(name = "type")
+        val type: String
+)
+
+@Root(name = "guid", strict = false)
+data class Guid @JvmOverloads constructor(
+        @param:Attribute(name = "isPermaLink", required = false)
+        @get:Attribute(name = "isPermaLink", required = false)
+        val isPermaLink: Boolean = false,
+        @param:Text
+        @get:Text
+        val text: String
+)
+
+@Root(name = "source", strict = false)
+data class Source @JvmOverloads constructor(
+        @param:Attribute(name = "url")
+        @get:Attribute(name = "url")
+        val url: URL,
+        @param:Text(required = false)
+        @get:Text(required = false)
+        val text: String? = null
 )

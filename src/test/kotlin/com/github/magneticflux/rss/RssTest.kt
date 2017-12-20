@@ -125,6 +125,21 @@ class RssTest : Spek({
                                 URL("http://www.cadenhead.org/textinput.php"))
                 ))
             }
+
+            it("should contain the correct items") {
+                assertThat(rssFeed.channel.items, hasElement(Item(
+                        "RSS Solutions for Restaurants",
+                        "<b>FeedForAll </b>helps Restaurant's communicate with customers. Let your customers know the latest specials or events.<br> <br> RSS feed uses include:<br> <i><font color=\"#FF0000\">Daily Specials <br> Entertainment <br> Calendar of Events </i></font>",
+                        URL("http://www.feedforall.com/restaurant.htm"),
+                        listOf(Category("www.dmoz.com", "Computers/Software/Internet/Site Management/Content Management")),
+                        URL("http://www.feedforall.com/forum"),
+                        ZonedDateTime.from(DateTimeFormatter.RFC_1123_DATE_TIME.parse("Tue, 19 Oct 2004 11:09:11 -0400")),
+                        "lawyer@boyer.net (Lawyer Boyer)",
+                        Guid(true, "http://inessential.com/2002/09/01.php#a2"),
+                        Enclosure(URL("http://www.scripting.com/mp3s/weatherReportSuite.mp3"), 12216320, "audio/mpeg"),
+                        Source(URL("http://www.tomalak.org/links2.xml"), "Tomalak's Realm")
+                )))
+            }
         }
 
         on("read-write-read") {
