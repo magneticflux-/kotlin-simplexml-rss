@@ -9,9 +9,6 @@ import org.jetbrains.spek.api.Spek
 import org.jetbrains.spek.api.dsl.given
 import org.jetbrains.spek.api.dsl.it
 import org.jetbrains.spek.api.dsl.on
-import org.simpleframework.xml.convert.AnnotationStrategy
-import org.simpleframework.xml.core.Persister
-import org.simpleframework.xml.transform.RegistryMatcher
 import org.threeten.bp.DayOfWeek
 import org.threeten.bp.ZonedDateTime
 import org.threeten.bp.format.DateTimeFormatter
@@ -21,11 +18,7 @@ import java.util.Locale
 
 class RssTest : Spek({
     given("a simple Persister") {
-        val persister = Persister(
-                AnnotationStrategy(),
-                RegistryMatcher().apply {
-                    this.bind(DayOfWeek::class.java, DayOfWeekTransform)
-                })
+        val persister = createDefaultPersister()
 
         on("sample_ffa RSS feed read") {
             val rssFeed = persister.read(RssFeed::class.java, getSample("sample_ffa.xml"))
@@ -139,7 +132,7 @@ class RssTest : Spek({
             }
         }
 
-        on("read-write-read") {
+        on("sample_ffa read-write-read") {
             val rssFeed = persister.read(RssFeed::class.java, getSample("sample_ffa.xml"))
 
             val rssText = StringWriter()
@@ -152,8 +145,30 @@ class RssTest : Spek({
             }
         }
 
-        on("sample_phs RSS feed read") {
+        on("sample_podcast read-write-read") {
             val rssFeed = persister.read(RssFeed::class.java, getSample("sample_podcast.xml"))
+
+            val rssText = StringWriter()
+            persister.write(rssFeed, rssText)
+
+            val rereadRssFeed = persister.read(RssFeed::class.java, rssText.buffer.toString())
+
+            it("should equal original RSS feed read") {
+                assertThat(rereadRssFeed, equalTo(rssFeed))
+            }
+        }
+
+        on("sample_phs read-write-read") {
+            val rssFeed = persister.read(RssFeed::class.java, getSample("sample_phs.xml"))
+
+            val rssText = StringWriter()
+            persister.write(rssFeed, rssText)
+
+            val rereadRssFeed = persister.read(RssFeed::class.java, rssText.buffer.toString())
+
+            it("should equal original RSS feed read") {
+                assertThat(rereadRssFeed, equalTo(rssFeed))
+            }
         }
     }
 })

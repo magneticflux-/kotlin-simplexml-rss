@@ -18,6 +18,7 @@ import java.util.Locale
  * @since 1.0.0
  */
 @Root(name = "rss", strict = false)
+@Convert(RssFeedConverter::class)
 data class RssFeed(
         @param:Attribute(name = "version")
         @get:Attribute(name = "version")
@@ -34,6 +35,7 @@ data class RssFeed(
  * @since 1.0.0
  */
 @Root(name = "channel", strict = false)
+@Convert(ChannelConverter::class)
 data class Channel @JvmOverloads constructor(
         @param:Element(name = "title")
         @get:Element(name = "title")
@@ -195,6 +197,7 @@ data class TextInput(
  * @since 1.0.0
  */
 @Root(name = "item", strict = false)
+@Convert(ItemConverter::class)
 data class Item @JvmOverloads constructor(
         @param:Element(name = "title", required = false)
         @get:Element(name = "title", required = false)
