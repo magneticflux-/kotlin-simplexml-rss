@@ -58,8 +58,8 @@ data class Channel @JvmOverloads constructor(
         @param:[Element(name = "docs", required = false) Convert(URLConverter::class)]
         @get:[Element(name = "docs", required = false) Convert(URLConverter::class)]
         val docs: URL? = null,
-        @param:[Element(name = "language", required = false) Convert(LocaleLanguageConverter::class)]
-        @get:[Element(name = "language", required = false) Convert(LocaleLanguageConverter::class)]
+        @param:Element(name = "language", required = false)
+        @get:Element(name = "language", required = false)
         val language: Locale? = null,
         @param:Element(name = "webMaster", required = false)
         @get:Element(name = "webMaster", required = false)
@@ -73,11 +73,11 @@ data class Channel @JvmOverloads constructor(
         @param:Element(name = "image", required = false)
         @get:Element(name = "image", required = false)
         val image: Image? = null,
-        @param:[Element(name = "lastBuildDate", required = false) Convert(ZonedDateTimeConverter::class)]
-        @get:[Element(name = "lastBuildDate", required = false) Convert(ZonedDateTimeConverter::class)]
+        @param:Element(name = "lastBuildDate", required = false)
+        @get:Element(name = "lastBuildDate", required = false)
         val lastBuildDate: ZonedDateTime? = null,
-        @param:[Element(name = "pubDate", required = false) Convert(ZonedDateTimeConverter::class)]
-        @get:[Element(name = "pubDate", required = false) Convert(ZonedDateTimeConverter::class)]
+        @param:Element(name = "pubDate", required = false)
+        @get:Element(name = "pubDate", required = false)
         val pubDate: ZonedDateTime? = null,
         @param:Element(name = "ttl", required = false)
         @get:Element(name = "ttl", required = false)
@@ -214,8 +214,8 @@ data class Item @JvmOverloads constructor(
         @param:Element(name = "comments", required = false)
         @get:Element(name = "comments", required = false)
         val comments: URL? = null,
-        @param:[Element(name = "pubDate", required = false) Convert(ZonedDateTimeConverter::class)]
-        @get:[Element(name = "pubDate", required = false) Convert(ZonedDateTimeConverter::class)]
+        @param:Element(name = "pubDate", required = false)
+        @get:Element(name = "pubDate", required = false)
         val pubDate: ZonedDateTime? = null,
         @param:Element(name = "author", required = false)
         @get:Element(name = "author", required = false)
