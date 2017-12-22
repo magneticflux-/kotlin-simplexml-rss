@@ -36,7 +36,7 @@ data class RssFeed(
  */
 @Root(name = "channel", strict = false)
 @Convert(ChannelConverter::class)
-data class Channel @JvmOverloads constructor(
+data class Channel(
         @param:Element(name = "title")
         @get:Element(name = "title")
         val title: String,
@@ -198,7 +198,7 @@ data class TextInput(
  */
 @Root(name = "item", strict = false)
 @Convert(ItemConverter::class)
-data class Item @JvmOverloads constructor(
+data class Item(
         @param:Element(name = "title", required = false)
         @get:Element(name = "title", required = false)
         val title: String? = null,
