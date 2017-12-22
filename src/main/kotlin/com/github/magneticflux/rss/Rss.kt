@@ -18,6 +18,7 @@ import java.util.Locale
  * @since 1.0.0
  */
 @Root(name = "rss", strict = false)
+@Convert(RssFeedConverter::class)
 data class RssFeed(
         @param:Attribute(name = "version")
         @get:Attribute(name = "version")
@@ -34,13 +35,17 @@ data class RssFeed(
  * @since 1.0.0
  */
 @Root(name = "channel", strict = false)
-data class Channel @JvmOverloads constructor(
+@Convert(ChannelConverter::class)
+data class Channel(
         @param:Element(name = "title")
         @get:Element(name = "title")
         val title: String,
-        @param:Element(name = "description")
-        @get:Element(name = "description")
-        val description: String,
+        /**
+         * Not nullable, but not required in XML to fallback to an empty string.
+         */
+        @param:Element(name = "description", required = false)
+        @get:Element(name = "description", required = false)
+        val description: String = "",
         @param:[Element(name = "link") Convert(URLConverter::class)]
         @get:[Element(name = "link") Convert(URLConverter::class)]
         val link: URL,
@@ -53,8 +58,8 @@ data class Channel @JvmOverloads constructor(
         @param:[Element(name = "docs", required = false) Convert(URLConverter::class)]
         @get:[Element(name = "docs", required = false) Convert(URLConverter::class)]
         val docs: URL? = null,
-        @param:[Element(name = "language", required = false) Convert(LocaleLanguageConverter::class)]
-        @get:[Element(name = "language", required = false) Convert(LocaleLanguageConverter::class)]
+        @param:Element(name = "language", required = false)
+        @get:Element(name = "language", required = false)
         val language: Locale? = null,
         @param:Element(name = "webMaster", required = false)
         @get:Element(name = "webMaster", required = false)
@@ -68,11 +73,11 @@ data class Channel @JvmOverloads constructor(
         @param:Element(name = "image", required = false)
         @get:Element(name = "image", required = false)
         val image: Image? = null,
-        @param:[Element(name = "lastBuildDate", required = false) Convert(ZonedDateTimeConverter::class)]
-        @get:[Element(name = "lastBuildDate", required = false) Convert(ZonedDateTimeConverter::class)]
+        @param:Element(name = "lastBuildDate", required = false)
+        @get:Element(name = "lastBuildDate", required = false)
         val lastBuildDate: ZonedDateTime? = null,
-        @param:[Element(name = "pubDate", required = false) Convert(ZonedDateTimeConverter::class)]
-        @get:[Element(name = "pubDate", required = false) Convert(ZonedDateTimeConverter::class)]
+        @param:Element(name = "pubDate", required = false)
+        @get:Element(name = "pubDate", required = false)
         val pubDate: ZonedDateTime? = null,
         @param:Element(name = "ttl", required = false)
         @get:Element(name = "ttl", required = false)
@@ -192,7 +197,8 @@ data class TextInput(
  * @since 1.0.0
  */
 @Root(name = "item", strict = false)
-data class Item @JvmOverloads constructor(
+@Convert(ItemConverter::class)
+data class Item(
         @param:Element(name = "title", required = false)
         @get:Element(name = "title", required = false)
         val title: String? = null,
@@ -208,8 +214,8 @@ data class Item @JvmOverloads constructor(
         @param:Element(name = "comments", required = false)
         @get:Element(name = "comments", required = false)
         val comments: URL? = null,
-        @param:[Element(name = "pubDate", required = false) Convert(ZonedDateTimeConverter::class)]
-        @get:[Element(name = "pubDate", required = false) Convert(ZonedDateTimeConverter::class)]
+        @param:Element(name = "pubDate", required = false)
+        @get:Element(name = "pubDate", required = false)
         val pubDate: ZonedDateTime? = null,
         @param:Element(name = "author", required = false)
         @get:Element(name = "author", required = false)

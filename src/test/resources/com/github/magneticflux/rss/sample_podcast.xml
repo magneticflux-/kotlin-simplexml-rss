@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="utf-8"?>
+<rss xmlns:atom="http://www.w3.org/2005/Atom"
+    xmlns:itunes="http://www.itunes.com/dtds/podcast-1.0.dtd"
+    xmlns:itunesu="http://www.itunesu.com/feed"
+    version="2.0">
+    <channel>
+        <link>http://www.osu.edu</link>
+        <language>en-us</language>
+        <copyright>&#xA9;2012</copyright>
+        <webMaster>MediaServices@osu.edu (Media Services)</webMaster>
+        <managingEditor>MediaServices@osu.edu (Media Services)</managingEditor>
+        <image>
+            <url>http://streaming.osu.edu/podcast/iTunesU/Images/Icons/Generic_OSU.jpg</url>
+            <title>The Ohio State University</title>
+            <link>http://www.osu.edu</link>
+        </image>
+        <itunes:owner>
+            <itunes:name>The Ohio State University</itunes:name>
+            <itunes:email>MediaServices@osu.edu</itunes:email>
+        </itunes:owner>
+        <itunes:category text="Education">
+            <itunes:category text="Higher Education" />
+        </itunes:category>
+        <itunes:keywords>The Ohio State University,Ohio State University, OSU, Buckeyes</itunes:keywords>
+        <itunes:explicit>no</itunes:explicit>
+        <itunes:image href="http://streaming.osu.edu/podcast/iTunesU/Images/Icons/Generic_OSU.jpg" />
+        <atom:link href="http://streaming.osu.edu/podcast/Example/podcast.xml"
+            rel="self"
+            type="application/rss+xml" /> <!-- The URL of this file -->
+        <pubDate>Fri, 18 May 2012 00:00:00 -0500</pubDate> <!-- http://www.timeanddate.com/worldclock/city.html?n=805 - Use 24 hour clock -->
+        <title>Example Podcast RSS XML Code</title>
+        <itunes:author>Office of the Chief Information Officer</itunes:author>
+        <description>Example RSS 2.0 code for a XML 1.0 podcast including iTunes proprietary tags.</description>
+        <itunes:summary>Example RSS 2.0 code for a XML 1.0 podcast including iTunes proprietary tags.</itunes:summary>
+        <itunes:subtitle>A working sample podcast.</itunes:subtitle>
+
+        <lastBuildDate>Fri, 18 May 2012 00:00:00 -0500</lastBuildDate> <!-- http://www.timeanddate.com/worldclock/city.html?n=805 - Use 24 hour clock -->
+
+        <!-- Always add the newest ITEM to the top of the list -->
+        <item>
+            <title>Example Podcast Episode</title>
+            <description>Example MP3 podcast item including iTunes proprietary tags.</description>
+            <itunes:summary>Example MP3 podcast item including iTunes proprietary tags.</itunes:summary>
+            <itunes:subtitle>A working sample podcast episode.</itunes:subtitle>
+            <itunesu:category itunesu:code="112" />
+            <enclosure length="1"
+                type="audio/mpeg"
+                url="http://streaming.osu.edu/podcast/Example/Item.mp3" />
+            <guid>http://streaming.osu.edu/podcast/Example/Item.mp3</guid> <!-- GUID URL is identical to Enclosure URL -->
+            <itunes:duration>0:59</itunes:duration>
+            <pubDate>Fri, 18 May 2012 00:00:00 -0500</pubDate> <!-- http://www.timeanddate.com/worldclock/city.html?n=805 - Use 24 hour clock -->
+        </item>
+
+    </channel>
+</rss>
+
+    <!--
+    XML Character Entity References:
+    & (ampersand)       =   &amp;
+    < (less than)       =   &lt;
+    > (greater than)    =   &gt;
+    " (quotation mark)  =   &quot;
+    ' (apostrophe)      =   &apos;
+
+    iTunesU Category Codes:
+    http://deimos.apple.com/rsrc/doc/UsingiTunesUPublicSiteManager/AboutCategoryPages/chapter_8_section_3.html
+
+    iTunesU Supported Enclosures:
+        audio/mpeg                          .mp3
+        audio/x-m4a                         .m4a .m4b
+        video/mp4                           .mp4
+        video/x-m4v                         .m4v
+        application/pdf                     .pdf
+        application/epub+zip                .epub
+
+    Podcast Supported Enclosures:
+     Audio Enclosure Types:
+        audio/mpeg                          .mpg .mpeg .mp2 .mp3
+        audio/x-m4a                         .m4a .m4b
+        audio/x-wav                         .wav
+        audio/x-aiff                        .aif .aiff .aifc
+        audio/x-pn-realaudio                .ra .rm
+        audio/x-ms-wma                      .wma
+        audio/midi                          .mid .midi
+
+     Video Enclosure Types:
+        video/mp4                           .mp4
+        video/x-m4v                         .m4v
+        video/x-flv                         .flv
+        application/x-shockwave-flash       .swf
+        video/quicktime                     .mov .qt
+        video/x-msvideo                     .avi
+        application/vnd.rn-realmedia        .rv
+        video/vnd.rn-realvideo              .rm
+        application/vnd.rn-realmedia-vbr    .rmvb
+        video/x-ms-wmv                      .wmv
+        video/mpeg                          .mpg .mpeg .mp2
+        video/x-dv                          .dv
+
+     Document Enclosure Types:
+      application/pdf                     .pdf
+      application/epub+zip                .epub
+    -->
