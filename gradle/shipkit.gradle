@@ -12,16 +12,12 @@ allprojects {
         //Bintray configuration is handled by JFrog Bintray Gradle Plugin
         //For reference see the official documentation: https://github.com/bintray/gradle-bintray-plugin
         bintray {
-            user = System.getenv("BINTRAY_USER")
+            user = 'magneticflux'
             key = System.getenv("BINTRAY_API_KEY")
-
-            publications = ['myPublication']
 
             pkg {
                 repo = 'kotlin-simplexml-rss'
-                name = 'kotlin-simplexml-rss'
                 licenses = ['GPL-3.0']
-                labels = ['kotlin', 'rss', 'simplexml', 'xml']
                 vcsUrl = 'https://github.com/magneticflux-/kotlin-simplexml-rss.git'
             }
         }

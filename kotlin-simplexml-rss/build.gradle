@@ -1,0 +1,82 @@
+plugins {
+    id "java"
+    id "java-library"
+    id "jacoco"
+    id "maven-publish"
+    id "com.jfrog.bintray" //version "1.8.0"
+    id "com.diffplug.gradle.spotless" version "3.7.0"
+}
+
+apply plugin: 'kotlin'
+apply plugin: 'org.junit.platform.gradle.plugin'
+
+junitPlatform {
+    filters {
+        engines {
+            include 'spek'
+        }
+    }
+}
+
+publishing {
+    publications {
+        kotlinSimpleXmlRss(MavenPublication) {
+            from components.java
+            //noinspection GroovyAssignabilityCheck
+            artifact sourcesJar
+            //noinspection GroovyAssignabilityCheck
+            artifact javadocJar
+        }
+    }
+}
+
+bintray {
+    publications = ['kotlinSimpleXmlRss']
+
+    pkg {
+        name = 'kotlin-simplexml-rss'
+        labels = ['kotlin', 'rss', 'simplexml', 'xml']
+    }
+}
+
+spotless {
+    kotlin {
+        ktlint()
+    }
+}
+
+dependencies {
+    compile "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
+    compile "org.jetbrains.kotlin:kotlin-reflect:$kotlin_version"
+
+    compile 'org.simpleframework:simple-xml:2.7.1'
+    compile 'org.threeten:threetenbp:1.3.6'
+
+    testCompile 'com.natpryce:hamkrest:1.4.2.2'
+    testCompile 'org.jetbrains.spek:spek-api:1.1.5'
+    testRuntime 'org.jetbrains.spek:spek-junit-platform-engine:1.1.5'
+}
+
+jacoco {
+    applyTo junitPlatformTest
+}
+
+junitPlatformTest {
+    jacoco {
+        destinationFile = file("$buildDir/jacoco/test.exec")
+    }
+}
+
+jacocoTestReport {
+    executionData junitPlatformTest
+    sourceSets sourceSets.main
+    dependsOn(junitPlatformTest)
+
+    reports {
+        //noinspection GroovyAssignabilityCheck
+        xml {
+            enabled true
+        }
+    }
+}
+check.dependsOn(jacocoTestReport)

@@ -1,2 +1,1 @@
-rootProject.name = 'kotlin-simplexml-rss'
-
+include 'kotlin-simplexml-rss', 'kotlin-simplexml-rss-android'
