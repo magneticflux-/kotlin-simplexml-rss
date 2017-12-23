@@ -41,7 +41,7 @@ data class Channel(
         @get:Element(name = "title")
         val title: String,
         /**
-         * Not nullable, but not required in XML to fallback to an empty string.
+         * Not nullable but not required in XML so fallback to an empty string.
          */
         @param:Element(name = "description", required = false)
         @get:Element(name = "description", required = false)
