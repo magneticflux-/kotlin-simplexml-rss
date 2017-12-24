@@ -10,4 +10,61 @@
 
 [![Get automatic notifications about new "kotlin-simplexml-rss" versions](https://www.bintray.com/docs/images/bintray_badge_color.png)](https://bintray.com/magneticflux/kotlin-simplexml-rss/kotlin-simplexml-rss?source=watch)
 
+# Usage
+Gradle declaration
+```Gradle
+repositories {
+    jcenter()
+}
+
+dependencies {
+    implementation 'com.github.magneticflux:kotlin-simplexml-rss:$latest_version'
+}
+```
+1. Get a `Persister`
+```Kotlin
+val persister = createDefaultPersister()
+```
+2. Read the input
+```Kotlin
+val rssFeed = persister.read(RssFeed::class.java, input)
+```
+3. ???
+```
+???
+```
+4. Profit (Use the input)
+```Kotlin
+title.setText(rssFeed.channel.title)
+viewModel.setItems(rssFeed.channel.items)
+```
+
+# Android Support
+
+Proguard rules
+```Proguard
+-keepattributes *Annotation*
+-keepclassmembers class org.simpleframework.xml.** {
+    <init>(...);
+}
+-keep class com.github.magneticflux.rss.** { *; }
+-keep class * extends org.simpleframework.xml.convert.Converter
+-keep class * extends org.simpleframework.xml.transform.Transform
+```
+Gradle declaration (More efficient timezone access on Android)
+```Gradle
+repositories {
+    jcenter()
+}
+
+dependencies {
+    implementation 'com.github.magneticflux:kotlin-simplexml-rss:$latest_version', {
+        exclude group: 'org.threeten', module: 'threetenbp'
+    }
+    implementation 'com.jakewharton.threetenabp:threetenabp:1.0.5'
+}
+```
+
+---
+
 Copyright 2017 Mitchell Skaggs
