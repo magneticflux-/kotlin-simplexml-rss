@@ -5,7 +5,6 @@ import org.simpleframework.xml.Element
 import org.simpleframework.xml.ElementList
 import org.simpleframework.xml.Root
 import org.simpleframework.xml.Text
-import org.simpleframework.xml.convert.Convert
 import org.threeten.bp.DayOfWeek
 import org.threeten.bp.ZonedDateTime
 import java.net.URL
@@ -16,9 +15,9 @@ import java.util.Locale
  *
  * @author Mitchell Skaggs
  * @since 1.0.0
+ * @see RssFeedConverter
  */
 @Root(name = "rss", strict = false)
-@Convert(RssFeedConverter::class)
 data class RssFeed(
         @param:Attribute(name = "version")
         @get:Attribute(name = "version")
@@ -33,9 +32,9 @@ data class RssFeed(
  *
  * @author Mitchell Skaggs
  * @since 1.0.0
+ * @see ChannelConverter
  */
 @Root(name = "channel", strict = false)
-@Convert(ChannelConverter::class)
 data class Channel(
         @param:Element(name = "title")
         @get:Element(name = "title")
@@ -46,8 +45,8 @@ data class Channel(
         @param:Element(name = "description", required = false)
         @get:Element(name = "description", required = false)
         val description: String = "",
-        @param:[Element(name = "link") Convert(URLConverter::class)]
-        @get:[Element(name = "link") Convert(URLConverter::class)]
+        @param:Element(name = "link")
+        @get:Element(name = "link")
         val link: URL,
         @param:ElementList(inline = true)
         @get:ElementList(inline = true)
@@ -55,8 +54,8 @@ data class Channel(
         @param:Element(name = "copyright", required = false)
         @get:Element(name = "copyright", required = false)
         val copyright: String? = null,
-        @param:[Element(name = "docs", required = false) Convert(URLConverter::class)]
-        @get:[Element(name = "docs", required = false) Convert(URLConverter::class)]
+        @param:Element(name = "docs", required = false)
+        @get:Element(name = "docs", required = false)
         val docs: URL? = null,
         @param:Element(name = "language", required = false)
         @get:Element(name = "language", required = false)
@@ -104,9 +103,10 @@ data class Channel(
  *
  * @author Mitchell Skaggs
  * @since 1.0.0
+ * @see CategoryConverter
  */
 @Root(name = "category", strict = false)
-data class Category @JvmOverloads constructor(
+data class Category(
         @param:Attribute(name = "domain")
         @get:Attribute(name = "domain")
         val domain: String? = null,
@@ -120,17 +120,18 @@ data class Category @JvmOverloads constructor(
  *
  * @author Mitchell Skaggs
  * @since 1.0.0
+ * @see ImageConverter
  */
 @Root(name = "image", strict = false)
-data class Image @JvmOverloads constructor(
-        @param:[Element(name = "url") Convert(URLConverter::class)]
-        @get:[Element(name = "url") Convert(URLConverter::class)]
+data class Image(
+        @param:Element(name = "url")
+        @get:Element(name = "url")
         val url: URL,
         @param:Element(name = "title")
         @get:Element(name = "title")
         val title: String,
-        @param:[Element(name = "link") Convert(URLConverter::class)]
-        @get:[Element(name = "link") Convert(URLConverter::class)]
+        @param:Element(name = "link")
+        @get:Element(name = "link")
         val link: URL,
         @param:Element(name = "description", required = false)
         @get:Element(name = "description", required = false)
@@ -148,6 +149,7 @@ data class Image @JvmOverloads constructor(
  *
  * @author Mitchell Skaggs
  * @since 1.0.0
+ * @see CloudConverter
  */
 @Root(name = "cloud", strict = false)
 data class Cloud(
@@ -173,6 +175,7 @@ data class Cloud(
  *
  * @author Mitchell Skaggs
  * @since 1.0.0
+ * @see TextInputConverter
  */
 @Root(name = "textInput", strict = false)
 data class TextInput(
@@ -185,8 +188,8 @@ data class TextInput(
         @param:Element(name = "name")
         @get:Element(name = "name")
         val name: String,
-        @param:[Element(name = "link") Convert(URLConverter::class)]
-        @get:[Element(name = "link") Convert(URLConverter::class)]
+        @param:Element(name = "link")
+        @get:Element(name = "link")
         val link: URL
 )
 
@@ -195,9 +198,9 @@ data class TextInput(
  *
  * @author Mitchell Skaggs
  * @since 1.0.0
+ * @see ItemConverter
  */
 @Root(name = "item", strict = false)
-@Convert(ItemConverter::class)
 data class Item(
         @param:Element(name = "title", required = false)
         @get:Element(name = "title", required = false)
@@ -236,6 +239,7 @@ data class Item(
  *
  * @author Mitchell Skaggs
  * @since 1.0.0
+ * @see EnclosureConverter
  */
 @Root(name = "enclosure", strict = false)
 data class Enclosure(
@@ -255,6 +259,7 @@ data class Enclosure(
  *
  * @author Mitchell Skaggs
  * @since 1.0.0
+ * @see GuidConverter
  */
 @Root(name = "guid", strict = false)
 data class Guid @JvmOverloads constructor(
@@ -271,6 +276,7 @@ data class Guid @JvmOverloads constructor(
  *
  * @author Mitchell Skaggs
  * @since 1.0.0
+ * @see SourceConverter
  */
 @Root(name = "source", strict = false)
 data class Source @JvmOverloads constructor(
