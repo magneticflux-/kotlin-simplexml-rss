@@ -18,7 +18,6 @@ allprojects {
             publications = ['myPublication']
 
             pkg {
-                userOrg = bintray.user
                 repo = 'kotlin-simplexml-rss'
                 name = 'kotlin-simplexml-rss'
                 licenses = ['GPL-3.0']

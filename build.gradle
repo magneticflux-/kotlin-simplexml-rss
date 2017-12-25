@@ -16,7 +16,7 @@ plugins {
     id "jacoco"
     id "maven-publish"
     id "com.jfrog.bintray" version "1.8.0"
-    id "org.shipkit.java" version "1.0.0"
+    id "org.shipkit.java" version "1.0.2"
     id "com.diffplug.gradle.spotless" version "3.7.0"
 }
 
