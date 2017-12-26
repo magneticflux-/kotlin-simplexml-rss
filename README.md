@@ -3,6 +3,7 @@
  [![Download](https://api.bintray.com/packages/magneticflux/kotlin-simplexml-rss/kotlin-simplexml-rss/images/download.svg) ](https://bintray.com/magneticflux/kotlin-simplexml-rss/kotlin-simplexml-rss/_latestVersion)
  [![GitHub tag](https://img.shields.io/github/tag/magneticflux-/kotlin-simplexml-rss.svg)](https://github.com/magneticflux-/kotlin-simplexml-rss/tags) 
 [![Build Status](https://travis-ci.org/magneticflux-/kotlin-simplexml-rss.svg?branch=master)](https://travis-ci.org/magneticflux-/kotlin-simplexml-rss) 
+[![codecov](https://codecov.io/gh/magneticflux-/kotlin-simplexml-rss/branch/master/graph/badge.svg)](https://codecov.io/gh/magneticflux-/kotlin-simplexml-rss) 
 [![GitHub issues](https://img.shields.io/github/issues/magneticflux-/kotlin-simplexml-rss.svg)](https://github.com/magneticflux-/kotlin-simplexml-rss/issues) 
 [![GitHub PRs](https://img.shields.io/github/issues-pr/magneticflux-/kotlin-simplexml-rss.svg)](https://github.com/magneticflux-/kotlin-simplexml-rss/pulls) 
 [![GitHub Contributors](https://img.shields.io/github/contributors/magneticflux-/kotlin-simplexml-rss.svg)](https://github.com/magneticflux-/kotlin-simplexml-rss/graphs/contributors) 
