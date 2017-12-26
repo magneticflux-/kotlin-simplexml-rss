@@ -233,7 +233,8 @@ data class Item(
         val enclosure: Enclosure? = null,
         @param:Element(name = "source", required = false)
         @get:Element(name = "source", required = false)
-        val source: Source? = null
+        val source: Source? = null,
+        val itunesCategories: List<ITunesTopLevelCategory>
 )
 
 /**

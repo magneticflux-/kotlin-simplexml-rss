@@ -308,6 +308,7 @@ object ItemConverter : Converter<Item> {
         var guid: Guid? = null
         var enclosure: Enclosure? = null
         var source: Source? = null
+        val itunesCategories = mutableListOf<ITunesTopLevelCategory>()
 
         node.children.forEach {
             when (it.fullName) {
@@ -321,6 +322,7 @@ object ItemConverter : Converter<Item> {
                 "guid" -> guid = fallbackPersister.read(Guid::class.java, it)
                 "enclosure" -> enclosure = fallbackPersister.read(Enclosure::class.java, it)
                 "source" -> source = fallbackPersister.read(Source::class.java, it)
+                "itunes:category" -> itunesCategories += fallbackPersister.read(ITunesTopLevelCategory::class.java, it)
             }
         }
 
@@ -334,7 +336,9 @@ object ItemConverter : Converter<Item> {
                 author,
                 guid,
                 enclosure,
-                source)
+                source,
+                itunesCategories
+        )
     }
 
     override fun write(node: OutputNode, value: Item) {
@@ -348,6 +352,9 @@ object ItemConverter : Converter<Item> {
         if (value.guid != null) fallbackPersister.write(value.guid, node)
         if (value.enclosure != null) fallbackPersister.write(value.enclosure, node)
         if (value.source != null) fallbackPersister.write(value.source, node)
+        value.itunesCategories.forEach {
+            fallbackPersister.write(it, node)
+        }
     }
 }
 

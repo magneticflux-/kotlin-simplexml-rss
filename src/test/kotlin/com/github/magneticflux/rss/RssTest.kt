@@ -128,7 +128,8 @@ class RssTest : Spek({
                         "lawyer@boyer.net (Lawyer Boyer)",
                         Guid(true, "http://inessential.com/2002/09/01.php#a2"),
                         Enclosure(URL("http://www.scripting.com/mp3s/weatherReportSuite.mp3"), 12216320, "audio/mpeg"),
-                        Source(URL("http://www.tomalak.org/links2.xml"), "Tomalak's Realm")
+                        Source(URL("http://www.tomalak.org/links2.xml"), "Tomalak's Realm"),
+                        emptyList()
                 )))
             }
 
