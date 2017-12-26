@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<rss xmlns:itunes="http://www.itunes.com/DTDs/Podcast-1.0.dtd" version="2.0">
+    <channel>
+        <title>RSS Feed Podcast</title>
+        <description>Podcast explaining the ins and outs of RSS, RSS feeds, feed creation, optimization and use as a marketing technology. The podcast is prepared using voice synthesis, reading articles related to RSS.</description>
+        <link>http://www.rss-specifications.com/rss-articles.htm</link>
+        <lastBuildDate>Mon, 25 Jul 2005 16:37:32 -0400</lastBuildDate>
+        <pubDate>Mon, 25 Jul 2005 09:00:00 -0400</pubDate>
+        <generator>FeedForAll Mac v1.0 (1.0.1.0) unlicensed version</generator>
+        <itunes:category text="Technology">
+            <itunes:category text="Information Technology" />
+        </itunes:category>
+        <itunes:subtitle>Podcasting made easy with FeedForAll</itunes:subtitle>
+        <itunes:summary>Podcasting tutorial developed by the FeedForAll Mac Team to walk you through the steps necessary to publish a podcast on iTunes Music Store using this very program. Simple and precise instructions will guide you through creating an RSS feed that can contain audio, artwork, or simple xml.</itunes:summary>
+        <itunes:author>FeedForAll Mac OS Team</itunes:author>
+        <itunes:owner>
+            <itunes:name>FeedForAll Mac OS Team</itunes:name>
+            <itunes:email>macsupport@feedforall.com</itunes:email>
+        </itunes:owner>
+        <itunes:image>
+            <url>http://www.feedforall.com/logo.jpg</url>
+            <title>FeedForAll Logo</title>
+            <link>http://www.feedforall.com</link>
+        </itunes:image>
+        <itunes:link href="http://www.feedforall.com/logo.jpg"
+            rel="image"
+            type="video/jpeg">- FeedForAll Podcasting Tutorial
+        </itunes:link>
+        <item>
+            <title>Tips to Creating a Blog</title>
+            <description>Tips for creating a blog.&lt;br&gt; There are no hard and fast rules on how to blog. Having said that, bloggers will likely increase their exposure by following some simple blog guidelines. &lt;br&gt;&lt;br&gt; 1) Stay on topic.&lt;br&gt; Opinions are generally accepted but the content of the items in the blog should all relate to a general theme. Unless you have an uncanny knack for wit, humor or cynicism, the majority of your readers will be interested in the content that relates to a specific defined theme or loosely defined area of interest. Most readers won&amp;apos;t care that you eat Cheerios for breakfast. They may, however, be interested in the fact that vinegar takes out stains and that toilet paper rolls make great wreaths. Define a topic and stick to it. This will ensure that you create a loyal following of interested readers.&lt;br&gt;&lt;br&gt;</description>
+            <link>http://www.rss-specifications.com/10-tips-for-bloggers.htm</link>
+            <enclosure length="1157907"
+                type="audio/mpeg"
+                url="http://www.rss-specifications.com/podcasts/tips_to_creating_a_blog.mp3" />
+            <pubDate>Mon, 25 Jul 2005 09:00:00 -0400</pubDate>
+            <itunes:category text="Technology">
+                <itunes:category text="Information Technology" />
+            </itunes:category>
+            <itunes:explicit>no</itunes:explicit>
+            <itunes:duration>4:49</itunes:duration>
+            <itunes:keywords>BLOG create howto</itunes:keywords>
+        </item>
+
+        <item>
+            <title>Search Engine Optimization for RSS Feeds</title>
+            <description>&lt;b&gt;&lt;i&gt;Tips for Helping Your RSS Feed Perform!&lt;/i&gt;&lt;/b&gt;&lt;br&gt; In some ways RSS is very similar to HTML, the language commonly used to create websites. Just as with HTML, webmasters using traditional search engine optimization tactics when creating an RSS feed will find that their RSS feed receives additional exposure and interest. &lt;br&gt;&lt;br&gt;&lt;a href=&quot;http://www.rss-specifications.com/rss-seo.htm&quot; target=&quot;blank&quot;&gt;Complete Article&lt;/a&gt; or &lt;a href=&quot;http://www.rss-specifications.com/podcasts/Search%20Engine%20Optimization%20for%20Feeds.mp3&quot; target=&quot;blank&quot;&gt;Listen&lt;/a&gt;&lt;br&gt;</description>
+            <link>http://www.rss-specifications.com/rss-seo.htm</link>
+            <enclosure length="1421222"
+                type="audio/mpeg"
+                url="http://www.rss-specifications.com/podcasts/Search%20Engine%20Optimization%20for%20Feeds.mp3" />
+            <pubDate>Tue, 5 Jul 2005 09:00:00 -0400</pubDate>
+            <itunes:category text="Technology">
+                <itunes:category text="Information Technology" />
+            </itunes:category>
+            <itunes:explicit>no</itunes:explicit>
+            <itunes:duration>5:55</itunes:duration>
+            <itunes:keywords>search engine optimization howto</itunes:keywords>
+        </item>
+
+        <item>
+            <title>RSS Feeds</title>
+            <description>&lt;b&gt;RSS Feeds&lt;/b&gt;&lt;br&gt; RSS also known as rich site summary or real simply syndication, arrived on the scene a number of years ago, but was only recently embraced by webmasters as a means to effectively syndicate content. RSS Feeds provide webmasters and content providers an avenue to provide concise summaries to prospective readers. Thousands of commercial web sites and blogs now publish content summaries in an RSS feed. Each item in the feed typically contains a headline; article summary and link back to the online article.&lt;br&gt;&lt;br&gt;&lt;a href=&quot;http://www.rss-specifications.com/everything-rss.htm&quot; target=&quot;blank&quot;&gt;Complete Article&lt;/a&gt; or &lt;a href=&quot;http://www.rss-specifications.com/podcasts/RSS%20Feeds.mp3&quot; target=&quot;blank&quot;&gt;Listen&lt;/a&gt;&lt;br&gt;</description>
+            <link>http://www.rss-specifications.com/everything-rss.htm</link>
+            <author>FeedForAll</author>
+            <enclosure length="1322583"
+                type="audio/mpeg"
+                url="http://www.rss-specifications.com/podcasts/RSS%20Feeds.mp3" />
+            <pubDate>Mon, 4 Jul 2005 14:32:27 -0400</pubDate>
+            <itunes:category text="Technology">
+                <itunes:category text="Information Technology" />
+            </itunes:category>
+            <itunes:explicit>no</itunes:explicit>
+            <itunes:duration>5:30</itunes:duration>
+            <itunes:keywords>RSS</itunes:keywords>
+        </item>
+
+        <item>
+            <title>More on RSS Feeds</title>
+            <description>&lt;b&gt;RSS FEEDS &lt;/b&gt;&lt;br&gt; Lets face it as much as we all rely on email communications it is not really a reliable technology. &lt;br&gt;&lt;br&gt;&lt;b&gt;&lt;i&gt;Why Should I care about RSS Feeds&lt;/i&gt;&lt;/b&gt;&lt;br&gt; SPAM and viruses have wreaked havoc with a communication medium and reduced its value. Users have become admittedly paranoid about privacy issues and have begun &quot;tuning out&quot; and mentally filtering mail. &lt;br&gt;&lt;br&gt;&lt;br&gt;&lt;a href=&quot;http://www.rss-specifications.com/rss-feeds-article.htm&quot; target=&quot;blank&quot;&gt;Entire Article &lt;/a&gt;or &lt;a href=&quot;http://www.rss-specifications.com/podcasts/More%20On%20RSS%20Feeds.mp3&quot; target=&quot;blank&quot;&gt;Listen&lt;/a&gt;&lt;br&gt;</description>
+            <link>http://www.rss-specifications.com/rss-feeds-article.htm</link>
+            <enclosure length="652490"
+                type="audio/mpeg"
+                url="http://www.rss-specifications.com/podcasts/More%20On%20RSS%20Feeds.mp3" />
+            <pubDate>Fri, 1 Jul 2005 14:41:48 -0400</pubDate>
+            <itunes:category text="Technology">
+                <itunes:category text="Information Technology" />
+            </itunes:category>
+            <itunes:explicit>no</itunes:explicit>
+            <itunes:duration>2:43</itunes:duration>
+            <itunes:keywords>RSS</itunes:keywords>
+        </item>
+
+    </channel>
+</rss>
