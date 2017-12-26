@@ -3,12 +3,15 @@ package com.github.magneticflux.rss
 import org.simpleframework.xml.Attribute
 import org.simpleframework.xml.Element
 import org.simpleframework.xml.ElementList
+import org.simpleframework.xml.Namespace
 import org.simpleframework.xml.Root
 import org.simpleframework.xml.Text
 import org.threeten.bp.DayOfWeek
 import org.threeten.bp.ZonedDateTime
 import java.net.URL
 import java.util.Locale
+
+const val ITUNES_REFERENCE = "http://www.itunes.com/DTDs/Podcast-1.0.dtd"
 
 /**
  * This class represents an RSS feed.
@@ -18,6 +21,7 @@ import java.util.Locale
  * @see RssFeedConverter
  */
 @Root(name = "rss", strict = false)
+@Namespace(prefix = "itunes", reference = ITUNES_REFERENCE)
 data class RssFeed(
         @param:Attribute(name = "version")
         @get:Attribute(name = "version")
@@ -39,12 +43,9 @@ data class Channel(
         @param:Element(name = "title")
         @get:Element(name = "title")
         val title: String,
-        /**
-         * Not nullable but not required in XML so fallback to an empty string.
-         */
         @param:Element(name = "description", required = false)
         @get:Element(name = "description", required = false)
-        val description: String = "",
+        val description: String,
         @param:Element(name = "link")
         @get:Element(name = "link")
         val link: URL,
@@ -95,7 +96,8 @@ data class Channel(
         val textInput: TextInput? = null,
         @param:ElementList(inline = true)
         @get:ElementList(inline = true)
-        val items: List<Item>
+        val items: List<Item>,
+        val itunesCategories: List<ITunesTopLevelCategory>
 )
 
 /**
@@ -286,4 +288,31 @@ data class Source @JvmOverloads constructor(
         @param:Text(required = false)
         @get:Text(required = false)
         val text: String? = null
+)
+
+/**
+ * This class represents an itunes:category in a [Channel] or an [Item].
+ *
+ * @author Mitchell Skaggs
+ * @since 1.0.5
+ * @see ITunesTopLevelCategoryConverter
+ */
+@Root(name = "category")
+@Namespace(reference = ITUNES_REFERENCE)
+data class ITunesTopLevelCategory(
+        val text: String,
+        val subCategories: List<ITunesSubCategory>
+)
+
+/**
+ * This class represents an itunes:category in a [ITunesTopLevelCategory].
+ *
+ * @author Mitchell Skaggs
+ * @since 1.0.5
+ * @see ITunesTopLevelCategoryConverter
+ */
+@Root(name = "category")
+@Namespace(reference = ITUNES_REFERENCE)
+data class ITunesSubCategory(
+        val text: String
 )

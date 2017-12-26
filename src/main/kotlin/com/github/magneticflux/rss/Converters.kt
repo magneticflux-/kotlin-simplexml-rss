@@ -95,6 +95,7 @@ object ChannelConverter : Converter<Channel> {
         var cloud: Cloud? = null
         var textInput: TextInput? = null
         val items = mutableListOf<Item>()
+        val itunesCategories = mutableListOf<ITunesTopLevelCategory>()
 
         node.children.forEach {
             when (it.fullName) {
@@ -117,6 +118,7 @@ object ChannelConverter : Converter<Channel> {
                 "cloud" -> cloud = fallbackPersister.read(Cloud::class.java, it)
                 "textInput" -> textInput = fallbackPersister.read(TextInput::class.java, it)
                 "item" -> items += fallbackPersister.read(Item::class.java, it)
+                "itunes:category" -> itunesCategories += fallbackPersister.read(ITunesTopLevelCategory::class.java, it)
             }
         }
 
@@ -139,7 +141,8 @@ object ChannelConverter : Converter<Channel> {
                 skipHours,
                 cloud,
                 textInput,
-                items
+                items,
+                itunesCategories
         )
     }
 
@@ -171,6 +174,9 @@ object ChannelConverter : Converter<Channel> {
         if (value.cloud != null) fallbackPersister.write(value.cloud, node)
         if (value.textInput != null) fallbackPersister.write(value.textInput, node)
         value.items.forEach {
+            fallbackPersister.write(it, node)
+        }
+        value.itunesCategories.forEach {
             fallbackPersister.write(it, node)
         }
     }
@@ -398,5 +404,47 @@ object SourceConverter : Converter<Source> {
     override fun write(node: OutputNode, value: Source) {
         node.setAttribute("url", URLTransform.write(value.url))
         node.value = value.text
+    }
+}
+
+/**
+ * @author Mitchell Skaggs
+ * @since 1.0.5
+ */
+object ITunesTopLevelCategoryConverter : Converter<ITunesTopLevelCategory> {
+    override fun read(node: InputNode): ITunesTopLevelCategory {
+        val text = node.getAttribute("text").value
+        val subCategories = mutableListOf<ITunesSubCategory>()
+
+        node.children.forEach {
+            when (it.fullName) {
+                "itunes:category" -> subCategories += fallbackPersister.read(ITunesSubCategory::class.java, it)
+            }
+        }
+
+        return ITunesTopLevelCategory(text, subCategories)
+    }
+
+    override fun write(node: OutputNode, value: ITunesTopLevelCategory) {
+        node.setAttribute("text", value.text)
+        value.subCategories.forEach {
+            fallbackPersister.write(it, node)
+        }
+    }
+}
+
+/**
+ * @author Mitchell Skaggs
+ * @since 1.0.5
+ */
+object ITunesSubCategoryConverter : Converter<ITunesSubCategory> {
+    override fun read(node: InputNode): ITunesSubCategory {
+        val text = node.getAttribute("text").value
+
+        return ITunesSubCategory(text)
+    }
+
+    override fun write(node: OutputNode, value: ITunesSubCategory) {
+        node.setAttribute("text", value.text)
     }
 }
