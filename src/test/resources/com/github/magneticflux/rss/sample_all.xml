@@ -7,23 +7,12 @@
         <title>FeedForAll Sample Feed</title>
         <description>RSS is a fascinating technology. The uses for RSS are expanding daily. Take a closer look at how various industries are using the benefits of RSS in their businesses.</description>
         <link>http://www.feedforall.com/industry-solutions.htm</link>
-        <category domain="www.dmoz.com">Computers/Software/Internet/Site Management/Content Management</category>
+        <category>Computers/Software/Internet/Site Management/Content Management</category>
         <copyright>Copyright 2004 NotePage, Inc.</copyright>
         <docs>http://blogs.law.harvard.edu/tech/rss</docs>
-        <language>en-us</language>
-        <lastBuildDate>Tue, 19 Oct 2004 13:39:14 -0400</lastBuildDate>
         <managingEditor>marketing@feedforall.com</managingEditor>
-        <pubDate>Tue, 19 Oct 2004 13:38:55 -0400</pubDate>
         <webMaster>webmaster@feedforall.com</webMaster>
         <generator>FeedForAll Beta1 (0.0.1.8)</generator>
-        <image>
-            <url>http://www.feedforall.com/ffalogo48x48.gif</url>
-            <title>FeedForAll Sample Feed</title>
-            <link>http://www.feedforall.com/industry-solutions.htm</link>
-            <description>FeedForAll Sample Feed</description>
-            <width>48</width>
-            <height>48</height>
-        </image>
         <itunes:owner>
             <itunes:name>The Ohio State University</itunes:name>
             <itunes:email>MediaServices@osu.edu</itunes:email>
@@ -65,11 +54,9 @@
             <itunes:author>Jackie Ditmeyer</itunes:author>
             <link>/HighSchool/news/I0B0C0F99</link>
             <guid ispermalink="false">fcuid://O185339799@1010802</guid>
-            <pubDate>Wed, 20 Dec 2017 08:43:41 -0600</pubDate>
             <source url="http://fccms.psdr3.org/HighSchool/news/?plugin=xml&amp;leaves">News</source>
         </item>
         <item>
-            <title>Example Podcast Episode</title>
             <description>Example MP3 podcast item including iTunes proprietary tags.</description>
             <itunes:summary>Example MP3 podcast item including iTunes proprietary tags.</itunes:summary>
             <itunes:subtitle>A working sample podcast episode.</itunes:subtitle>
@@ -89,7 +76,7 @@
             <comments>http://www.feedforall.com/forum</comments>
             <pubDate>Tue, 19 Oct 2004 11:09:11 -0400</pubDate>
             <author>lawyer@boyer.net (Lawyer Boyer)</author>
-            <guid isPermaLink="true">http://inessential.com/2002/09/01.php#a2</guid>
+            <guid>http://inessential.com/2002/09/01.php#a2</guid>
             <enclosure length="12216320"
                 type="audio/mpeg"
                 url="http://www.scripting.com/mp3s/weatherReportSuite.mp3" />

@@ -19,7 +19,7 @@ import java.util.Locale
 
 class RssTest : Spek({
     given("a simple Persister") {
-        val persister = createDefaultPersister()
+        val persister = createRssPersister()
 
         given("sample_ffa RSS feed") {
             val sampleFFA = persister.read(RssFeed::class.java, getSample("sample_ffa.xml"))
