@@ -129,7 +129,8 @@ class RssTest : Spek({
                         Guid(true, "http://inessential.com/2002/09/01.php#a2"),
                         Enclosure(URL("http://www.scripting.com/mp3s/weatherReportSuite.mp3"), 12216320, "audio/mpeg"),
                         Source(URL("http://www.tomalak.org/links2.xml"), "Tomalak's Realm"),
-                        emptyList()
+                        emptyList(),
+                        Explicit.NO
                 )))
             }
 
@@ -255,7 +256,7 @@ class RssTest : Spek({
                 val rssText = StringWriter()
                 persister.write(sampleITunes, rssText)
 
-                val rereadRssFeed = persister.read(RssFeed::class.java, rssText.buffer.toString())
+                val rereadRssFeed = persister.read(RssFeed::class.java, rssText.buffer.toString().apply { println(this) })
 
                 it("should equal original RSS feed read") {
                     assertThat(rereadRssFeed, equalTo(sampleITunes))

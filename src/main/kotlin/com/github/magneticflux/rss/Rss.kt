@@ -97,7 +97,8 @@ data class Channel(
         @param:ElementList(inline = true)
         @get:ElementList(inline = true)
         val items: List<Item>,
-        val itunesCategories: List<ITunesTopLevelCategory>
+        val itunesCategories: List<ITunesTopLevelCategory>,
+        val itunesExplicit: Explicit
 )
 
 /**
@@ -234,7 +235,8 @@ data class Item(
         @param:Element(name = "source", required = false)
         @get:Element(name = "source", required = false)
         val source: Source? = null,
-        val itunesCategories: List<ITunesTopLevelCategory>
+        val itunesCategories: List<ITunesTopLevelCategory>,
+        val itunesExplicit: Explicit
 )
 
 /**
@@ -310,10 +312,28 @@ data class ITunesTopLevelCategory(
  *
  * @author Mitchell Skaggs
  * @since 1.0.5
- * @see ITunesTopLevelCategoryConverter
+ * @see ITunesSubCategoryConverter
  */
 @Root(name = "category")
 @Namespace(reference = ITUNES_REFERENCE)
 data class ITunesSubCategory(
         val text: String
 )
+
+/**
+ * This class represents an itunes:explicit in a [Channel] or an [Item].
+ *
+ * @author Mitchell Skaggs
+ * @since 1.0.5
+ * @see ExplicitConverter
+ */
+@Root(name = "explicit")
+@Namespace(reference = ITUNES_REFERENCE)
+class Explicit private constructor(
+        val isExplicit: Boolean
+) {
+    companion object {
+        val YES = Explicit(true)
+        val NO = Explicit(false)
+    }
+}

@@ -96,6 +96,7 @@ object ChannelConverter : Converter<Channel> {
         var textInput: TextInput? = null
         val items = mutableListOf<Item>()
         val itunesCategories = mutableListOf<ITunesTopLevelCategory>()
+        var itunesExplicit: Explicit? = null
 
         node.children.forEach {
             when (it.fullName) {
@@ -119,6 +120,7 @@ object ChannelConverter : Converter<Channel> {
                 "textInput" -> textInput = fallbackPersister.read(TextInput::class.java, it)
                 "item" -> items += fallbackPersister.read(Item::class.java, it)
                 "itunes:category" -> itunesCategories += fallbackPersister.read(ITunesTopLevelCategory::class.java, it)
+                "itunes:explicit" -> itunesExplicit = fallbackPersister.read(Explicit::class.java, it)
             }
         }
 
@@ -142,7 +144,8 @@ object ChannelConverter : Converter<Channel> {
                 cloud,
                 textInput,
                 items,
-                itunesCategories
+                itunesCategories,
+                itunesExplicit ?: Explicit.NO
         )
     }
 
@@ -179,6 +182,7 @@ object ChannelConverter : Converter<Channel> {
         value.itunesCategories.forEach {
             fallbackPersister.write(it, node)
         }
+        fallbackPersister.write(value.itunesExplicit, node)
     }
 }
 
@@ -309,6 +313,7 @@ object ItemConverter : Converter<Item> {
         var enclosure: Enclosure? = null
         var source: Source? = null
         val itunesCategories = mutableListOf<ITunesTopLevelCategory>()
+        var itunesExplicit: Explicit? = null
 
         node.children.forEach {
             when (it.fullName) {
@@ -323,6 +328,7 @@ object ItemConverter : Converter<Item> {
                 "enclosure" -> enclosure = fallbackPersister.read(Enclosure::class.java, it)
                 "source" -> source = fallbackPersister.read(Source::class.java, it)
                 "itunes:category" -> itunesCategories += fallbackPersister.read(ITunesTopLevelCategory::class.java, it)
+                "itunes:explicit" -> itunesExplicit = fallbackPersister.read(Explicit::class.java, it)
             }
         }
 
@@ -337,7 +343,8 @@ object ItemConverter : Converter<Item> {
                 guid,
                 enclosure,
                 source,
-                itunesCategories
+                itunesCategories,
+                itunesExplicit ?: Explicit.NO
         )
     }
 
@@ -355,6 +362,7 @@ object ItemConverter : Converter<Item> {
         value.itunesCategories.forEach {
             fallbackPersister.write(it, node)
         }
+        fallbackPersister.write(value.itunesExplicit, node)
     }
 }
 
@@ -453,5 +461,27 @@ object ITunesSubCategoryConverter : Converter<ITunesSubCategory> {
 
     override fun write(node: OutputNode, value: ITunesSubCategory) {
         node.setAttribute("text", value.text)
+    }
+}
+
+/**
+ * @author Mitchell Skaggs
+ * @since 1.0.5
+ */
+object ExplicitConverter : Converter<Explicit> {
+    override fun read(node: InputNode): Explicit {
+        val value: String? = node.value
+        return when {
+            value.equals("yes", true) -> Explicit.YES
+            value.equals("no", true) -> Explicit.NO
+            else -> throw IllegalStateException("Incorrect 'itunes:explicit' text $value is not 'yes' or 'no' ignoring case")
+        }
+    }
+
+    override fun write(node: OutputNode, value: Explicit) {
+        node.value = when (value.isExplicit) {
+            true -> "yes"
+            false -> "no"
+        }
     }
 }
