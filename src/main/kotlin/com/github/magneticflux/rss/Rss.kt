@@ -329,7 +329,7 @@ data class ITunesSubCategory(
  */
 @Root(name = "explicit")
 @Namespace(reference = ITUNES_REFERENCE)
-class Explicit private constructor(
+data class Explicit(
         val isExplicit: Boolean
 ) {
     companion object {
