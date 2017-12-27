@@ -1,6 +1,9 @@
 package com.github.magneticflux.rss
 
 import com.github.magneticflux.rss.SampleUtils.getSample
+import com.github.magneticflux.rss.itunes.Explicit
+import com.github.magneticflux.rss.itunes.ITunesSubCategory
+import com.github.magneticflux.rss.itunes.ITunesTopLevelCategory
 import com.natpryce.hamkrest.assertion.assertThat
 import com.natpryce.hamkrest.equalTo
 import com.natpryce.hamkrest.hasElement

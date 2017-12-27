@@ -1,5 +1,11 @@
 package com.github.magneticflux.rss
 
+import com.github.magneticflux.rss.itunes.Explicit
+import com.github.magneticflux.rss.itunes.ExplicitConverter
+import com.github.magneticflux.rss.itunes.ITunesSubCategory
+import com.github.magneticflux.rss.itunes.ITunesSubCategoryConverter
+import com.github.magneticflux.rss.itunes.ITunesTopLevelCategory
+import com.github.magneticflux.rss.itunes.ITunesTopLevelCategoryConverter
 import org.simpleframework.xml.convert.Registry
 import org.simpleframework.xml.convert.RegistryStrategy
 import org.simpleframework.xml.core.Persister
