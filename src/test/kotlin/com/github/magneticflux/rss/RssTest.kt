@@ -1,7 +1,7 @@
 package com.github.magneticflux.rss
 
 import com.github.magneticflux.rss.SampleUtils.getSample
-import com.github.magneticflux.rss.itunes.Explicit
+import com.github.magneticflux.rss.itunes.ITunesExplicit
 import com.github.magneticflux.rss.itunes.ITunesSubCategory
 import com.github.magneticflux.rss.itunes.ITunesTopLevelCategory
 import com.natpryce.hamkrest.assertion.assertThat
@@ -133,7 +133,8 @@ class RssTest : Spek({
                         Enclosure(URL("http://www.scripting.com/mp3s/weatherReportSuite.mp3"), 12216320, "audio/mpeg"),
                         Source(URL("http://www.tomalak.org/links2.xml"), "Tomalak's Realm"),
                         emptyList(),
-                        Explicit.NO
+                        ITunesExplicit.NO,
+                        null
                 )))
             }
 
@@ -259,7 +260,7 @@ class RssTest : Spek({
                 val rssText = StringWriter()
                 persister.write(sampleITunes, rssText)
 
-                val rereadRssFeed = persister.read(RssFeed::class.java, rssText.buffer.toString().apply { println(this) })
+                val rereadRssFeed = persister.read(RssFeed::class.java, rssText.toString())
 
                 it("should equal original RSS feed read") {
                     assertThat(rereadRssFeed, equalTo(sampleITunes))

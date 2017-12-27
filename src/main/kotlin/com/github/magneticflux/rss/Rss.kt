@@ -1,6 +1,7 @@
 package com.github.magneticflux.rss
 
-import com.github.magneticflux.rss.itunes.Explicit
+import com.github.magneticflux.rss.itunes.ITunesExplicit
+import com.github.magneticflux.rss.itunes.ITunesSubtitle
 import com.github.magneticflux.rss.itunes.ITunesTopLevelCategory
 import org.simpleframework.xml.Attribute
 import org.simpleframework.xml.Element
@@ -100,7 +101,8 @@ data class Channel(
         @get:ElementList(inline = true)
         val items: List<Item>,
         val itunesCategories: List<ITunesTopLevelCategory>,
-        val itunesExplicit: Explicit
+        val itunesExplicit: ITunesExplicit,
+        val itunesSubtitle: ITunesSubtitle?
 )
 
 /**
@@ -238,7 +240,8 @@ data class Item(
         @get:Element(name = "source", required = false)
         val source: Source? = null,
         val itunesCategories: List<ITunesTopLevelCategory>,
-        val itunesExplicit: Explicit
+        val itunesExplicit: ITunesExplicit,
+        val itunesSubtitle: ITunesSubtitle?
 )
 
 /**

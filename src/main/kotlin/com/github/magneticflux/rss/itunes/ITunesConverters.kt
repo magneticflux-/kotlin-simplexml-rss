@@ -27,7 +27,7 @@ object ITunesTopLevelCategoryConverter : Converter<ITunesTopLevelCategory> {
 
     override fun write(node: OutputNode, value: ITunesTopLevelCategory) {
         node.setAttribute("text", value.text)
-        value.subCategories.forEach {
+        value.itunesSubCategories.forEach {
             fallbackPersister.write(it, node)
         }
     }
@@ -53,20 +53,36 @@ object ITunesSubCategoryConverter : Converter<ITunesSubCategory> {
  * @author Mitchell Skaggs
  * @since 1.0.5
  */
-object ExplicitConverter : Converter<Explicit> {
-    override fun read(node: InputNode): Explicit {
+object ITunesExplicitConverter : Converter<ITunesExplicit> {
+    override fun read(node: InputNode): ITunesExplicit {
         val value: String? = node.value
         return when {
-            value.equals("yes", true) -> Explicit.YES
-            value.equals("no", true) -> Explicit.NO
+            value.equals("yes", true) -> ITunesExplicit.YES
+            value.equals("no", true) -> ITunesExplicit.NO
             else -> throw IllegalStateException("Incorrect 'itunes:explicit' text $value is not 'yes' or 'no' ignoring case")
         }
     }
 
-    override fun write(node: OutputNode, value: Explicit) {
+    override fun write(node: OutputNode, value: ITunesExplicit) {
         node.value = when (value.isExplicit) {
             true -> "yes"
             false -> "no"
         }
+    }
+}
+
+/**
+ * @author Mitchell Skaggs
+ * @since 1.0.5
+ */
+object ITunesSubtitleConverter : Converter<ITunesSubtitle> {
+    override fun read(node: InputNode): ITunesSubtitle {
+        val text: String? = node.value
+
+        return ITunesSubtitle(text.orEmpty())
+    }
+
+    override fun write(node: OutputNode, value: ITunesSubtitle) {
+        node.value = value.text
     }
 }
