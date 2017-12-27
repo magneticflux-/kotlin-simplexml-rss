@@ -22,19 +22,9 @@ branches:
   except:
   - /^v\d/
 
-before_script:
-  - curl -L https://codeclimate.com/downloads/test-reporter/test-reporter-latest-linux-amd64 > ./cc-test-reporter
-  - chmod +x ./cc-test-reporter
-  - ./cc-test-reporter before-build
-
 #Build and perform release (if needed)
 script:
   - ./gradlew build -s && ./gradlew ciPerformRelease
-
-after_script:
-  - mv "build/reports/jacoco/test/jacocoTestReport.xml" "src/main/kotlin/jacoco.xml"
-  - cd src/main/kotlin/
-  - ../../../cc-test-reporter after-build -t jacoco --exit-code $TRAVIS_TEST_RESULT
 
 after_success:
   - bash <(curl -s https://codecov.io/bash)
