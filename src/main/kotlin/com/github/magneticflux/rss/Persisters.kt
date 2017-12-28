@@ -6,6 +6,8 @@ import com.github.magneticflux.rss.itunes.ITunesSubCategory
 import com.github.magneticflux.rss.itunes.ITunesSubCategoryConverter
 import com.github.magneticflux.rss.itunes.ITunesSubtitle
 import com.github.magneticflux.rss.itunes.ITunesSubtitleConverter
+import com.github.magneticflux.rss.itunes.ITunesSummary
+import com.github.magneticflux.rss.itunes.ITunesSummaryConverter
 import com.github.magneticflux.rss.itunes.ITunesTopLevelCategory
 import com.github.magneticflux.rss.itunes.ITunesTopLevelCategoryConverter
 import org.simpleframework.xml.convert.Registry
@@ -48,6 +50,7 @@ fun createRssStrategy(): Strategy {
                 this.bind(ITunesSubCategory::class.java, ITunesSubCategoryConverter)
                 this.bind(ITunesExplicit::class.java, ITunesExplicitConverter)
                 this.bind(ITunesSubtitle::class.java, ITunesSubtitleConverter)
+                this.bind(ITunesSummary::class.java, ITunesSummaryConverter)
             })
 }
 

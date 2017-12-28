@@ -86,3 +86,19 @@ object ITunesSubtitleConverter : Converter<ITunesSubtitle> {
         node.value = value.text
     }
 }
+
+/**
+ * @author Mitchell Skaggs
+ * @since 1.0.5
+ */
+object ITunesSummaryConverter : Converter<ITunesSummary> {
+    override fun read(node: InputNode): ITunesSummary {
+        val text: String? = node.value
+
+        return ITunesSummary(text.orEmpty())
+    }
+
+    override fun write(node: OutputNode, value: ITunesSummary) {
+        node.value = value.text
+    }
+}

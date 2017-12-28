@@ -80,3 +80,16 @@ abstract class AbstractString internal constructor(open val text: String) : Comp
 class ITunesSubtitle(
         override val text: String
 ) : AbstractString(text)
+
+/**
+ * This class represents an itunes:subtitle in a [Channel] or an [Item].
+ *
+ * @author Mitchell Skaggs
+ * @since 1.0.5
+ * @see ITunesSummaryConverter
+ */
+@Root(name = "summary")
+@Namespace(reference = ITUNES_REFERENCE)
+class ITunesSummary(
+        override val text: String
+) : AbstractString(text)

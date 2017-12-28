@@ -134,6 +134,7 @@ class RssTest : Spek({
                         Source(URL("http://www.tomalak.org/links2.xml"), "Tomalak's Realm"),
                         emptyList(),
                         ITunesExplicit.NO,
+                        null,
                         null
                 )))
             }

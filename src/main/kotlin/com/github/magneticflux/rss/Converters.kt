@@ -2,6 +2,7 @@ package com.github.magneticflux.rss
 
 import com.github.magneticflux.rss.itunes.ITunesExplicit
 import com.github.magneticflux.rss.itunes.ITunesSubtitle
+import com.github.magneticflux.rss.itunes.ITunesSummary
 import com.github.magneticflux.rss.itunes.ITunesTopLevelCategory
 import org.simpleframework.xml.convert.Converter
 import org.simpleframework.xml.stream.InputNode
@@ -101,6 +102,7 @@ object ChannelConverter : Converter<Channel> {
         val itunesCategories = mutableListOf<ITunesTopLevelCategory>()
         var itunesExplicit: ITunesExplicit? = null
         var itunesSubtitle: ITunesSubtitle? = null
+        var itunesSummary: ITunesSummary? = null
 
         node.children.forEach {
             when (it.fullName) {
@@ -126,6 +128,7 @@ object ChannelConverter : Converter<Channel> {
                 "itunes:category" -> itunesCategories += fallbackPersister.read(ITunesTopLevelCategory::class.java, it)
                 "itunes:explicit" -> itunesExplicit = fallbackPersister.read(ITunesExplicit::class.java, it)
                 "itunes:subtitle" -> itunesSubtitle = fallbackPersister.read(ITunesSubtitle::class.java, it)
+                "itunes:summary" -> itunesSummary = fallbackPersister.read(ITunesSummary::class.java, it)
             }
         }
 
@@ -151,7 +154,8 @@ object ChannelConverter : Converter<Channel> {
                 items,
                 itunesCategories,
                 itunesExplicit ?: ITunesExplicit.NO,
-                itunesSubtitle
+                itunesSubtitle,
+                itunesSummary
         )
     }
 
@@ -190,6 +194,7 @@ object ChannelConverter : Converter<Channel> {
         }
         fallbackPersister.write(value.itunesExplicit, node)
         if (value.itunesSubtitle != null) fallbackPersister.write(value.itunesSubtitle, node)
+        if (value.iTunesSummary != null) fallbackPersister.write(value.iTunesSummary, node)
     }
 }
 
@@ -322,6 +327,7 @@ object ItemConverter : Converter<Item> {
         val itunesCategories = mutableListOf<ITunesTopLevelCategory>()
         var itunesExplicit: ITunesExplicit? = null
         var itunesSubtitle: ITunesSubtitle? = null
+        var itunesSummary: ITunesSummary? = null
 
         node.children.forEach {
             when (it.fullName) {
@@ -338,6 +344,7 @@ object ItemConverter : Converter<Item> {
                 "itunes:category" -> itunesCategories += fallbackPersister.read(ITunesTopLevelCategory::class.java, it)
                 "itunes:explicit" -> itunesExplicit = fallbackPersister.read(ITunesExplicit::class.java, it)
                 "itunes:subtitle" -> itunesSubtitle = fallbackPersister.read(ITunesSubtitle::class.java, it)
+                "itunes:summary" -> itunesSummary = fallbackPersister.read(ITunesSummary::class.java, it)
             }
         }
 
@@ -354,7 +361,8 @@ object ItemConverter : Converter<Item> {
                 source,
                 itunesCategories,
                 itunesExplicit ?: ITunesExplicit.NO,
-                itunesSubtitle
+                itunesSubtitle,
+                itunesSummary
         )
     }
 
@@ -374,6 +382,7 @@ object ItemConverter : Converter<Item> {
         }
         fallbackPersister.write(value.itunesExplicit, node)
         if (value.itunesSubtitle != null) fallbackPersister.write(value.itunesSubtitle, node)
+        if (value.iTunesSummary != null) fallbackPersister.write(value.iTunesSummary, node)
     }
 }
 
