@@ -1,6 +1,7 @@
 package com.github.magneticflux.rss
 
 import com.github.magneticflux.rss.itunes.ITunesAuthor
+import com.github.magneticflux.rss.itunes.ITunesDuration
 import com.github.magneticflux.rss.itunes.ITunesExplicit
 import com.github.magneticflux.rss.itunes.ITunesSubtitle
 import com.github.magneticflux.rss.itunes.ITunesSummary
@@ -247,7 +248,8 @@ data class Item(
         val iTunesExplicit: ITunesExplicit,
         val iTunesSubtitle: ITunesSubtitle?,
         val iTunesSummary: ITunesSummary?,
-        val iTunesAuthor: ITunesAuthor?
+        val iTunesAuthor: ITunesAuthor?,
+        val iTunesDuration: ITunesDuration?
 )
 
 /**

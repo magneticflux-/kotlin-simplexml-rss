@@ -1,6 +1,7 @@
 package com.github.magneticflux.rss
 
 import com.github.magneticflux.rss.itunes.ITunesAuthor
+import com.github.magneticflux.rss.itunes.ITunesDuration
 import com.github.magneticflux.rss.itunes.ITunesExplicit
 import com.github.magneticflux.rss.itunes.ITunesSubtitle
 import com.github.magneticflux.rss.itunes.ITunesSummary
@@ -334,6 +335,7 @@ object ItemConverter : Converter<Item> {
         var iTunesSubtitle: ITunesSubtitle? = null
         var iTunesSummary: ITunesSummary? = null
         var iTunesAuthor: ITunesAuthor? = null
+        var iTunesDuration: ITunesDuration? = null
 
         node.children.forEach {
             when (it.fullName) {
@@ -352,6 +354,7 @@ object ItemConverter : Converter<Item> {
                 "itunes:subtitle" -> iTunesSubtitle = fallbackPersister.read(ITunesSubtitle::class.java, it)
                 "itunes:summary" -> iTunesSummary = fallbackPersister.read(ITunesSummary::class.java, it)
                 "itunes:author" -> iTunesAuthor = fallbackPersister.read(ITunesAuthor::class.java, it)
+                "itunes:duration" -> iTunesDuration = fallbackPersister.read(ITunesDuration::class.java, it)
             }
         }
 
@@ -370,7 +373,8 @@ object ItemConverter : Converter<Item> {
                 iTunesExplicit ?: ITunesExplicit.NO,
                 iTunesSubtitle,
                 iTunesSummary,
-                iTunesAuthor
+                iTunesAuthor,
+                iTunesDuration
         )
     }
 
@@ -392,6 +396,7 @@ object ItemConverter : Converter<Item> {
         if (value.iTunesSubtitle != null) fallbackPersister.write(value.iTunesSubtitle, node)
         if (value.iTunesSummary != null) fallbackPersister.write(value.iTunesSummary, node)
         if (value.iTunesAuthor != null) fallbackPersister.write(value.iTunesAuthor, node)
+        if (value.iTunesDuration != null) fallbackPersister.write(value.iTunesDuration, node)
     }
 }
 

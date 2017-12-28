@@ -1,5 +1,6 @@
 package com.github.magneticflux.rss.itunes
 
+import com.github.magneticflux.rss.DurationTransform
 import com.github.magneticflux.rss.children
 import com.github.magneticflux.rss.fallbackPersister
 import com.github.magneticflux.rss.fullName
@@ -116,5 +117,21 @@ object ITunesAuthorConverter : Converter<ITunesAuthor> {
 
     override fun write(node: OutputNode, value: ITunesAuthor) {
         node.value = value.text
+    }
+}
+
+/**
+ * @author Mitchell Skaggs
+ * @since 1.0.5
+ */
+object ITunesDurationConverter : Converter<ITunesDuration> {
+    override fun read(node: InputNode): ITunesDuration {
+        val duration = DurationTransform.read(node.value)
+
+        return ITunesDuration(duration)
+    }
+
+    override fun write(node: OutputNode, value: ITunesDuration) {
+        node.value = DurationTransform.write(value.duration)
     }
 }

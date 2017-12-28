@@ -136,6 +136,7 @@ class RssTest : Spek({
                         ITunesExplicit.NO,
                         null,
                         null,
+                        null,
                         null
                 )))
             }

@@ -1,13 +1,12 @@
 package com.github.magneticflux.rss.itunes
 
-import com.github.magneticflux.rss.Channel
 import com.github.magneticflux.rss.ITUNES_REFERENCE
-import com.github.magneticflux.rss.Item
 import org.simpleframework.xml.Namespace
 import org.simpleframework.xml.Root
+import org.threeten.bp.Duration
 
 /**
- * This class represents an itunes:category in a [Channel] or an [Item].
+ * This class represents an itunes:category in a [com.github.magneticflux.rss.Channel] or an [com.github.magneticflux.rss.Item].
  *
  * @author Mitchell Skaggs
  * @since 1.0.5
@@ -34,7 +33,7 @@ data class ITunesSubCategory(
 )
 
 /**
- * This class represents an itunes:explicit in a [Channel] or an [Item].
+ * This class represents an itunes:explicit in a [com.github.magneticflux.rss.Channel] or an [com.github.magneticflux.rss.Item].
  *
  * @author Mitchell Skaggs
  * @since 1.0.5
@@ -69,7 +68,7 @@ abstract class AbstractString internal constructor(open val text: String) : Comp
 }
 
 /**
- * This class represents an itunes:subtitle in a [Channel] or an [Item].
+ * This class represents an itunes:subtitle in a [com.github.magneticflux.rss.Channel] or an [com.github.magneticflux.rss.Item].
  *
  * @author Mitchell Skaggs
  * @since 1.0.5
@@ -82,7 +81,7 @@ class ITunesSubtitle(
 ) : AbstractString(text)
 
 /**
- * This class represents an itunes:summary in a [Channel] or an [Item].
+ * This class represents an itunes:summary in a [com.github.magneticflux.rss.Channel] or an [com.github.magneticflux.rss.Item].
  *
  * @author Mitchell Skaggs
  * @since 1.0.5
@@ -95,7 +94,7 @@ class ITunesSummary(
 ) : AbstractString(text)
 
 /**
- * This class represents an itunes:author in a [Channel] or an [Item].
+ * This class represents an itunes:author in a [com.github.magneticflux.rss.Channel] or an [com.github.magneticflux.rss.Item].
  *
  * @author Mitchell Skaggs
  * @since 1.0.5
@@ -106,3 +105,16 @@ class ITunesSummary(
 class ITunesAuthor(
         override val text: String
 ) : AbstractString(text)
+
+/**
+ * This class represents an itunes:duration in an [com.github.magneticflux.rss.Item].
+ *
+ * @author Mitchell Skaggs
+ * @since 1.0.5
+ * @see ITunesDurationConverter
+ */
+@Root(name = "duration")
+@Namespace(reference = ITUNES_REFERENCE)
+data class ITunesDuration(
+        val duration: Duration
+)
