@@ -275,7 +275,7 @@ data class Enclosure(
  * @see GuidConverter
  */
 @Root(name = "guid", strict = false)
-data class Guid @JvmOverloads constructor(
+data class Guid(
         @param:Attribute(name = "isPermaLink", required = false)
         @get:Attribute(name = "isPermaLink", required = false)
         val isPermaLink: Boolean = false,
@@ -292,7 +292,7 @@ data class Guid @JvmOverloads constructor(
  * @see SourceConverter
  */
 @Root(name = "source", strict = false)
-data class Source @JvmOverloads constructor(
+data class Source(
         @param:Attribute(name = "url")
         @get:Attribute(name = "url")
         val url: URL,
