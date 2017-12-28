@@ -18,7 +18,16 @@ import java.util.Locale
  */
 object DayOfWeekTransform : Transform<DayOfWeek> {
     override fun read(value: String): DayOfWeek {
-        return DayOfWeek.from(FORMATTER.parse(value))
+        return when (value.toLowerCase()) {
+            "monday" -> DayOfWeek.MONDAY
+            "tuesday" -> DayOfWeek.TUESDAY
+            "wednesday" -> DayOfWeek.WEDNESDAY
+            "thursday" -> DayOfWeek.THURSDAY
+            "friday" -> DayOfWeek.FRIDAY
+            "saturday" -> DayOfWeek.SATURDAY
+            "sunday" -> DayOfWeek.SUNDAY
+            else -> throw IllegalArgumentException("No day of week for input '$value'")
+        }
     }
 
     override fun write(value: DayOfWeek): String {
