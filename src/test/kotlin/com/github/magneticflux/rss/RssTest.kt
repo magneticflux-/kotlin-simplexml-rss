@@ -278,5 +278,28 @@ class RssTest : Spek({
                 }
             }
         }
+
+        given("sample_gn RSS feed") {
+            val sampleITunes = persister.read(RssFeed::class.java, getSample("sample_gn.xml"))
+
+            on("feed reread") {
+                val rssText = StringWriter()
+                persister.write(sampleITunes, rssText)
+
+                val rereadRssFeed = persister.read(RssFeed::class.java, rssText.toString())
+
+                it("should equal original RSS feed read") {
+                    assertThat(rereadRssFeed, equalTo(sampleITunes))
+                }
+
+                it("should have the same hashCode as original RSS feed read") {
+                    assertThat(rereadRssFeed.hashCode(), equalTo(sampleITunes.hashCode()))
+                }
+
+                it("should have the same String representation as original RSS feed read") {
+                    assertThat(rereadRssFeed.toString(), equalTo(sampleITunes.toString()))
+                }
+            }
+        }
     }
 })

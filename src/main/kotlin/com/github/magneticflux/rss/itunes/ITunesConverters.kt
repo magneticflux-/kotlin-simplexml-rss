@@ -60,7 +60,8 @@ object ITunesExplicitConverter : Converter<ITunesExplicit> {
         return when {
             value.equals("yes", true) -> ITunesExplicit.YES
             value.equals("no", true) -> ITunesExplicit.NO
-            else -> throw IllegalStateException("Incorrect 'itunes:explicit' text $value is not 'yes' or 'no' ignoring case")
+            value.equals("clean", true) -> ITunesExplicit.NO
+            else -> throw IllegalStateException("Incorrect 'itunes:explicit' text $value")
         }
     }
 
