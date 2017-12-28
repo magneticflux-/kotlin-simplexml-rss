@@ -135,6 +135,7 @@ class RssTest : Spek({
                         emptyList(),
                         ITunesExplicit.NO,
                         null,
+                        null,
                         null
                 )))
             }
@@ -250,7 +251,7 @@ class RssTest : Spek({
             val sampleITunes = persister.read(RssFeed::class.java, getSample("sample_itunes.xml"))
 
             it("should have the correct itunes:category elements") {
-                assertThat(sampleITunes.channel.itunesCategories, equalTo(listOf(
+                assertThat(sampleITunes.channel.iTunesCategories, equalTo(listOf(
                         ITunesTopLevelCategory("Technology", listOf(
                                 ITunesSubCategory("Information Technology")
                         ))

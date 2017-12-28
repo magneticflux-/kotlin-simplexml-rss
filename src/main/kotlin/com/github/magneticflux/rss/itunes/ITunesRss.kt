@@ -82,7 +82,7 @@ class ITunesSubtitle(
 ) : AbstractString(text)
 
 /**
- * This class represents an itunes:subtitle in a [Channel] or an [Item].
+ * This class represents an itunes:summary in a [Channel] or an [Item].
  *
  * @author Mitchell Skaggs
  * @since 1.0.5
@@ -91,5 +91,18 @@ class ITunesSubtitle(
 @Root(name = "summary")
 @Namespace(reference = ITUNES_REFERENCE)
 class ITunesSummary(
+        override val text: String
+) : AbstractString(text)
+
+/**
+ * This class represents an itunes:author in a [Channel] or an [Item].
+ *
+ * @author Mitchell Skaggs
+ * @since 1.0.5
+ * @see ITunesAuthorConverter
+ */
+@Root(name = "author")
+@Namespace(reference = ITUNES_REFERENCE)
+class ITunesAuthor(
         override val text: String
 ) : AbstractString(text)

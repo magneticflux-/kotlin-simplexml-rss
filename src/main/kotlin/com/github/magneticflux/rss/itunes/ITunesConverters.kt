@@ -102,3 +102,19 @@ object ITunesSummaryConverter : Converter<ITunesSummary> {
         node.value = value.text
     }
 }
+
+/**
+ * @author Mitchell Skaggs
+ * @since 1.0.5
+ */
+object ITunesAuthorConverter : Converter<ITunesAuthor> {
+    override fun read(node: InputNode): ITunesAuthor {
+        val text: String? = node.value
+
+        return ITunesAuthor(text.orEmpty())
+    }
+
+    override fun write(node: OutputNode, value: ITunesAuthor) {
+        node.value = value.text
+    }
+}
