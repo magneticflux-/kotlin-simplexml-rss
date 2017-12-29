@@ -2,6 +2,7 @@ package com.github.magneticflux.rss
 
 import com.natpryce.hamkrest.assertion.assertThat
 import com.natpryce.hamkrest.equalTo
+import com.natpryce.hamkrest.throws
 import org.jetbrains.spek.api.Spek
 import org.jetbrains.spek.api.dsl.given
 import org.jetbrains.spek.api.dsl.it
@@ -15,13 +16,23 @@ class TransformersTest : Spek({
     for (dayOfWeek in DayOfWeek.values()) {
 
         val input = dayOfWeek.name
-        given("'$input'") {
+        given("day of week '$input'") {
             on("DayOfWeekTransform used") {
 
                 val transform = DayOfWeekTransform.read(input)
                 it("should be $input") {
                     assertThat(transform, equalTo(dayOfWeek))
                 }
+            }
+        }
+    }
+
+    given("NotAWeekday", { "invalid day of week '$it'" }) {
+        on("day of week parsed") {
+            it("should throw an IllegalArgumentException") {
+                assertThat({
+                    DayOfWeekTransform.read(it)
+                }, throws<IllegalArgumentException>())
             }
         }
     }
@@ -184,6 +195,16 @@ class TransformersTest : Spek({
 
             it("should be 12 seconds long") {
                 assertThat(duration.seconds, equalTo(12L))
+            }
+        }
+    }
+
+    given("", { "duration of '$it'" }) {
+        given("a parsed Duration") {
+            val duration = DurationTransform.read(it)
+
+            it("should be 0 seconds long") {
+                assertThat(duration.seconds, equalTo(0L))
             }
         }
     }

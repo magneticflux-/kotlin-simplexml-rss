@@ -95,9 +95,9 @@ object URLTransform : Transform<URL> {
 object DurationTransform : Transform<Duration> {
     override fun read(value: String): Duration {
         val segments = value.split(':').asReversed()
-        val seconds = segments.getOrNull(0)?.toLong() ?: 0
-        val minutes = segments.getOrNull(1)?.toLong() ?: 0
-        val hours = segments.getOrNull(2)?.toLong() ?: 0
+        val seconds = segments.getOrNull(0)?.toLongOrNull() ?: 0
+        val minutes = segments.getOrNull(1)?.toLongOrNull() ?: 0
+        val hours = segments.getOrNull(2)?.toLongOrNull() ?: 0
 
         return Duration.ofSeconds(seconds).plusMinutes(minutes).plusHours(hours)
     }
