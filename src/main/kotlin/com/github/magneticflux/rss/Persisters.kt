@@ -2,6 +2,8 @@ package com.github.magneticflux.rss
 
 import com.github.magneticflux.rss.itunes.ITunesAuthor
 import com.github.magneticflux.rss.itunes.ITunesAuthorConverter
+import com.github.magneticflux.rss.itunes.ITunesBlock
+import com.github.magneticflux.rss.itunes.ITunesBlockConverter
 import com.github.magneticflux.rss.itunes.ITunesDuration
 import com.github.magneticflux.rss.itunes.ITunesDurationConverter
 import com.github.magneticflux.rss.itunes.ITunesExplicit
@@ -60,6 +62,7 @@ fun createRssStrategy(): Strategy {
                 this.bind(ITunesAuthor::class.java, ITunesAuthorConverter)
                 this.bind(ITunesDuration::class.java, ITunesDurationConverter)
                 this.bind(ITunesImage::class.java, ITunesImageConverter)
+                this.bind(ITunesBlock::class.java, ITunesBlockConverter)
             })
 }
 
