@@ -138,6 +138,7 @@ class RssTest : Spek({
                         null,
                         null,
                         null,
+                        null,
                         null
                 )))
             }

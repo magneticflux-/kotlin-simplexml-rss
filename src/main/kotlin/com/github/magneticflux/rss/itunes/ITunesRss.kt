@@ -134,3 +134,16 @@ data class ITunesDuration(
 data class ITunesImage(
         val href: URL
 )
+
+/**
+ * This class represents an itunes:block in a [Channel] or an [Item].
+ *
+ * @author Mitchell Skaggs
+ * @since 1.0.5
+ * @see ITunesBlockConverter
+ */
+@Root(name = "block")
+@Namespace(reference = ITUNES_REFERENCE)
+data class ITunesBlock(
+        val shouldBlock: Boolean
+)

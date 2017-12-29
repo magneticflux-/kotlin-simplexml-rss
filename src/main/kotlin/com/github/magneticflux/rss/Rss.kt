@@ -1,6 +1,7 @@
 package com.github.magneticflux.rss
 
 import com.github.magneticflux.rss.itunes.ITunesAuthor
+import com.github.magneticflux.rss.itunes.ITunesBlock
 import com.github.magneticflux.rss.itunes.ITunesDuration
 import com.github.magneticflux.rss.itunes.ITunesExplicit
 import com.github.magneticflux.rss.itunes.ITunesImage
@@ -109,7 +110,8 @@ data class Channel(
         val iTunesSubtitle: ITunesSubtitle?,
         val iTunesSummary: ITunesSummary?,
         val iTunesAuthor: ITunesAuthor?,
-        val iTunesImage: ITunesImage?
+        val iTunesImage: ITunesImage?,
+        val iTunesBlock: ITunesBlock?
 )
 
 /**
@@ -252,7 +254,8 @@ data class Item(
         val iTunesSummary: ITunesSummary?,
         val iTunesAuthor: ITunesAuthor?,
         val iTunesDuration: ITunesDuration?,
-        val iTunesImage: ITunesImage?
+        val iTunesImage: ITunesImage?,
+        val iTunesBlock: ITunesBlock?
 )
 
 /**

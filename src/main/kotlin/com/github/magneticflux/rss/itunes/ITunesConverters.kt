@@ -154,3 +154,21 @@ object ITunesImageConverter : Converter<ITunesImage> {
         node.setAttribute("href", URLTransform.write(value.href))
     }
 }
+
+/**
+ * @author Mitchell Skaggs
+ * @since 1.0.5
+ */
+object ITunesBlockConverter : Converter<ITunesBlock> {
+    override fun read(node: InputNode): ITunesBlock {
+        val text: String? = node.value
+        return when (text) {
+            "yes" -> ITunesBlock(true)
+            else -> ITunesBlock(false)
+        }
+    }
+
+    override fun write(node: OutputNode, value: ITunesBlock) {
+        node.value = if (value.shouldBlock) "yes" else "no"
+    }
+}
