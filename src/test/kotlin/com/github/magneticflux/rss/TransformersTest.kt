@@ -208,4 +208,14 @@ class TransformersTest : Spek({
             }
         }
     }
+
+    given("ab:cd:ef", { "duration of '$it'" }) {
+        given("a parsed Duration") {
+            val duration = DurationTransform.read(it)
+
+            it("should be 0 seconds long") {
+                assertThat(duration.seconds, equalTo(0L))
+            }
+        }
+    }
 })
