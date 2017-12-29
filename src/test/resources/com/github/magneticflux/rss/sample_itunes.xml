@@ -17,11 +17,7 @@
             <itunes:name>FeedForAll Mac OS Team</itunes:name>
             <itunes:email>macsupport@feedforall.com</itunes:email>
         </itunes:owner>
-        <itunes:image>
-            <url>http://www.feedforall.com/logo.jpg</url>
-            <title>FeedForAll Logo</title>
-            <link>http://www.feedforall.com</link>
-        </itunes:image>
+        <itunes:image href="http://example.com/podcasts/everything/AllAboutEverything.jpg" />
         <itunes:explicit>yes</itunes:explicit>
         <itunes:link href="http://www.feedforall.com/logo.jpg"
             rel="image"
@@ -78,7 +74,7 @@
 
         <item>
             <title>More on RSS Feeds</title>
-            <description>&lt;b&gt;RSS FEEDS &lt;/b&gt;&lt;br&gt; Lets face it as much as we all rely on email communications it is not really a reliable technology. &lt;br&gt;&lt;br&gt;&lt;b&gt;&lt;i&gt;Why Should I care about RSS Feeds&lt;/i&gt;&lt;/b&gt;&lt;br&gt; SPAM and viruses have wreaked havoc with a communication medium and reduced its value. Users have become admittedly paranoid about privacy issues and have begun &quot;tuning out&quot; and mentally filtering mail. &lt;br&gt;&lt;br&gt;&lt;br&gt;&lt;a href=&quot;http://www.rss-specifications.com/rss-feeds-article.htm&quot; target=&quot;blank&quot;&gt;Entire Article &lt;/a&gt;or &lt;a href=&quot;http://www.rss-specifications.com/podcasts/More%20On%20RSS%20Feeds.mp3&quot; target=&quot;blank&quot;&gt;Listen&lt;/a&gt;&lt;br&gt;</description>
+            <description>&lt;b&gt;RSS FEEDS &lt;/b&gt;&lt;br&gt; Lets face it as much as we all rely on email communications it is not really a reliable technology. &lt;br&gt;&lt;br&gt;&lt;b&gt;&lt;i&gt;Why Should I care about RSS Feeds&lt;/i&gt;&lt;/b&gt;&lt;br&gt; SPAM and viruses have wreaked havoc with a communication medium and reduced its value. Users have become admittedly paranoid about privacy issues and have begun &quot;tuning out&quot; and mentally filtering mail. &lt;br&gt;&lt;br&gt;&lt;br&gt;&lt;a href=&quot;http://www.rss-specifications.com/rss-feeds-article.htm&quot; target=&quot;blank&quot;&gt;Entire Article &lt;/a&gt;or &lt;a href=&quot;http://www.rss-specifications.com/podcasts/More%20On%20RSS%20Feeds.mp3&quot; target=&quot;blank&quot;&gt;Listen&lt;/a&gt;&lt;br&gt;</description>f
             <link>http://www.rss-specifications.com/rss-feeds-article.htm</link>
             <enclosure length="652490"
                 type="audio/mpeg"

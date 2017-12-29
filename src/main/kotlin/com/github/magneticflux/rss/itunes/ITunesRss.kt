@@ -6,6 +6,7 @@ import com.github.magneticflux.rss.Item
 import org.simpleframework.xml.Namespace
 import org.simpleframework.xml.Root
 import org.threeten.bp.Duration
+import java.net.URL
 
 /**
  * This class represents an itunes:category in a [Channel] or an [Item].
@@ -119,4 +120,17 @@ class ITunesAuthor(
 @Namespace(reference = ITUNES_REFERENCE)
 data class ITunesDuration(
         val duration: Duration
+)
+
+/**
+ * This class represents an itunes:image in a [Channel] or an [Item].
+ *
+ * @author Mitchell Skaggs
+ * @since 1.0.5
+ * @see ITunesImageConverter
+ */
+@Root(name = "image")
+@Namespace(reference = ITUNES_REFERENCE)
+data class ITunesImage(
+        val href: URL
 )

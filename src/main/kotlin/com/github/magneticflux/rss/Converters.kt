@@ -3,6 +3,7 @@ package com.github.magneticflux.rss
 import com.github.magneticflux.rss.itunes.ITunesAuthor
 import com.github.magneticflux.rss.itunes.ITunesDuration
 import com.github.magneticflux.rss.itunes.ITunesExplicit
+import com.github.magneticflux.rss.itunes.ITunesImage
 import com.github.magneticflux.rss.itunes.ITunesSubtitle
 import com.github.magneticflux.rss.itunes.ITunesSummary
 import com.github.magneticflux.rss.itunes.ITunesTopLevelCategory
@@ -106,6 +107,7 @@ object ChannelConverter : Converter<Channel> {
         var iTunesSubtitle: ITunesSubtitle? = null
         var iTunesSummary: ITunesSummary? = null
         var iTunesAuthor: ITunesAuthor? = null
+        var iTunesImage: ITunesImage? = null
 
         node.children.forEach {
             when (it.fullName) {
@@ -133,6 +135,7 @@ object ChannelConverter : Converter<Channel> {
                 "itunes:subtitle" -> iTunesSubtitle = fallbackPersister.read(ITunesSubtitle::class.java, it)
                 "itunes:summary" -> iTunesSummary = fallbackPersister.read(ITunesSummary::class.java, it)
                 "itunes:author" -> iTunesAuthor = fallbackPersister.read(ITunesAuthor::class.java, it)
+                "itunes:image" -> iTunesImage = fallbackPersister.read(ITunesImage::class.java, it)
             }
         }
 
@@ -160,7 +163,8 @@ object ChannelConverter : Converter<Channel> {
                 iTunesExplicit ?: ITunesExplicit.NO,
                 iTunesSubtitle,
                 iTunesSummary,
-                iTunesAuthor
+                iTunesAuthor,
+                iTunesImage
         )
     }
 
@@ -201,6 +205,7 @@ object ChannelConverter : Converter<Channel> {
         if (value.iTunesSubtitle != null) fallbackPersister.write(value.iTunesSubtitle, node)
         if (value.iTunesSummary != null) fallbackPersister.write(value.iTunesSummary, node)
         if (value.iTunesAuthor != null) fallbackPersister.write(value.iTunesAuthor, node)
+        if (value.iTunesImage != null) fallbackPersister.write(value.iTunesImage, node)
     }
 }
 
@@ -336,6 +341,7 @@ object ItemConverter : Converter<Item> {
         var iTunesSummary: ITunesSummary? = null
         var iTunesAuthor: ITunesAuthor? = null
         var iTunesDuration: ITunesDuration? = null
+        var iTunesImage: ITunesImage? = null
 
         node.children.forEach {
             when (it.fullName) {
@@ -355,6 +361,7 @@ object ItemConverter : Converter<Item> {
                 "itunes:summary" -> iTunesSummary = fallbackPersister.read(ITunesSummary::class.java, it)
                 "itunes:author" -> iTunesAuthor = fallbackPersister.read(ITunesAuthor::class.java, it)
                 "itunes:duration" -> iTunesDuration = fallbackPersister.read(ITunesDuration::class.java, it)
+                "itunes:image" -> iTunesImage = fallbackPersister.read(ITunesImage::class.java, it)
             }
         }
 
@@ -374,7 +381,8 @@ object ItemConverter : Converter<Item> {
                 iTunesSubtitle,
                 iTunesSummary,
                 iTunesAuthor,
-                iTunesDuration
+                iTunesDuration,
+                iTunesImage
         )
     }
 
@@ -397,6 +405,7 @@ object ItemConverter : Converter<Item> {
         if (value.iTunesSummary != null) fallbackPersister.write(value.iTunesSummary, node)
         if (value.iTunesAuthor != null) fallbackPersister.write(value.iTunesAuthor, node)
         if (value.iTunesDuration != null) fallbackPersister.write(value.iTunesDuration, node)
+        if (value.iTunesImage != null) fallbackPersister.write(value.iTunesImage, node)
     }
 }
 
