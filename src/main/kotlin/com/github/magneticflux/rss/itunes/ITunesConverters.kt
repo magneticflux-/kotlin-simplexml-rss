@@ -61,16 +61,16 @@ object ITunesExplicitConverter : Converter<ITunesExplicit> {
         val value: String? = node.value
         return when {
             value.equals("yes", true) -> ITunesExplicit.YES
-            value.equals("no", true) -> ITunesExplicit.NO
-            value.equals("clean", true) -> ITunesExplicit.NO
-            else -> throw IllegalStateException("Incorrect 'itunes:explicit' text $value")
+            value.equals("clean", true) -> ITunesExplicit.CLEAN
+            else -> ITunesExplicit.NO
         }
     }
 
     override fun write(node: OutputNode, value: ITunesExplicit) {
-        node.value = when (value.isExplicit) {
-            true -> "yes"
-            false -> "no"
+        node.value = when (value.explicitStatus) {
+            ITunesExplicit.ExplicitStatus.YES -> "yes"
+            ITunesExplicit.ExplicitStatus.NO -> "no"
+            ITunesExplicit.ExplicitStatus.CLEAN -> "clean"
         }
     }
 }

@@ -45,11 +45,16 @@ data class ITunesSubCategory(
 @Root(name = "explicit")
 @Namespace(reference = ITUNES_REFERENCE)
 data class ITunesExplicit(
-        val isExplicit: Boolean
+        val explicitStatus: ExplicitStatus
 ) {
     companion object {
-        val YES = ITunesExplicit(true)
-        val NO = ITunesExplicit(false)
+        val YES = ITunesExplicit(ExplicitStatus.YES)
+        val NO = ITunesExplicit(ExplicitStatus.NO)
+        val CLEAN = ITunesExplicit(ExplicitStatus.CLEAN)
+    }
+
+    enum class ExplicitStatus {
+        YES, NO, CLEAN
     }
 }
 
