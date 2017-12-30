@@ -64,7 +64,7 @@ task dokkaJavadocJar(type: Jar, dependsOn: dokka) {
 
 spotless {
     kotlin {
-        ktlint()
+        ktlint('0.14.0')
     }
 }
 

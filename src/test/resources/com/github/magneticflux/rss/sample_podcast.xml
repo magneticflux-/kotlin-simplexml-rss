@@ -49,6 +49,7 @@
             <guid>http://streaming.osu.edu/podcast/Example/Item.mp3</guid> <!-- GUID URL is identical to Enclosure URL -->
             <itunes:duration>0:59</itunes:duration>
             <pubDate>Fri, 18 May 2012 00:00:00 -0500</pubDate> <!-- http://www.timeanddate.com/worldclock/city.html?n=805 - Use 24 hour clock -->
+            <itunes:block>yes</itunes:block>
         </item>
 
     </channel>

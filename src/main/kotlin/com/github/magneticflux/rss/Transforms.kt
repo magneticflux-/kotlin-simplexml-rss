@@ -2,6 +2,7 @@ package com.github.magneticflux.rss
 
 import org.simpleframework.xml.transform.Transform
 import org.threeten.bp.DayOfWeek
+import org.threeten.bp.Duration
 import org.threeten.bp.ZonedDateTime
 import org.threeten.bp.format.DateTimeFormatter
 import org.threeten.bp.format.DateTimeFormatterBuilder
@@ -17,7 +18,16 @@ import java.util.Locale
  */
 object DayOfWeekTransform : Transform<DayOfWeek> {
     override fun read(value: String): DayOfWeek {
-        return DayOfWeek.from(FORMATTER.parse(value))
+        return when (value.toLowerCase()) {
+            "monday" -> DayOfWeek.MONDAY
+            "tuesday" -> DayOfWeek.TUESDAY
+            "wednesday" -> DayOfWeek.WEDNESDAY
+            "thursday" -> DayOfWeek.THURSDAY
+            "friday" -> DayOfWeek.FRIDAY
+            "saturday" -> DayOfWeek.SATURDAY
+            "sunday" -> DayOfWeek.SUNDAY
+            else -> throw IllegalArgumentException("No day of week for input '$value'")
+        }
     }
 
     override fun write(value: DayOfWeek): String {
@@ -75,5 +85,34 @@ object URLTransform : Transform<URL> {
             value.file
         else
             value.toExternalForm()
+    }
+}
+
+/**
+ * @author Mitchell Skaggs
+ * @since 1.0.5
+ */
+object DurationTransform : Transform<Duration> {
+    override fun read(value: String): Duration {
+        val segments = value.split(':').asReversed()
+        val seconds = segments.getOrNull(0)?.toLongOrNull() ?: 0
+        val minutes = segments.getOrNull(1)?.toLongOrNull() ?: 0
+        val hours = segments.getOrNull(2)?.toLongOrNull() ?: 0
+
+        return Duration.ofSeconds(seconds).plusMinutes(minutes).plusHours(hours)
+    }
+
+    override fun write(value: Duration): String {
+        var reducedDuration = value
+
+        val hours = reducedDuration.toHours()
+        reducedDuration -= Duration.ofHours(hours)
+
+        val minutes = reducedDuration.toMinutes()
+        reducedDuration -= Duration.ofMinutes(minutes)
+
+        val seconds = reducedDuration.seconds
+
+        return arrayOf(hours, minutes, seconds).joinToString(separator = ":")
     }
 }

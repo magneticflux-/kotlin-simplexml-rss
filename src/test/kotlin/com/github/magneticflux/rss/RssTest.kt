@@ -1,6 +1,9 @@
 package com.github.magneticflux.rss
 
 import com.github.magneticflux.rss.SampleUtils.getSample
+import com.github.magneticflux.rss.itunes.ITunesExplicit
+import com.github.magneticflux.rss.itunes.ITunesSubCategory
+import com.github.magneticflux.rss.itunes.ITunesTopLevelCategory
 import com.natpryce.hamkrest.assertion.assertThat
 import com.natpryce.hamkrest.equalTo
 import com.natpryce.hamkrest.hasElement
@@ -128,7 +131,15 @@ class RssTest : Spek({
                         "lawyer@boyer.net (Lawyer Boyer)",
                         Guid(true, "http://inessential.com/2002/09/01.php#a2"),
                         Enclosure(URL("http://www.scripting.com/mp3s/weatherReportSuite.mp3"), 12216320, "audio/mpeg"),
-                        Source(URL("http://www.tomalak.org/links2.xml"), "Tomalak's Realm")
+                        Source(URL("http://www.tomalak.org/links2.xml"), "Tomalak's Realm"),
+                        emptyList(),
+                        ITunesExplicit.NO,
+                        null,
+                        null,
+                        null,
+                        null,
+                        null,
+                        null
                 )))
             }
 
@@ -235,6 +246,83 @@ class RssTest : Spek({
                     assertThat({
                         persister.read(RssFeed::class.java, getSample("sample_no_channel.xml"))
                     }, throws<UninitializedPropertyAccessException>())
+                }
+            }
+        }
+
+        given("sample_itunes RSS feed") {
+            val sampleITunes = persister.read(RssFeed::class.java, getSample("sample_itunes.xml"))
+
+            it("should have the correct itunes:category elements") {
+                assertThat(sampleITunes.channel.iTunesCategories, equalTo(listOf(
+                        ITunesTopLevelCategory("Technology", listOf(
+                                ITunesSubCategory("Information Technology")
+                        ))
+                )))
+            }
+
+            on("feed reread") {
+                val rssText = StringWriter()
+                persister.write(sampleITunes, rssText)
+
+                val rereadRssFeed = persister.read(RssFeed::class.java, rssText.toString())
+
+                it("should equal original RSS feed read") {
+                    assertThat(rereadRssFeed, equalTo(sampleITunes))
+                }
+
+                it("should have the same hashCode as original RSS feed read") {
+                    assertThat(rereadRssFeed.hashCode(), equalTo(sampleITunes.hashCode()))
+                }
+
+                it("should have the same String representation as original RSS feed read") {
+                    assertThat(rereadRssFeed.toString(), equalTo(sampleITunes.toString()))
+                }
+            }
+        }
+
+        given("sample_gn", { "$it RSS feed" }) {
+            val rssFeed = persister.read(RssFeed::class.java, getSample("$it.xml"))
+
+            on("feed reread") {
+                val rssText = StringWriter()
+                persister.write(rssFeed, rssText)
+
+                val rereadRssFeed = persister.read(RssFeed::class.java, rssText.toString())
+
+                it("should equal original RSS feed read") {
+                    assertThat(rereadRssFeed, equalTo(rssFeed))
+                }
+
+                it("should have the same hashCode as original RSS feed read") {
+                    assertThat(rereadRssFeed.hashCode(), equalTo(rssFeed.hashCode()))
+                }
+
+                it("should have the same String representation as original RSS feed read") {
+                    assertThat(rereadRssFeed.toString(), equalTo(rssFeed.toString()))
+                }
+            }
+        }
+
+        given("sample_apple", { "$it RSS feed" }) {
+            val rssFeed = persister.read(RssFeed::class.java, getSample("$it.xml"))
+
+            on("feed reread") {
+                val rssText = StringWriter()
+                persister.write(rssFeed, rssText)
+
+                val rereadRssFeed = persister.read(RssFeed::class.java, rssText.toString())
+
+                it("should equal original RSS feed read") {
+                    assertThat(rereadRssFeed, equalTo(rssFeed))
+                }
+
+                it("should have the same hashCode as original RSS feed read") {
+                    assertThat(rereadRssFeed.hashCode(), equalTo(rssFeed.hashCode()))
+                }
+
+                it("should have the same String representation as original RSS feed read") {
+                    assertThat(rereadRssFeed.toString(), equalTo(rssFeed.toString()))
                 }
             }
         }

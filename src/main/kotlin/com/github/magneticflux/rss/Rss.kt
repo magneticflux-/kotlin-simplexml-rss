@@ -1,14 +1,26 @@
 package com.github.magneticflux.rss
 
+import com.github.magneticflux.rss.itunes.ITunesAuthor
+import com.github.magneticflux.rss.itunes.ITunesBlock
+import com.github.magneticflux.rss.itunes.ITunesComplete
+import com.github.magneticflux.rss.itunes.ITunesDuration
+import com.github.magneticflux.rss.itunes.ITunesExplicit
+import com.github.magneticflux.rss.itunes.ITunesImage
+import com.github.magneticflux.rss.itunes.ITunesSubtitle
+import com.github.magneticflux.rss.itunes.ITunesSummary
+import com.github.magneticflux.rss.itunes.ITunesTopLevelCategory
 import org.simpleframework.xml.Attribute
 import org.simpleframework.xml.Element
 import org.simpleframework.xml.ElementList
+import org.simpleframework.xml.Namespace
 import org.simpleframework.xml.Root
 import org.simpleframework.xml.Text
 import org.threeten.bp.DayOfWeek
 import org.threeten.bp.ZonedDateTime
 import java.net.URL
 import java.util.Locale
+
+const val ITUNES_REFERENCE = "http://www.itunes.com/DTDs/Podcast-1.0.dtd"
 
 /**
  * This class represents an RSS feed.
@@ -18,6 +30,7 @@ import java.util.Locale
  * @see RssFeedConverter
  */
 @Root(name = "rss", strict = false)
+@Namespace(prefix = "itunes", reference = ITUNES_REFERENCE)
 data class RssFeed(
         @param:Attribute(name = "version")
         @get:Attribute(name = "version")
@@ -39,12 +52,9 @@ data class Channel(
         @param:Element(name = "title")
         @get:Element(name = "title")
         val title: String,
-        /**
-         * Not nullable but not required in XML so fallback to an empty string.
-         */
         @param:Element(name = "description", required = false)
         @get:Element(name = "description", required = false)
-        val description: String = "",
+        val description: String,
         @param:Element(name = "link")
         @get:Element(name = "link")
         val link: URL,
@@ -95,7 +105,15 @@ data class Channel(
         val textInput: TextInput? = null,
         @param:ElementList(inline = true)
         @get:ElementList(inline = true)
-        val items: List<Item>
+        val items: List<Item>,
+        val iTunesCategories: List<ITunesTopLevelCategory>,
+        val iTunesExplicit: ITunesExplicit,
+        val iTunesSubtitle: ITunesSubtitle?,
+        val iTunesSummary: ITunesSummary?,
+        val iTunesAuthor: ITunesAuthor?,
+        val iTunesImage: ITunesImage?,
+        val iTunesBlock: ITunesBlock?,
+        val iTunesComplete: ITunesComplete?
 )
 
 /**
@@ -231,7 +249,15 @@ data class Item(
         val enclosure: Enclosure? = null,
         @param:Element(name = "source", required = false)
         @get:Element(name = "source", required = false)
-        val source: Source? = null
+        val source: Source? = null,
+        val iTunesCategories: List<ITunesTopLevelCategory>,
+        val iTunesExplicit: ITunesExplicit,
+        val iTunesSubtitle: ITunesSubtitle?,
+        val iTunesSummary: ITunesSummary?,
+        val iTunesAuthor: ITunesAuthor?,
+        val iTunesDuration: ITunesDuration?,
+        val iTunesImage: ITunesImage?,
+        val iTunesBlock: ITunesBlock?
 )
 
 /**
@@ -262,7 +288,7 @@ data class Enclosure(
  * @see GuidConverter
  */
 @Root(name = "guid", strict = false)
-data class Guid @JvmOverloads constructor(
+data class Guid(
         @param:Attribute(name = "isPermaLink", required = false)
         @get:Attribute(name = "isPermaLink", required = false)
         val isPermaLink: Boolean = false,
@@ -279,7 +305,7 @@ data class Guid @JvmOverloads constructor(
  * @see SourceConverter
  */
 @Root(name = "source", strict = false)
-data class Source @JvmOverloads constructor(
+data class Source(
         @param:Attribute(name = "url")
         @get:Attribute(name = "url")
         val url: URL,
