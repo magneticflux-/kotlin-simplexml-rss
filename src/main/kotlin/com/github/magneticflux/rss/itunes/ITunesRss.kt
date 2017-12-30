@@ -36,26 +36,10 @@ data class ITunesSubCategory(
 )
 
 /**
- * This class represents an itunes:explicit in a [Channel] or an [Item].
- *
- * @author Mitchell Skaggs
- * @since 1.0.5
- * @see ITunesExplicitConverter
+ * This class represents the value of an itunes:explicit element in a [Channel] or an [Item]
  */
-@Root(name = "explicit")
-@Namespace(reference = ITUNES_REFERENCE)
-data class ITunesExplicit(
-        val explicitStatus: ExplicitStatus
-) {
-    companion object {
-        val YES = ITunesExplicit(ExplicitStatus.YES)
-        val NO = ITunesExplicit(ExplicitStatus.NO)
-        val CLEAN = ITunesExplicit(ExplicitStatus.CLEAN)
-    }
-
-    enum class ExplicitStatus {
-        YES, NO, CLEAN
-    }
+enum class ExplicitStatus {
+    YES, NONE, CLEAN
 }
 
 /**
@@ -64,6 +48,7 @@ data class ITunesExplicit(
  * @author Mitchell Skaggs
  * @since 1.0.5
  */
+@Deprecated("Should write the String to the value and the namespace to the reference on the OutputNode")
 abstract class AbstractString internal constructor(open val text: String) : Comparable<String> by text, CharSequence by text {
     override fun toString(): String = text
     override fun hashCode(): Int = text.hashCode()

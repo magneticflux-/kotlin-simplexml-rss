@@ -56,29 +56,6 @@ object ITunesSubCategoryConverter : Converter<ITunesSubCategory> {
  * @author Mitchell Skaggs
  * @since 1.0.5
  */
-object ITunesExplicitConverter : Converter<ITunesExplicit> {
-    override fun read(node: InputNode): ITunesExplicit {
-        val value: String? = node.value
-        return when {
-            value.equals("yes", true) -> ITunesExplicit.YES
-            value.equals("clean", true) -> ITunesExplicit.CLEAN
-            else -> ITunesExplicit.NO
-        }
-    }
-
-    override fun write(node: OutputNode, value: ITunesExplicit) {
-        node.value = when (value.explicitStatus) {
-            ITunesExplicit.ExplicitStatus.YES -> "yes"
-            ITunesExplicit.ExplicitStatus.NO -> "no"
-            ITunesExplicit.ExplicitStatus.CLEAN -> "clean"
-        }
-    }
-}
-
-/**
- * @author Mitchell Skaggs
- * @since 1.0.5
- */
 object ITunesSubtitleConverter : Converter<ITunesSubtitle> {
     override fun read(node: InputNode): ITunesSubtitle {
         val text: String? = node.value

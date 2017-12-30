@@ -1,7 +1,6 @@
 package com.github.magneticflux.rss
 
 import com.github.magneticflux.rss.SampleUtils.getSample
-import com.github.magneticflux.rss.itunes.ITunesExplicit
 import com.github.magneticflux.rss.itunes.ITunesSubCategory
 import com.github.magneticflux.rss.itunes.ITunesTopLevelCategory
 import com.natpryce.hamkrest.assertion.assertThat
@@ -133,7 +132,7 @@ class RssTest : Spek({
                         Enclosure(URL("http://www.scripting.com/mp3s/weatherReportSuite.mp3"), 12216320, "audio/mpeg"),
                         Source(URL("http://www.tomalak.org/links2.xml"), "Tomalak's Realm"),
                         emptyList(),
-                        ITunesExplicit.NO,
+                        null,
                         null,
                         null,
                         null,

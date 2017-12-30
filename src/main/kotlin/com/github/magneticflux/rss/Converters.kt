@@ -4,7 +4,6 @@ import com.github.magneticflux.rss.itunes.ITunesAuthor
 import com.github.magneticflux.rss.itunes.ITunesBlock
 import com.github.magneticflux.rss.itunes.ITunesComplete
 import com.github.magneticflux.rss.itunes.ITunesDuration
-import com.github.magneticflux.rss.itunes.ITunesExplicit
 import com.github.magneticflux.rss.itunes.ITunesImage
 import com.github.magneticflux.rss.itunes.ITunesSubtitle
 import com.github.magneticflux.rss.itunes.ITunesSummary
@@ -86,7 +85,7 @@ object RssFeedConverter : Converter<RssFeed> {
 object ChannelConverter : Converter<Channel> {
     override fun read(node: InputNode): Channel {
         lateinit var title: String
-        var description: String? = null
+        lateinit var description: String
         lateinit var link: URL
         val categories = mutableListOf<Category>()
         var copyright: String? = null
@@ -105,7 +104,7 @@ object ChannelConverter : Converter<Channel> {
         var textInput: TextInput? = null
         val items = mutableListOf<Item>()
         val iTunesCategories = mutableListOf<ITunesTopLevelCategory>()
-        var iTunesExplicit: ITunesExplicit? = null
+        var iTunesExplicit: String? = null
         var iTunesSubtitle: ITunesSubtitle? = null
         var iTunesSummary: ITunesSummary? = null
         var iTunesAuthor: ITunesAuthor? = null
@@ -115,16 +114,16 @@ object ChannelConverter : Converter<Channel> {
 
         node.children.forEach {
             when (it.fullName) {
-                "title" -> title = fallbackPersister.read(String::class.java, it)
-                "description" -> description = fallbackPersister.read(String::class.java, it)
+                "title" -> title = it.value.orEmpty() // Element is there, but an empty String
+                "description" -> description = it.value.orEmpty() // Element is there, but an empty String
                 "link" -> link = fallbackPersister.read(URL::class.java, it)
                 "category" -> categories += fallbackPersister.read(Category::class.java, it)
-                "copyright" -> copyright = fallbackPersister.read(String::class.java, it)
+                "copyright" -> copyright = it.value
                 "docs" -> docs = fallbackPersister.read(URL::class.java, it)
                 "language" -> language = fallbackPersister.read(Locale::class.java, it)
-                "webMaster" -> webMaster = fallbackPersister.read(String::class.java, it)
-                "managingEditor" -> managingEditor = fallbackPersister.read(String::class.java, it)
-                "generator" -> generator = fallbackPersister.read(String::class.java, it)
+                "webMaster" -> webMaster = it.value
+                "managingEditor" -> managingEditor = it.value
+                "generator" -> generator = it.value
                 "image" -> image = fallbackPersister.read(Image::class.java, it)
                 "lastBuildDate" -> lastBuildDate = fallbackPersister.read(ZonedDateTime::class.java, it)
                 "pubDate" -> pubDate = fallbackPersister.read(ZonedDateTime::class.java, it)
@@ -135,7 +134,7 @@ object ChannelConverter : Converter<Channel> {
                 "textInput" -> textInput = fallbackPersister.read(TextInput::class.java, it)
                 "item" -> items += fallbackPersister.read(Item::class.java, it)
                 "itunes:category" -> iTunesCategories += fallbackPersister.read(ITunesTopLevelCategory::class.java, it)
-                "itunes:explicit" -> iTunesExplicit = fallbackPersister.read(ITunesExplicit::class.java, it)
+                "itunes:explicit" -> iTunesExplicit = it.value
                 "itunes:subtitle" -> iTunesSubtitle = fallbackPersister.read(ITunesSubtitle::class.java, it)
                 "itunes:summary" -> iTunesSummary = fallbackPersister.read(ITunesSummary::class.java, it)
                 "itunes:author" -> iTunesAuthor = fallbackPersister.read(ITunesAuthor::class.java, it)
@@ -147,7 +146,7 @@ object ChannelConverter : Converter<Channel> {
 
         return Channel(
                 title,
-                description.orEmpty(),
+                description,
                 link,
                 categories,
                 copyright,
@@ -166,7 +165,7 @@ object ChannelConverter : Converter<Channel> {
                 textInput,
                 items,
                 iTunesCategories,
-                iTunesExplicit ?: ITunesExplicit.NO,
+                iTunesExplicit,
                 iTunesSubtitle,
                 iTunesSummary,
                 iTunesAuthor,
@@ -209,7 +208,11 @@ object ChannelConverter : Converter<Channel> {
         value.iTunesCategories.forEach {
             fallbackPersister.write(it, node)
         }
-        fallbackPersister.write(value.iTunesExplicit, node)
+        if (value._iTunesExplicit != null) node.getChild("explicit")
+                .apply {
+                    this.value = value._iTunesExplicit
+                    this.reference = ITUNES_REFERENCE
+                }
         if (value.iTunesSubtitle != null) fallbackPersister.write(value.iTunesSubtitle, node)
         if (value.iTunesSummary != null) fallbackPersister.write(value.iTunesSummary, node)
         if (value.iTunesAuthor != null) fallbackPersister.write(value.iTunesAuthor, node)
@@ -346,7 +349,7 @@ object ItemConverter : Converter<Item> {
         var enclosure: Enclosure? = null
         var source: Source? = null
         val iTunesCategories = mutableListOf<ITunesTopLevelCategory>()
-        var iTunesExplicit: ITunesExplicit? = null
+        var iTunesExplicit: String? = null
         var iTunesSubtitle: ITunesSubtitle? = null
         var iTunesSummary: ITunesSummary? = null
         var iTunesAuthor: ITunesAuthor? = null
@@ -356,18 +359,18 @@ object ItemConverter : Converter<Item> {
 
         node.children.forEach {
             when (it.fullName) {
-                "title" -> title = fallbackPersister.read(String::class.java, it)
-                "description" -> description = fallbackPersister.read(String::class.java, it)
+                "title" -> title = it.value
+                "description" -> description = it.value
                 "link" -> link = fallbackPersister.read(URL::class.java, it)
                 "category" -> categories += fallbackPersister.read(Category::class.java, it)
                 "comments" -> comments = fallbackPersister.read(URL::class.java, it)
                 "pubDate" -> pubDate = fallbackPersister.read(ZonedDateTime::class.java, it)
-                "author" -> author = fallbackPersister.read(String::class.java, it)
+                "author" -> author = it.value
                 "guid" -> guid = fallbackPersister.read(Guid::class.java, it)
                 "enclosure" -> enclosure = fallbackPersister.read(Enclosure::class.java, it)
                 "source" -> source = fallbackPersister.read(Source::class.java, it)
                 "itunes:category" -> iTunesCategories += fallbackPersister.read(ITunesTopLevelCategory::class.java, it)
-                "itunes:explicit" -> iTunesExplicit = fallbackPersister.read(ITunesExplicit::class.java, it)
+                "itunes:explicit" -> iTunesExplicit = it.value
                 "itunes:subtitle" -> iTunesSubtitle = fallbackPersister.read(ITunesSubtitle::class.java, it)
                 "itunes:summary" -> iTunesSummary = fallbackPersister.read(ITunesSummary::class.java, it)
                 "itunes:author" -> iTunesAuthor = fallbackPersister.read(ITunesAuthor::class.java, it)
@@ -389,7 +392,7 @@ object ItemConverter : Converter<Item> {
                 enclosure,
                 source,
                 iTunesCategories,
-                iTunesExplicit ?: ITunesExplicit.NO,
+                iTunesExplicit,
                 iTunesSubtitle,
                 iTunesSummary,
                 iTunesAuthor,
@@ -413,7 +416,11 @@ object ItemConverter : Converter<Item> {
         value.iTunesCategories.forEach {
             fallbackPersister.write(it, node)
         }
-        fallbackPersister.write(value.iTunesExplicit, node)
+        if (value._iTunesExplicit != null) node.getChild("explicit")
+                .apply {
+                    this.value = value._iTunesExplicit
+                    this.reference = ITUNES_REFERENCE
+                }
         if (value.iTunesSubtitle != null) fallbackPersister.write(value.iTunesSubtitle, node)
         if (value.iTunesSummary != null) fallbackPersister.write(value.iTunesSummary, node)
         if (value.iTunesAuthor != null) fallbackPersister.write(value.iTunesAuthor, node)

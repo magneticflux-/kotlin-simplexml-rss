@@ -1,10 +1,10 @@
 package com.github.magneticflux.rss
 
+import com.github.magneticflux.rss.itunes.ExplicitStatus
 import com.github.magneticflux.rss.itunes.ITunesAuthor
 import com.github.magneticflux.rss.itunes.ITunesBlock
 import com.github.magneticflux.rss.itunes.ITunesComplete
 import com.github.magneticflux.rss.itunes.ITunesDuration
-import com.github.magneticflux.rss.itunes.ITunesExplicit
 import com.github.magneticflux.rss.itunes.ITunesImage
 import com.github.magneticflux.rss.itunes.ITunesSubtitle
 import com.github.magneticflux.rss.itunes.ITunesSummary
@@ -32,11 +32,7 @@ const val ITUNES_REFERENCE = "http://www.itunes.com/DTDs/Podcast-1.0.dtd"
 @Root(name = "rss", strict = false)
 @Namespace(prefix = "itunes", reference = ITUNES_REFERENCE)
 data class RssFeed(
-        @param:Attribute(name = "version")
-        @get:Attribute(name = "version")
         val version: String,
-        @param:Element(name = "channel")
-        @get:Element(name = "channel")
         val channel: Channel
 )
 
@@ -49,72 +45,40 @@ data class RssFeed(
  */
 @Root(name = "channel", strict = false)
 data class Channel(
-        @param:Element(name = "title")
-        @get:Element(name = "title")
         val title: String,
-        @param:Element(name = "description", required = false)
-        @get:Element(name = "description", required = false)
         val description: String,
-        @param:Element(name = "link")
-        @get:Element(name = "link")
         val link: URL,
-        @param:ElementList(inline = true)
-        @get:ElementList(inline = true)
         val categories: List<Category>,
-        @param:Element(name = "copyright", required = false)
-        @get:Element(name = "copyright", required = false)
         val copyright: String? = null,
-        @param:Element(name = "docs", required = false)
-        @get:Element(name = "docs", required = false)
         val docs: URL? = null,
-        @param:Element(name = "language", required = false)
-        @get:Element(name = "language", required = false)
         val language: Locale? = null,
-        @param:Element(name = "webMaster", required = false)
-        @get:Element(name = "webMaster", required = false)
         val webMaster: String? = null,
-        @param:Element(name = "managingEditor", required = false)
-        @get:Element(name = "managingEditor", required = false)
         val managingEditor: String? = null,
-        @param:Element(name = "generator", required = false)
-        @get:Element(name = "generator", required = false)
         val generator: String? = null,
-        @param:Element(name = "image", required = false)
-        @get:Element(name = "image", required = false)
         val image: Image? = null,
-        @param:Element(name = "lastBuildDate", required = false)
-        @get:Element(name = "lastBuildDate", required = false)
         val lastBuildDate: ZonedDateTime? = null,
-        @param:Element(name = "pubDate", required = false)
-        @get:Element(name = "pubDate", required = false)
         val pubDate: ZonedDateTime? = null,
-        @param:Element(name = "ttl", required = false)
-        @get:Element(name = "ttl", required = false)
         val ttl: Int? = null,
-        @param:ElementList(name = "skipDays", entry = "day", required = false)
-        @get:ElementList(name = "skipDays", entry = "day", required = false)
-        val skipDays: List<DayOfWeek> = emptyList(),
-        @param:ElementList(name = "skipHours", entry = "hour", required = false)
-        @get:ElementList(name = "skipHours", entry = "hour", required = false)
-        val skipHours: List<Int> = emptyList(),
-        @param:Element(name = "cloud", required = false)
-        @get:Element(name = "cloud", required = false)
+        val skipDays: List<DayOfWeek>,
+        val skipHours: List<Int>,
         val cloud: Cloud? = null,
-        @param:Element(name = "textInput", required = false)
-        @get:Element(name = "textInput", required = false)
         val textInput: TextInput? = null,
-        @param:ElementList(inline = true)
-        @get:ElementList(inline = true)
         val items: List<Item>,
         val iTunesCategories: List<ITunesTopLevelCategory>,
-        val iTunesExplicit: ITunesExplicit,
+        internal val _iTunesExplicit: String?,
         val iTunesSubtitle: ITunesSubtitle?,
         val iTunesSummary: ITunesSummary?,
         val iTunesAuthor: ITunesAuthor?,
         val iTunesImage: ITunesImage?,
         val iTunesBlock: ITunesBlock?,
         val iTunesComplete: ITunesComplete?
-)
+) {
+        val iTunesExplicit: ExplicitStatus = when (_iTunesExplicit?.toLowerCase()) {
+                "yes" -> ExplicitStatus.YES
+                "clean" -> ExplicitStatus.CLEAN
+                else -> ExplicitStatus.NONE
+        }
+}
 
 /**
  * This class represents a category in either a [Channel] or an [Item].
@@ -251,14 +215,20 @@ data class Item(
         @get:Element(name = "source", required = false)
         val source: Source? = null,
         val iTunesCategories: List<ITunesTopLevelCategory>,
-        val iTunesExplicit: ITunesExplicit,
+        val _iTunesExplicit: String?,
         val iTunesSubtitle: ITunesSubtitle?,
         val iTunesSummary: ITunesSummary?,
         val iTunesAuthor: ITunesAuthor?,
         val iTunesDuration: ITunesDuration?,
         val iTunesImage: ITunesImage?,
         val iTunesBlock: ITunesBlock?
-)
+) {
+        val iTunesExplicit: ExplicitStatus = when (_iTunesExplicit?.toLowerCase()) {
+                "yes" -> ExplicitStatus.YES
+                "clean" -> ExplicitStatus.CLEAN
+                else -> ExplicitStatus.NONE
+        }
+}
 
 /**
  * This class represents an enclosure in an [Item].
