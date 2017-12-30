@@ -281,25 +281,48 @@ class RssTest : Spek({
             }
         }
 
-        given("sample_gn RSS feed") {
-            val sampleITunes = persister.read(RssFeed::class.java, getSample("sample_gn.xml"))
+        given("sample_gn", { "$it RSS feed" }) {
+            val rssFeed = persister.read(RssFeed::class.java, getSample("$it.xml"))
 
             on("feed reread") {
                 val rssText = StringWriter()
-                persister.write(sampleITunes, rssText)
+                persister.write(rssFeed, rssText)
 
                 val rereadRssFeed = persister.read(RssFeed::class.java, rssText.toString())
 
                 it("should equal original RSS feed read") {
-                    assertThat(rereadRssFeed, equalTo(sampleITunes))
+                    assertThat(rereadRssFeed, equalTo(rssFeed))
                 }
 
                 it("should have the same hashCode as original RSS feed read") {
-                    assertThat(rereadRssFeed.hashCode(), equalTo(sampleITunes.hashCode()))
+                    assertThat(rereadRssFeed.hashCode(), equalTo(rssFeed.hashCode()))
                 }
 
                 it("should have the same String representation as original RSS feed read") {
-                    assertThat(rereadRssFeed.toString(), equalTo(sampleITunes.toString()))
+                    assertThat(rereadRssFeed.toString(), equalTo(rssFeed.toString()))
+                }
+            }
+        }
+
+        given("sample_apple", { "$it RSS feed" }) {
+            val rssFeed = persister.read(RssFeed::class.java, getSample("$it.xml"))
+
+            on("feed reread") {
+                val rssText = StringWriter()
+                persister.write(rssFeed, rssText)
+
+                val rereadRssFeed = persister.read(RssFeed::class.java, rssText.toString())
+
+                it("should equal original RSS feed read") {
+                    assertThat(rereadRssFeed, equalTo(rssFeed))
+                }
+
+                it("should have the same hashCode as original RSS feed read") {
+                    assertThat(rereadRssFeed.hashCode(), equalTo(rssFeed.hashCode()))
+                }
+
+                it("should have the same String representation as original RSS feed read") {
+                    assertThat(rereadRssFeed.toString(), equalTo(rssFeed.toString()))
                 }
             }
         }
