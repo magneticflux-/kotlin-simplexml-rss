@@ -152,3 +152,16 @@ data class ITunesImage(
 data class ITunesBlock(
         val shouldBlock: Boolean
 )
+
+/**
+ * This class represents an itunes:complete in a [Channel].
+ *
+ * @author Mitchell Skaggs
+ * @since 1.0.5
+ * @see ITunesCompleteConverter
+ */
+@Root(name = "complete")
+@Namespace(reference = ITUNES_REFERENCE)
+data class ITunesComplete(
+        val isComplete: Boolean
+)

@@ -172,3 +172,21 @@ object ITunesBlockConverter : Converter<ITunesBlock> {
         node.value = if (value.shouldBlock) "yes" else "no"
     }
 }
+
+/**
+ * @author Mitchell Skaggs
+ * @since 1.0.5
+ */
+object ITunesCompleteConverter : Converter<ITunesComplete> {
+    override fun read(node: InputNode): ITunesComplete {
+        val text: String? = node.value
+        return when (text) {
+            "yes" -> ITunesComplete(true)
+            else -> ITunesComplete(false)
+        }
+    }
+
+    override fun write(node: OutputNode, value: ITunesComplete) {
+        node.value = if (value.isComplete) "yes" else "no"
+    }
+}

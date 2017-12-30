@@ -2,6 +2,7 @@ package com.github.magneticflux.rss
 
 import com.github.magneticflux.rss.itunes.ITunesAuthor
 import com.github.magneticflux.rss.itunes.ITunesBlock
+import com.github.magneticflux.rss.itunes.ITunesComplete
 import com.github.magneticflux.rss.itunes.ITunesDuration
 import com.github.magneticflux.rss.itunes.ITunesExplicit
 import com.github.magneticflux.rss.itunes.ITunesImage
@@ -110,6 +111,7 @@ object ChannelConverter : Converter<Channel> {
         var iTunesAuthor: ITunesAuthor? = null
         var iTunesImage: ITunesImage? = null
         var iTunesBlock: ITunesBlock? = null
+        var iTunesComplete: ITunesComplete? = null
 
         node.children.forEach {
             when (it.fullName) {
@@ -139,6 +141,7 @@ object ChannelConverter : Converter<Channel> {
                 "itunes:author" -> iTunesAuthor = fallbackPersister.read(ITunesAuthor::class.java, it)
                 "itunes:image" -> iTunesImage = fallbackPersister.read(ITunesImage::class.java, it)
                 "itunes:block" -> iTunesBlock = fallbackPersister.read(ITunesBlock::class.java, it)
+                "itunes:complete" -> iTunesComplete = fallbackPersister.read(ITunesComplete::class.java, it)
             }
         }
 
@@ -168,7 +171,8 @@ object ChannelConverter : Converter<Channel> {
                 iTunesSummary,
                 iTunesAuthor,
                 iTunesImage,
-                iTunesBlock
+                iTunesBlock,
+                iTunesComplete
         )
     }
 
@@ -211,6 +215,7 @@ object ChannelConverter : Converter<Channel> {
         if (value.iTunesAuthor != null) fallbackPersister.write(value.iTunesAuthor, node)
         if (value.iTunesImage != null) fallbackPersister.write(value.iTunesImage, node)
         if (value.iTunesBlock != null) fallbackPersister.write(value.iTunesBlock, node)
+        if (value.iTunesComplete != null) fallbackPersister.write(value.iTunesComplete, node)
     }
 }
 

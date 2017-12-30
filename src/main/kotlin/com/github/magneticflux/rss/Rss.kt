@@ -2,6 +2,7 @@ package com.github.magneticflux.rss
 
 import com.github.magneticflux.rss.itunes.ITunesAuthor
 import com.github.magneticflux.rss.itunes.ITunesBlock
+import com.github.magneticflux.rss.itunes.ITunesComplete
 import com.github.magneticflux.rss.itunes.ITunesDuration
 import com.github.magneticflux.rss.itunes.ITunesExplicit
 import com.github.magneticflux.rss.itunes.ITunesImage
@@ -111,7 +112,8 @@ data class Channel(
         val iTunesSummary: ITunesSummary?,
         val iTunesAuthor: ITunesAuthor?,
         val iTunesImage: ITunesImage?,
-        val iTunesBlock: ITunesBlock?
+        val iTunesBlock: ITunesBlock?,
+        val iTunesComplete: ITunesComplete?
 )
 
 /**
