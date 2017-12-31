@@ -56,54 +56,6 @@ object ITunesSubCategoryConverter : Converter<ITunesSubCategory> {
  * @author Mitchell Skaggs
  * @since 1.0.5
  */
-object ITunesSubtitleConverter : Converter<ITunesSubtitle> {
-    override fun read(node: InputNode): ITunesSubtitle {
-        val text: String? = node.value
-
-        return ITunesSubtitle(text.orEmpty())
-    }
-
-    override fun write(node: OutputNode, value: ITunesSubtitle) {
-        node.value = value.text
-    }
-}
-
-/**
- * @author Mitchell Skaggs
- * @since 1.0.5
- */
-object ITunesSummaryConverter : Converter<ITunesSummary> {
-    override fun read(node: InputNode): ITunesSummary {
-        val text: String? = node.value
-
-        return ITunesSummary(text.orEmpty())
-    }
-
-    override fun write(node: OutputNode, value: ITunesSummary) {
-        node.value = value.text
-    }
-}
-
-/**
- * @author Mitchell Skaggs
- * @since 1.0.5
- */
-object ITunesAuthorConverter : Converter<ITunesAuthor> {
-    override fun read(node: InputNode): ITunesAuthor {
-        val text: String? = node.value
-
-        return ITunesAuthor(text.orEmpty())
-    }
-
-    override fun write(node: OutputNode, value: ITunesAuthor) {
-        node.value = value.text
-    }
-}
-
-/**
- * @author Mitchell Skaggs
- * @since 1.0.5
- */
 object ITunesDurationConverter : Converter<ITunesDuration> {
     override fun read(node: InputNode): ITunesDuration {
         val duration = DurationTransform.read(node.value)

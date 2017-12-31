@@ -1,12 +1,13 @@
 package com.github.magneticflux.rss.itunes
 
 import com.github.magneticflux.rss.Channel
-import com.github.magneticflux.rss.ITUNES_REFERENCE
 import com.github.magneticflux.rss.Item
 import org.simpleframework.xml.Namespace
 import org.simpleframework.xml.Root
 import org.threeten.bp.Duration
 import java.net.URL
+
+const val ITUNES_REFERENCE = "http://www.itunes.com/DTDs/Podcast-1.0.dtd"
 
 /**
  * This class represents an itunes:category in a [Channel] or an [Item].
@@ -38,66 +39,9 @@ data class ITunesSubCategory(
 /**
  * This class represents the value of an itunes:explicit element in a [Channel] or an [Item]
  */
-enum class ExplicitStatus {
+enum class ITunesExplicitStatus {
     YES, NONE, CLEAN
 }
-
-/**
- * This class helps with implementing [String] elements with namespaces because they require user-defined classes instead of just a [String]
- *
- * @author Mitchell Skaggs
- * @since 1.0.5
- */
-@Deprecated("Should write the String to the value and the namespace to the reference on the OutputNode")
-abstract class AbstractString internal constructor(open val text: String) : Comparable<String> by text, CharSequence by text {
-    override fun toString(): String = text
-    override fun hashCode(): Int = text.hashCode()
-    override fun equals(other: Any?): Boolean {
-        return if (other is AbstractString)
-            text == other.text
-        else
-            text == other
-    }
-}
-
-/**
- * This class represents an itunes:subtitle in a [Channel] or an [Item].
- *
- * @author Mitchell Skaggs
- * @since 1.0.5
- * @see ITunesSubtitleConverter
- */
-@Root(name = "subtitle")
-@Namespace(reference = ITUNES_REFERENCE)
-class ITunesSubtitle(
-        override val text: String
-) : AbstractString(text)
-
-/**
- * This class represents an itunes:summary in a [Channel] or an [Item].
- *
- * @author Mitchell Skaggs
- * @since 1.0.5
- * @see ITunesSummaryConverter
- */
-@Root(name = "summary")
-@Namespace(reference = ITUNES_REFERENCE)
-class ITunesSummary(
-        override val text: String
-) : AbstractString(text)
-
-/**
- * This class represents an itunes:author in a [Channel] or an [Item].
- *
- * @author Mitchell Skaggs
- * @since 1.0.5
- * @see ITunesAuthorConverter
- */
-@Root(name = "author")
-@Namespace(reference = ITUNES_REFERENCE)
-class ITunesAuthor(
-        override val text: String
-) : AbstractString(text)
 
 /**
  * This class represents an itunes:duration in an [Item].

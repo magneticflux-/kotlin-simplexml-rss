@@ -1,12 +1,9 @@
 package com.github.magneticflux.rss
 
-import com.github.magneticflux.rss.itunes.ITunesAuthor
+import com.github.magneticflux.rss.itunes.ITUNES_REFERENCE
 import com.github.magneticflux.rss.itunes.ITunesBlock
-import com.github.magneticflux.rss.itunes.ITunesComplete
 import com.github.magneticflux.rss.itunes.ITunesDuration
 import com.github.magneticflux.rss.itunes.ITunesImage
-import com.github.magneticflux.rss.itunes.ITunesSubtitle
-import com.github.magneticflux.rss.itunes.ITunesSummary
 import com.github.magneticflux.rss.itunes.ITunesTopLevelCategory
 import org.simpleframework.xml.convert.Converter
 import org.simpleframework.xml.stream.InputNode
@@ -39,6 +36,16 @@ internal val InputNode.children: Iterator<InputNode>
         return InputNodeChildIterator(this)
     }
 
+/**
+ * Create a child node containing only the given String with the specified namespace.
+ */
+@JvmOverloads
+internal fun OutputNode.createChild(reference: String = "", name: String, value: String) {
+    val child = this.getChild(name)
+    child.value = value
+    child.reference = reference
+}
+
 private class InputNodeChildIterator(val rootNode: InputNode) : AbstractIterator<InputNode>() {
     override fun computeNext() {
         val next = rootNode.next
@@ -55,7 +62,7 @@ private class InputNodeChildIterator(val rootNode: InputNode) : AbstractIterator
  */
 object RssFeedConverter : Converter<RssFeed> {
     override fun read(node: InputNode): RssFeed {
-        val version = fallbackPersister.read(String::class.java, node.getAttribute("version"))
+        val version = node.getAttribute("version").value
 
         lateinit var channel: Channel
 
@@ -73,6 +80,7 @@ object RssFeedConverter : Converter<RssFeed> {
     }
 
     override fun write(node: OutputNode, value: RssFeed) {
+        node.reference = null
         node.setAttribute("version", value.version)
         fallbackPersister.write(value.channel, node)
     }
@@ -105,12 +113,12 @@ object ChannelConverter : Converter<Channel> {
         val items = mutableListOf<Item>()
         val iTunesCategories = mutableListOf<ITunesTopLevelCategory>()
         var iTunesExplicit: String? = null
-        var iTunesSubtitle: ITunesSubtitle? = null
-        var iTunesSummary: ITunesSummary? = null
-        var iTunesAuthor: ITunesAuthor? = null
+        var iTunesSubtitle: String? = null
+        var iTunesSummary: String? = null
+        var iTunesAuthor: String? = null
         var iTunesImage: ITunesImage? = null
         var iTunesBlock: ITunesBlock? = null
-        var iTunesComplete: ITunesComplete? = null
+        var iTunesComplete: String? = null
 
         node.children.forEach {
             when (it.fullName) {
@@ -135,12 +143,12 @@ object ChannelConverter : Converter<Channel> {
                 "item" -> items += fallbackPersister.read(Item::class.java, it)
                 "itunes:category" -> iTunesCategories += fallbackPersister.read(ITunesTopLevelCategory::class.java, it)
                 "itunes:explicit" -> iTunesExplicit = it.value
-                "itunes:subtitle" -> iTunesSubtitle = fallbackPersister.read(ITunesSubtitle::class.java, it)
-                "itunes:summary" -> iTunesSummary = fallbackPersister.read(ITunesSummary::class.java, it)
-                "itunes:author" -> iTunesAuthor = fallbackPersister.read(ITunesAuthor::class.java, it)
+                "itunes:subtitle" -> iTunesSubtitle = it.value
+                "itunes:summary" -> iTunesSummary = it.value
+                "itunes:author" -> iTunesAuthor = it.value
                 "itunes:image" -> iTunesImage = fallbackPersister.read(ITunesImage::class.java, it)
                 "itunes:block" -> iTunesBlock = fallbackPersister.read(ITunesBlock::class.java, it)
-                "itunes:complete" -> iTunesComplete = fallbackPersister.read(ITunesComplete::class.java, it)
+                "itunes:complete" -> iTunesComplete = it.value
             }
         }
 
@@ -208,17 +216,13 @@ object ChannelConverter : Converter<Channel> {
         value.iTunesCategories.forEach {
             fallbackPersister.write(it, node)
         }
-        if (value._iTunesExplicit != null) node.getChild("explicit")
-                .apply {
-                    this.value = value._iTunesExplicit
-                    this.reference = ITUNES_REFERENCE
-                }
-        if (value.iTunesSubtitle != null) fallbackPersister.write(value.iTunesSubtitle, node)
-        if (value.iTunesSummary != null) fallbackPersister.write(value.iTunesSummary, node)
-        if (value.iTunesAuthor != null) fallbackPersister.write(value.iTunesAuthor, node)
+        if (value._iTunesExplicit != null) node.createChild(ITUNES_REFERENCE, "explicit", value._iTunesExplicit)
+        if (value.iTunesSubtitle != null) node.createChild(ITUNES_REFERENCE, "subtitle", value.iTunesSubtitle)
+        if (value.iTunesSummary != null) node.createChild(ITUNES_REFERENCE, "summary", value.iTunesSummary)
+        if (value.iTunesAuthor != null) node.createChild(ITUNES_REFERENCE, "author", value.iTunesAuthor)
         if (value.iTunesImage != null) fallbackPersister.write(value.iTunesImage, node)
         if (value.iTunesBlock != null) fallbackPersister.write(value.iTunesBlock, node)
-        if (value.iTunesComplete != null) fallbackPersister.write(value.iTunesComplete, node)
+        if (value._iTunesComplete != null) node.createChild(ITUNES_REFERENCE, "complete", value._iTunesComplete)
     }
 }
 
@@ -350,9 +354,9 @@ object ItemConverter : Converter<Item> {
         var source: Source? = null
         val iTunesCategories = mutableListOf<ITunesTopLevelCategory>()
         var iTunesExplicit: String? = null
-        var iTunesSubtitle: ITunesSubtitle? = null
-        var iTunesSummary: ITunesSummary? = null
-        var iTunesAuthor: ITunesAuthor? = null
+        var iTunesSubtitle: String? = null
+        var iTunesSummary: String? = null
+        var iTunesAuthor: String? = null
         var iTunesDuration: ITunesDuration? = null
         var iTunesImage: ITunesImage? = null
         var iTunesBlock: ITunesBlock? = null
@@ -371,9 +375,9 @@ object ItemConverter : Converter<Item> {
                 "source" -> source = fallbackPersister.read(Source::class.java, it)
                 "itunes:category" -> iTunesCategories += fallbackPersister.read(ITunesTopLevelCategory::class.java, it)
                 "itunes:explicit" -> iTunesExplicit = it.value
-                "itunes:subtitle" -> iTunesSubtitle = fallbackPersister.read(ITunesSubtitle::class.java, it)
-                "itunes:summary" -> iTunesSummary = fallbackPersister.read(ITunesSummary::class.java, it)
-                "itunes:author" -> iTunesAuthor = fallbackPersister.read(ITunesAuthor::class.java, it)
+                "itunes:subtitle" -> iTunesSubtitle = it.value
+                "itunes:summary" -> iTunesSummary = it.value
+                "itunes:author" -> iTunesAuthor = it.value
                 "itunes:duration" -> iTunesDuration = fallbackPersister.read(ITunesDuration::class.java, it)
                 "itunes:image" -> iTunesImage = fallbackPersister.read(ITunesImage::class.java, it)
                 "itunes:block" -> iTunesBlock = fallbackPersister.read(ITunesBlock::class.java, it)
@@ -403,27 +407,21 @@ object ItemConverter : Converter<Item> {
     }
 
     override fun write(node: OutputNode, value: Item) {
-        if (value.title != null) node.getChild("title").value = value.title
-        if (value.description != null) node.getChild("description").value = value.description
-        if (value.link != null) node.getChild("link").value = URLTransform.write(value.link)
+        if (value.title != null) node.createChild(name = "title", value = value.title)
+        if (value.description != null) node.createChild(name = "description", value = value.description)
+        if (value.link != null) node.createChild(name = "link", value = URLTransform.write(value.link))
         value.categories.forEach { fallbackPersister.write(it, node) }
-        if (value.comments != null) node.getChild("comments").value = URLTransform.write(value.comments)
-        if (value.pubDate != null) node.getChild("pubDate").value = ZonedDateTimeTransform.write(value.pubDate)
-        if (value.author != null) node.getChild("author").value = value.author
+        if (value.comments != null) node.createChild(name = "comments", value = URLTransform.write(value.comments))
+        if (value.pubDate != null) node.createChild(name = "pubDate", value = ZonedDateTimeTransform.write(value.pubDate))
+        if (value.author != null) node.createChild(name = "author", value = value.author)
         if (value.guid != null) fallbackPersister.write(value.guid, node)
         if (value.enclosure != null) fallbackPersister.write(value.enclosure, node)
         if (value.source != null) fallbackPersister.write(value.source, node)
-        value.iTunesCategories.forEach {
-            fallbackPersister.write(it, node)
-        }
-        if (value._iTunesExplicit != null) node.getChild("explicit")
-                .apply {
-                    this.value = value._iTunesExplicit
-                    this.reference = ITUNES_REFERENCE
-                }
-        if (value.iTunesSubtitle != null) fallbackPersister.write(value.iTunesSubtitle, node)
-        if (value.iTunesSummary != null) fallbackPersister.write(value.iTunesSummary, node)
-        if (value.iTunesAuthor != null) fallbackPersister.write(value.iTunesAuthor, node)
+        value.iTunesCategories.forEach { fallbackPersister.write(it, node) }
+        if (value._iTunesExplicit != null) node.createChild(ITUNES_REFERENCE, "explicit", value._iTunesExplicit)
+        if (value.iTunesSubtitle != null) node.createChild(ITUNES_REFERENCE, "subtitle", value.iTunesSubtitle)
+        if (value.iTunesSummary != null) node.createChild(ITUNES_REFERENCE, "summary", value.iTunesSummary)
+        if (value.iTunesAuthor != null) node.createChild(ITUNES_REFERENCE, "author", value.iTunesAuthor)
         if (value.iTunesDuration != null) fallbackPersister.write(value.iTunesDuration, node)
         if (value.iTunesImage != null) fallbackPersister.write(value.iTunesImage, node)
         if (value.iTunesBlock != null) fallbackPersister.write(value.iTunesBlock, node)

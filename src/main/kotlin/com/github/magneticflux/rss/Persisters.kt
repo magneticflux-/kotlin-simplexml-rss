@@ -1,7 +1,5 @@
 package com.github.magneticflux.rss
 
-import com.github.magneticflux.rss.itunes.ITunesAuthor
-import com.github.magneticflux.rss.itunes.ITunesAuthorConverter
 import com.github.magneticflux.rss.itunes.ITunesBlock
 import com.github.magneticflux.rss.itunes.ITunesBlockConverter
 import com.github.magneticflux.rss.itunes.ITunesComplete
@@ -12,10 +10,6 @@ import com.github.magneticflux.rss.itunes.ITunesImage
 import com.github.magneticflux.rss.itunes.ITunesImageConverter
 import com.github.magneticflux.rss.itunes.ITunesSubCategory
 import com.github.magneticflux.rss.itunes.ITunesSubCategoryConverter
-import com.github.magneticflux.rss.itunes.ITunesSubtitle
-import com.github.magneticflux.rss.itunes.ITunesSubtitleConverter
-import com.github.magneticflux.rss.itunes.ITunesSummary
-import com.github.magneticflux.rss.itunes.ITunesSummaryConverter
 import com.github.magneticflux.rss.itunes.ITunesTopLevelCategory
 import com.github.magneticflux.rss.itunes.ITunesTopLevelCategoryConverter
 import org.simpleframework.xml.convert.Registry
@@ -56,9 +50,6 @@ fun createRssStrategy(): Strategy {
                 this.bind(Source::class.java, SourceConverter)
                 this.bind(ITunesTopLevelCategory::class.java, ITunesTopLevelCategoryConverter)
                 this.bind(ITunesSubCategory::class.java, ITunesSubCategoryConverter)
-                this.bind(ITunesSubtitle::class.java, ITunesSubtitleConverter)
-                this.bind(ITunesSummary::class.java, ITunesSummaryConverter)
-                this.bind(ITunesAuthor::class.java, ITunesAuthorConverter)
                 this.bind(ITunesDuration::class.java, ITunesDurationConverter)
                 this.bind(ITunesImage::class.java, ITunesImageConverter)
                 this.bind(ITunesBlock::class.java, ITunesBlockConverter)

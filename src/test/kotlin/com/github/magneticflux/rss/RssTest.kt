@@ -3,11 +3,15 @@ package com.github.magneticflux.rss
 import com.github.magneticflux.rss.SampleUtils.getSample
 import com.github.magneticflux.rss.itunes.ITunesSubCategory
 import com.github.magneticflux.rss.itunes.ITunesTopLevelCategory
-import com.natpryce.hamkrest.assertion.assertThat
-import com.natpryce.hamkrest.equalTo
-import com.natpryce.hamkrest.hasElement
-import com.natpryce.hamkrest.hasSize
-import com.natpryce.hamkrest.throws
+import org.hamcrest.CoreMatchers.equalTo
+import org.hamcrest.CoreMatchers.isA
+import org.hamcrest.Description
+import org.hamcrest.Matcher
+import org.hamcrest.MatcherAssert.assertThat
+import org.hamcrest.Matchers.hasItem
+import org.hamcrest.Matchers.hasSize
+import org.hamcrest.Matchers.not
+import org.hamcrest.TypeSafeDiagnosingMatcher
 import org.jetbrains.spek.api.Spek
 import org.jetbrains.spek.api.dsl.given
 import org.jetbrains.spek.api.dsl.it
@@ -19,89 +23,90 @@ import java.io.StringWriter
 import java.net.URL
 import java.util.Locale
 
+
 class RssTest : Spek({
     given("a simple Persister") {
         val persister = createRssPersister()
 
-        given("sample_ffa RSS feed") {
-            val sampleFFA = persister.read(RssFeed::class.java, getSample("sample_ffa.xml"))
+        given("sample_ffa", { "$it RSS feed" }) {
+            val rssFeed = persister.read(RssFeed::class.java, getSample("$it.xml"))
 
             it("should have the correct version") {
-                assertThat(sampleFFA.version, equalTo("2.0"))
+                assertThat(rssFeed.version, equalTo("2.0"))
             }
 
             it("should have the correct title") {
-                assertThat(sampleFFA.channel.title, equalTo("FeedForAll Sample Feed"))
+                assertThat(rssFeed.channel.title, equalTo("FeedForAll Sample Feed"))
             }
 
             it("should have the correct description") {
-                assertThat(sampleFFA.channel.description, equalTo("RSS is a fascinating technology. The uses for RSS are expanding daily. Take a closer look at how various industries are using the benefits of RSS in their businesses."))
+                assertThat(rssFeed.channel.description, equalTo("RSS is a fascinating technology. The uses for RSS are expanding daily. Take a closer look at how various industries are using the benefits of RSS in their businesses."))
             }
 
             it("should have the correct link") {
-                assertThat(sampleFFA.channel.link, equalTo(URL("http://www.feedforall.com/industry-solutions.htm")))
+                assertThat(rssFeed.channel.link, equalTo(URL("http://www.feedforall.com/industry-solutions.htm")))
             }
 
             it("should have the correct categories") {
-                assertThat(sampleFFA.channel.categories, hasSize(equalTo(1)))
-                assertThat(sampleFFA.channel.categories, hasElement(Category("www.dmoz.com", "Computers/Software/Internet/Site Management/Content Management")))
+                assertThat(rssFeed.channel.categories, hasSize(1))
+                assertThat(rssFeed.channel.categories, hasItem(Category("www.dmoz.com", "Computers/Software/Internet/Site Management/Content Management")))
             }
 
             it("should have the correct copyright") {
-                assertThat(sampleFFA.channel.copyright, equalTo("Copyright 2004 NotePage, Inc."))
+                assertThat(rssFeed.channel.copyright, equalTo("Copyright 2004 NotePage, Inc."))
             }
 
             it("should have the correct docs") {
-                assertThat(sampleFFA.channel.docs, equalTo(URL("http://blogs.law.harvard.edu/tech/rss")))
+                assertThat(rssFeed.channel.docs, equalTo(URL("http://blogs.law.harvard.edu/tech/rss")))
             }
 
             it("should have the correct language") {
-                assertThat(sampleFFA.channel.language, equalTo(Locale.US))
+                assertThat(rssFeed.channel.language, equalTo(Locale.US))
             }
 
             it("should have the correct webMaster") {
-                assertThat(sampleFFA.channel.webMaster, equalTo("webmaster@feedforall.com"))
+                assertThat(rssFeed.channel.webMaster, equalTo("webmaster@feedforall.com"))
             }
 
             it("should have the correct managingEditor") {
-                assertThat(sampleFFA.channel.managingEditor, equalTo("marketing@feedforall.com"))
+                assertThat(rssFeed.channel.managingEditor, equalTo("marketing@feedforall.com"))
             }
 
             it("should have the correct generator") {
-                assertThat(sampleFFA.channel.generator, equalTo("FeedForAll Beta1 (0.0.1.8)"))
+                assertThat(rssFeed.channel.generator, equalTo("FeedForAll Beta1 (0.0.1.8)"))
             }
 
             it("should have the correct image") {
-                assertThat(sampleFFA.channel.image, equalTo(
+                assertThat(rssFeed.channel.image, equalTo(
                         Image(URL("http://www.feedforall.com/ffalogo48x48.gif"), "FeedForAll Sample Feed", URL("http://www.feedforall.com/industry-solutions.htm"), "FeedForAll Sample Feed", 48, 48)
                 ))
             }
 
             it("should have the correct lastBuildDate") {
-                assertThat(sampleFFA.channel.lastBuildDate, equalTo(ZonedDateTime.from(DateTimeFormatter.RFC_1123_DATE_TIME.parse("Tue, 19 Oct 2004 13:39:14 -0400"))))
+                assertThat(rssFeed.channel.lastBuildDate, equalTo(ZonedDateTime.from(DateTimeFormatter.RFC_1123_DATE_TIME.parse("Tue, 19 Oct 2004 13:39:14 -0400"))))
             }
 
             it("should have the correct pubDate") {
-                assertThat(sampleFFA.channel.pubDate, equalTo(ZonedDateTime.from(DateTimeFormatter.RFC_1123_DATE_TIME.parse("Tue, 19 Oct 2004 13:38:55 -0400"))))
+                assertThat(rssFeed.channel.pubDate, equalTo(ZonedDateTime.from(DateTimeFormatter.RFC_1123_DATE_TIME.parse("Tue, 19 Oct 2004 13:38:55 -0400"))))
             }
 
             it("should have the correct ttl") {
-                assertThat(sampleFFA.channel.ttl, equalTo(100))
+                assertThat(rssFeed.channel.ttl, equalTo(100))
             }
 
             it("should have the correct skipDays") {
-                assertThat(sampleFFA.channel.skipDays, hasSize(equalTo(1)))
-                assertThat(sampleFFA.channel.skipDays, hasElement(DayOfWeek.MONDAY))
+                assertThat(rssFeed.channel.skipDays, hasSize(1))
+                assertThat(rssFeed.channel.skipDays, hasItem(DayOfWeek.MONDAY))
             }
 
             it("should have the correct skipHours") {
-                assertThat(sampleFFA.channel.skipHours, hasSize(equalTo(2)))
-                assertThat(sampleFFA.channel.skipHours, hasElement(0))
-                assertThat(sampleFFA.channel.skipHours, hasElement(1))
+                assertThat(rssFeed.channel.skipHours, hasSize(2))
+                assertThat(rssFeed.channel.skipHours, hasItem(0))
+                assertThat(rssFeed.channel.skipHours, hasItem(1))
             }
 
             it("should have the correct cloud") {
-                assertThat(sampleFFA.channel.cloud, equalTo(
+                assertThat(rssFeed.channel.cloud, equalTo(
                         Cloud("rpc.sys.com",
                                 "/RPC2",
                                 80,
@@ -111,7 +116,7 @@ class RssTest : Spek({
             }
 
             it("should have the correct textInput") {
-                assertThat(sampleFFA.channel.textInput, equalTo(
+                assertThat(rssFeed.channel.textInput, equalTo(
                         TextInput("TextInput Inquiry",
                                 "Your aggregator supports the textInput element. What software are you using?",
                                 "query",
@@ -120,7 +125,7 @@ class RssTest : Spek({
             }
 
             it("should contain the correct items") {
-                assertThat(sampleFFA.channel.items, hasElement(Item(
+                assertThat(rssFeed.channel.items, hasItem(Item(
                         "RSS Solutions for Restaurants",
                         "<b>FeedForAll </b>helps Restaurant's communicate with customers. Let your customers know the latest specials or events.<br> <br> RSS feed uses include:<br> <i><font color=\"#FF0000\">Daily Specials <br> Entertainment <br> Calendar of Events </i></font>",
                         URL("http://www.feedforall.com/restaurant.htm"),
@@ -144,20 +149,20 @@ class RssTest : Spek({
 
             on("feed reread") {
                 val rssText = StringWriter()
-                persister.write(sampleFFA, rssText)
+                persister.write(rssFeed, rssText)
 
-                val rereadRssFeed = persister.read(RssFeed::class.java, rssText.buffer.toString())
+                val rereadRssFeed = persister.read(RssFeed::class.java, rssText.toString())
 
                 it("should equal original RSS feed read") {
-                    assertThat(rereadRssFeed, equalTo(sampleFFA))
+                    assertThat(rereadRssFeed, equalTo(rssFeed))
                 }
 
                 it("should have the same hashCode as original RSS feed read") {
-                    assertThat(rereadRssFeed.hashCode(), equalTo(sampleFFA.hashCode()))
+                    assertThat(rereadRssFeed.hashCode(), equalTo(rssFeed.hashCode()))
                 }
 
                 it("should have the same String representation as original RSS feed read") {
-                    assertThat(rereadRssFeed.toString(), equalTo(sampleFFA.toString()))
+                    assertThat(rereadRssFeed.toString(), equalTo(rssFeed.toString()))
                 }
             }
 
@@ -165,7 +170,7 @@ class RssTest : Spek({
                 val samplePHS = persister.read(RssFeed::class.java, getSample("sample_phs.xml"))
 
                 it("should not be equal to sample_ffa") {
-                    assertThat(samplePHS, !equalTo(sampleFFA))
+                    assertThat(samplePHS, !equalTo(rssFeed))
                 }
             }
         }
@@ -327,3 +332,37 @@ class RssTest : Spek({
         }
     }
 })
+
+inline fun <reified T : Throwable> throws(): Matcher<() -> Any?> {
+    return throws(isA(T::class.java))
+}
+
+fun throws(matcher: Matcher<out Throwable>): Matcher<() -> Any?> {
+    return object : TypeSafeDiagnosingMatcher<() -> Any?>() {
+        override fun matchesSafely(item: (() -> Any?), mismatchDescription: Description): Boolean {
+            return try {
+                item()
+                mismatchDescription.appendText("did not throw an exception")
+                false
+            } catch (e: Throwable) {
+                val success = matcher.matches(e)
+
+                if (!success) {
+                    mismatchDescription.appendText("was ")
+                    matcher.describeMismatch(e, mismatchDescription)
+                }
+
+                success
+            }
+        }
+
+        override fun describeTo(description: Description) {
+            description.appendText("a function that throws")
+                    .appendDescriptionOf(matcher)
+        }
+    }
+}
+
+private operator fun <T> Matcher<T>.not(): Matcher<T> {
+    return not(this)
+}
