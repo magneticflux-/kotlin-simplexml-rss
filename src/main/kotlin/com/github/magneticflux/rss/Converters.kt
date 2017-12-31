@@ -454,14 +454,14 @@ object EnclosureConverter : Converter<Enclosure> {
  */
 object GuidConverter : Converter<Guid> {
     override fun read(node: InputNode): Guid {
-        val isPermaLink = node.getAttribute("isPermaLink")?.value?.toBoolean()
+        val isPermaLink = node.getAttribute("isPermaLink")?.value
         val text = node.value
 
-        return Guid(isPermaLink ?: false, text)
+        return Guid(isPermaLink, text)
     }
 
     override fun write(node: OutputNode, value: Guid) {
-        node.setAttribute("isPermaLink", value.isPermaLink.toString())
+        if (value._isPermaLink != null) node.setAttribute("isPermaLink", value._isPermaLink)
         node.value = value.text
     }
 }

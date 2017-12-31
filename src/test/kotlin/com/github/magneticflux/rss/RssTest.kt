@@ -133,7 +133,7 @@ class RssTest : Spek({
                         URL("http://www.feedforall.com/forum"),
                         ZonedDateTime.from(DateTimeFormatter.RFC_1123_DATE_TIME.parse("Tue, 19 Oct 2004 11:09:11 -0400")),
                         "lawyer@boyer.net (Lawyer Boyer)",
-                        Guid(true, "http://inessential.com/2002/09/01.php#a2"),
+                        Guid(true.toString(), "http://inessential.com/2002/09/01.php#a2"),
                         Enclosure(URL("http://www.scripting.com/mp3s/weatherReportSuite.mp3"), 12216320, "audio/mpeg"),
                         Source(URL("http://www.tomalak.org/links2.xml"), "Tomalak's Realm"),
                         emptyList(),
@@ -152,6 +152,8 @@ class RssTest : Spek({
                 persister.write(rssFeed, rssText)
 
                 val rereadRssFeed = persister.read(RssFeed::class.java, rssText.toString())
+
+                println(rssText)
 
                 it("should equal original RSS feed read") {
                     assertThat(rereadRssFeed, equalTo(rssFeed))

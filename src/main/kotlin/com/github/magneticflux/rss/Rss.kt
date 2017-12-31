@@ -134,6 +134,14 @@ interface IImage {
     val height: Int
 }
 
+abstract class AbstractImage(
+        override val url: URL,
+        override val title: String,
+        override val link: URL,
+        override val description: String?,
+        override val width: Int,
+        override val height: Int) : IImage
+
 /**
  * This class represents an image in a [Channel].
  *
@@ -149,10 +157,14 @@ data class Image(
         override val description: String?,
         internal val _width: String?,
         internal val _height: String?
-) : IImage {
-    override val width: Int = _width?.toInt() ?: 88
-    override val height: Int = _height?.toInt() ?: 31
-}
+) : AbstractImage(
+        url,
+        title,
+        link,
+        description,
+        _width?.toInt() ?: 88,
+        _height?.toInt() ?: 31
+)
 
 /**
  * This class represents a cloud object in a [Channel].
@@ -259,6 +271,19 @@ data class Enclosure(
 )
 
 /**
+ * The final RSS view of a `<guid>` element. Defaults are used if applicable.
+ */
+interface IGuid {
+    val isPermaLink: Boolean
+    val text: String
+}
+
+abstract class AbstractGuid(
+        override val isPermaLink: Boolean,
+        override val text: String
+) : IGuid
+
+/**
  * This class represents a guid in an [Item].
  *
  * @author Mitchell Skaggs
@@ -267,8 +292,14 @@ data class Enclosure(
  */
 @Root(name = "guid", strict = false)
 data class Guid(
-        val isPermaLink: Boolean = false,
-        val text: String
+        internal val _isPermaLink: String?,
+        override val text: String
+) : AbstractGuid(
+        when (_isPermaLink?.toLowerCase()) {
+            "true" -> true
+            else -> false
+        },
+        text
 )
 
 /**
