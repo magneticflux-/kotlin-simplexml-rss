@@ -23,7 +23,6 @@ import java.io.StringWriter
 import java.net.URL
 import java.util.Locale
 
-
 class RssTest : Spek({
     given("a simple Persister") {
         val persister = createRssPersister()
@@ -152,8 +151,6 @@ class RssTest : Spek({
                 persister.write(rssFeed, rssText)
 
                 val rereadRssFeed = persister.read(RssFeed::class.java, rssText.toString())
-
-                println(rssText)
 
                 it("should equal original RSS feed read") {
                     assertThat(rereadRssFeed, equalTo(rssFeed))
