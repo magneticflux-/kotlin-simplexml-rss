@@ -254,8 +254,8 @@ object ImageConverter : Converter<Image> {
         lateinit var title: String
         lateinit var link: URL
         var description: String? = null
-        var width = 88
-        var height = 31
+        var width: String? = null
+        var height: String? = null
 
         node.children.forEach {
             when (it.fullName) {
@@ -263,8 +263,8 @@ object ImageConverter : Converter<Image> {
                 "title" -> title = fallbackPersister.read(String::class.java, it)
                 "link" -> link = fallbackPersister.read(URL::class.java, it)
                 "description" -> description = fallbackPersister.read(String::class.java, it)
-                "width" -> width = it.value.toInt()
-                "height" -> height = it.value.toInt()
+                "width" -> width = it.value
+                "height" -> height = it.value
             }
         }
 
@@ -275,9 +275,9 @@ object ImageConverter : Converter<Image> {
         node.getChild("url").value = URLTransform.write(value.url)
         node.getChild("title").value = value.title
         node.getChild("link").value = URLTransform.write(value.link)
-        if (value.description != null) node.getChild("description").value = value.description
-        node.getChild("width").value = value.width.toString()
-        node.getChild("height").value = value.height.toString()
+        if (value.description != null) node.createChild(name = "description", value = value.description)
+        if (value._width != null) node.createChild(name = "width", value = value._width)
+        if (value._height != null) node.createChild(name = "height", value = value._height)
     }
 }
 

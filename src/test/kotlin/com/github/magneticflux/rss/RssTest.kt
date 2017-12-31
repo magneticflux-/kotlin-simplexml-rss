@@ -78,7 +78,7 @@ class RssTest : Spek({
 
             it("should have the correct image") {
                 assertThat(rssFeed.channel.image, equalTo(
-                        Image(URL("http://www.feedforall.com/ffalogo48x48.gif"), "FeedForAll Sample Feed", URL("http://www.feedforall.com/industry-solutions.htm"), "FeedForAll Sample Feed", 48, 48)
+                        Image(URL("http://www.feedforall.com/ffalogo48x48.gif"), "FeedForAll Sample Feed", URL("http://www.feedforall.com/industry-solutions.htm"), "FeedForAll Sample Feed", "48", "48")
                 ))
             }
 

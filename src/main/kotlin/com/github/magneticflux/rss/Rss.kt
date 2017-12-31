@@ -28,6 +28,39 @@ data class RssFeed(
 )
 
 /**
+ * The final RSS view of a `<channel>` element. Defaults are used if applicable.
+ */
+interface IChannel {
+    val title: String
+    val description: String
+    val link: URL
+    val categories: List<Category>
+    val copyright: String?
+    val docs: URL?
+    val language: Locale?
+    val webMaster: String?
+    val managingEditor: String?
+    val generator: String?
+    val image: Image?
+    val lastBuildDate: ZonedDateTime?
+    val pubDate: ZonedDateTime?
+    val ttl: Int?
+    val skipDays: List<DayOfWeek>
+    val skipHours: List<Int>
+    val cloud: Cloud?
+    val textInput: TextInput?
+    val items: List<Item>
+    val iTunesCategories: List<ITunesTopLevelCategory>
+    val iTunesExplicit: ITunesExplicitStatus
+    val iTunesSubtitle: String?
+    val iTunesSummary: String?
+    val iTunesAuthor: String?
+    val iTunesImage: ITunesImage?
+    val iTunesBlock: ITunesBlock?
+    val iTunesComplete: Boolean
+}
+
+/**
  * This class represents a channel in an RSS feed.
  *
  * @author Mitchell Skaggs
@@ -36,44 +69,44 @@ data class RssFeed(
  */
 @Root(name = "channel", strict = false)
 data class Channel(
-        val title: String,
-        val description: String,
-        val link: URL,
-        val categories: List<Category>,
-        val copyright: String? = null,
-        val docs: URL? = null,
-        val language: Locale? = null,
-        val webMaster: String? = null,
-        val managingEditor: String? = null,
-        val generator: String? = null,
-        val image: Image? = null,
-        val lastBuildDate: ZonedDateTime? = null,
-        val pubDate: ZonedDateTime? = null,
-        val ttl: Int? = null,
-        val skipDays: List<DayOfWeek>,
-        val skipHours: List<Int>,
-        val cloud: Cloud? = null,
-        val textInput: TextInput? = null,
-        val items: List<Item>,
-        val iTunesCategories: List<ITunesTopLevelCategory>,
+        override val title: String,
+        override val description: String,
+        override val link: URL,
+        override val categories: List<Category>,
+        override val copyright: String?,
+        override val docs: URL?,
+        override val language: Locale?,
+        override val webMaster: String?,
+        override val managingEditor: String?,
+        override val generator: String?,
+        override val image: Image?,
+        override val lastBuildDate: ZonedDateTime?,
+        override val pubDate: ZonedDateTime?,
+        override val ttl: Int?,
+        override val skipDays: List<DayOfWeek>,
+        override val skipHours: List<Int>,
+        override val cloud: Cloud?,
+        override val textInput: TextInput?,
+        override val items: List<Item>,
+        override val iTunesCategories: List<ITunesTopLevelCategory>,
         internal val _iTunesExplicit: String?,
-        val iTunesSubtitle: String?,
-        val iTunesSummary: String?,
-        val iTunesAuthor: String?,
-        val iTunesImage: ITunesImage?,
-        val iTunesBlock: ITunesBlock?,
+        override val iTunesSubtitle: String?,
+        override val iTunesSummary: String?,
+        override val iTunesAuthor: String?,
+        override val iTunesImage: ITunesImage?,
+        override val iTunesBlock: ITunesBlock?,
         internal val _iTunesComplete: String?
-) {
-        val iTunesExplicit: ITunesExplicitStatus = when (_iTunesExplicit?.toLowerCase()) {
-                "yes" -> ITunesExplicitStatus.YES
-                "clean" -> ITunesExplicitStatus.CLEAN
-                else -> ITunesExplicitStatus.NONE
-        }
+) : IChannel {
+    override val iTunesExplicit: ITunesExplicitStatus = when (_iTunesExplicit?.toLowerCase()) {
+        "yes" -> ITunesExplicitStatus.YES
+        "clean" -> ITunesExplicitStatus.CLEAN
+        else -> ITunesExplicitStatus.NONE
+    }
 
-        val iTunesComplete: Boolean = when (_iTunesComplete?.toLowerCase()) {
-                "yes" -> true
-                else -> false
-        }
+    override val iTunesComplete: Boolean = when (_iTunesComplete?.toLowerCase()) {
+        "yes" -> true
+        else -> false
+    }
 }
 
 /**
@@ -90,6 +123,18 @@ data class Category(
 )
 
 /**
+ * The final RSS view of an `<image>` element. Defaults are used if applicable.
+ */
+interface IImage {
+    val url: URL
+    val title: String
+    val link: URL
+    val description: String?
+    val width: Int
+    val height: Int
+}
+
+/**
  * This class represents an image in a [Channel].
  *
  * @author Mitchell Skaggs
@@ -98,13 +143,16 @@ data class Category(
  */
 @Root(name = "image", strict = false)
 data class Image(
-        val url: URL,
-        val title: String,
-        val link: URL,
-        val description: String? = null,
-        val width: Int = 88,
-        val height: Int = 31
-)
+        override val url: URL,
+        override val title: String,
+        override val link: URL,
+        override val description: String?,
+        internal val _width: String?,
+        internal val _height: String?
+) : IImage {
+    override val width: Int = _width?.toInt() ?: 88
+    override val height: Int = _height?.toInt() ?: 31
+}
 
 /**
  * This class represents a cloud object in a [Channel].
@@ -138,6 +186,30 @@ data class TextInput(
 )
 
 /**
+ * The final RSS view of an `<item>` element. Defaults are used if applicable.
+ */
+interface IItem {
+    val title: String?
+    val description: String?
+    val link: URL?
+    val categories: List<Category>
+    val comments: URL?
+    val pubDate: ZonedDateTime?
+    val author: String?
+    val guid: Guid?
+    val enclosure: Enclosure?
+    val source: Source?
+    val iTunesCategories: List<ITunesTopLevelCategory>
+    val iTunesExplicit: ITunesExplicitStatus
+    val iTunesSubtitle: String?
+    val iTunesSummary: String?
+    val iTunesAuthor: String?
+    val iTunesDuration: ITunesDuration?
+    val iTunesImage: ITunesImage?
+    val iTunesBlock: ITunesBlock?
+}
+
+/**
  * This class represents an item in a [Channel].
  *
  * @author Mitchell Skaggs
@@ -146,30 +218,30 @@ data class TextInput(
  */
 @Root(name = "item", strict = false)
 data class Item(
-        val title: String? = null,
-        val description: String? = null,
-        val link: URL? = null,
-        val categories: List<Category>,
-        val comments: URL? = null,
-        val pubDate: ZonedDateTime? = null,
-        val author: String? = null,
-        val guid: Guid? = null,
-        val enclosure: Enclosure? = null,
-        val source: Source? = null,
-        val iTunesCategories: List<ITunesTopLevelCategory>,
+        override val title: String?,
+        override val description: String?,
+        override val link: URL?,
+        override val categories: List<Category>,
+        override val comments: URL?,
+        override val pubDate: ZonedDateTime?,
+        override val author: String?,
+        override val guid: Guid?,
+        override val enclosure: Enclosure?,
+        override val source: Source?,
+        override val iTunesCategories: List<ITunesTopLevelCategory>,
         internal val _iTunesExplicit: String?,
-        val iTunesSubtitle: String?,
-        val iTunesSummary: String?,
-        val iTunesAuthor: String?,
-        val iTunesDuration: ITunesDuration?,
-        val iTunesImage: ITunesImage?,
-        val iTunesBlock: ITunesBlock?
-) {
-        val iTunesExplicit: ITunesExplicitStatus = when (_iTunesExplicit?.toLowerCase()) {
-                "yes" -> ITunesExplicitStatus.YES
-                "clean" -> ITunesExplicitStatus.CLEAN
-                else -> ITunesExplicitStatus.NONE
-        }
+        override val iTunesSubtitle: String?,
+        override val iTunesSummary: String?,
+        override val iTunesAuthor: String?,
+        override val iTunesDuration: ITunesDuration?,
+        override val iTunesImage: ITunesImage?,
+        override val iTunesBlock: ITunesBlock?
+) : IItem {
+    override val iTunesExplicit: ITunesExplicitStatus = when (_iTunesExplicit?.toLowerCase()) {
+        "yes" -> ITunesExplicitStatus.YES
+        "clean" -> ITunesExplicitStatus.CLEAN
+        else -> ITunesExplicitStatus.NONE
+    }
 }
 
 /**
