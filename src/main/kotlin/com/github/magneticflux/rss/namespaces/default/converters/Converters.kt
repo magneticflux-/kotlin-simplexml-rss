@@ -1,10 +1,25 @@
-package com.github.magneticflux.rss
+package com.github.magneticflux.rss.namespaces.default.converters
 
-import com.github.magneticflux.rss.itunes.ITUNES_REFERENCE
-import com.github.magneticflux.rss.itunes.ITunesBlock
-import com.github.magneticflux.rss.itunes.ITunesDuration
-import com.github.magneticflux.rss.itunes.ITunesImage
-import com.github.magneticflux.rss.itunes.ITunesTopLevelCategory
+import com.github.magneticflux.rss.DayOfWeekTransform
+import com.github.magneticflux.rss.LocaleLanguageTransform
+import com.github.magneticflux.rss.URLTransform
+import com.github.magneticflux.rss.ZonedDateTimeTransform
+import com.github.magneticflux.rss.createRssPersister
+import com.github.magneticflux.rss.namespaces.default.elements.Category
+import com.github.magneticflux.rss.namespaces.default.elements.Channel
+import com.github.magneticflux.rss.namespaces.default.elements.Cloud
+import com.github.magneticflux.rss.namespaces.default.elements.Enclosure
+import com.github.magneticflux.rss.namespaces.default.elements.Guid
+import com.github.magneticflux.rss.namespaces.default.elements.Image
+import com.github.magneticflux.rss.namespaces.default.elements.Item
+import com.github.magneticflux.rss.namespaces.default.elements.RssFeed
+import com.github.magneticflux.rss.namespaces.default.elements.Source
+import com.github.magneticflux.rss.namespaces.default.elements.TextInput
+import com.github.magneticflux.rss.namespaces.itunes.elements.ITUNES_REFERENCE
+import com.github.magneticflux.rss.namespaces.itunes.elements.ITunesBlock
+import com.github.magneticflux.rss.namespaces.itunes.elements.ITunesDuration
+import com.github.magneticflux.rss.namespaces.itunes.elements.ITunesImage
+import com.github.magneticflux.rss.namespaces.itunes.elements.ITunesTopLevelCategory
 import org.simpleframework.xml.convert.Converter
 import org.simpleframework.xml.stream.InputNode
 import org.simpleframework.xml.stream.OutputNode
@@ -216,13 +231,13 @@ object ChannelConverter : Converter<Channel> {
         value.iTunesCategories.forEach {
             fallbackPersister.write(it, node)
         }
-        if (value._iTunesExplicit != null) node.createChild(ITUNES_REFERENCE, "explicit", value._iTunesExplicit)
+        if (value.iTunesExplicitRaw != null) node.createChild(ITUNES_REFERENCE, "explicit", value.iTunesExplicitRaw)
         if (value.iTunesSubtitle != null) node.createChild(ITUNES_REFERENCE, "subtitle", value.iTunesSubtitle)
         if (value.iTunesSummary != null) node.createChild(ITUNES_REFERENCE, "summary", value.iTunesSummary)
         if (value.iTunesAuthor != null) node.createChild(ITUNES_REFERENCE, "author", value.iTunesAuthor)
         if (value.iTunesImage != null) fallbackPersister.write(value.iTunesImage, node)
         if (value.iTunesBlock != null) fallbackPersister.write(value.iTunesBlock, node)
-        if (value._iTunesComplete != null) node.createChild(ITUNES_REFERENCE, "complete", value._iTunesComplete)
+        if (value.iTunesCompleteRaw != null) node.createChild(ITUNES_REFERENCE, "complete", value.iTunesCompleteRaw)
     }
 }
 
@@ -418,7 +433,7 @@ object ItemConverter : Converter<Item> {
         if (value.enclosure != null) fallbackPersister.write(value.enclosure, node)
         if (value.source != null) fallbackPersister.write(value.source, node)
         value.iTunesCategories.forEach { fallbackPersister.write(it, node) }
-        if (value._iTunesExplicit != null) node.createChild(ITUNES_REFERENCE, "explicit", value._iTunesExplicit)
+        if (value.iTunesExplicitRaw != null) node.createChild(ITUNES_REFERENCE, "explicit", value.iTunesExplicitRaw)
         if (value.iTunesSubtitle != null) node.createChild(ITUNES_REFERENCE, "subtitle", value.iTunesSubtitle)
         if (value.iTunesSummary != null) node.createChild(ITUNES_REFERENCE, "summary", value.iTunesSummary)
         if (value.iTunesAuthor != null) node.createChild(ITUNES_REFERENCE, "author", value.iTunesAuthor)

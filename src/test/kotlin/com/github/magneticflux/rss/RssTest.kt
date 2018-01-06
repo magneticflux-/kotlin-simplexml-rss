@@ -1,8 +1,17 @@
 package com.github.magneticflux.rss
 
 import com.github.magneticflux.rss.SampleUtils.getSample
-import com.github.magneticflux.rss.itunes.ITunesSubCategory
-import com.github.magneticflux.rss.itunes.ITunesTopLevelCategory
+import com.github.magneticflux.rss.namespaces.default.elements.Category
+import com.github.magneticflux.rss.namespaces.default.elements.Cloud
+import com.github.magneticflux.rss.namespaces.default.elements.Enclosure
+import com.github.magneticflux.rss.namespaces.default.elements.Guid
+import com.github.magneticflux.rss.namespaces.default.elements.Image
+import com.github.magneticflux.rss.namespaces.default.elements.Item
+import com.github.magneticflux.rss.namespaces.default.elements.RssFeed
+import com.github.magneticflux.rss.namespaces.default.elements.Source
+import com.github.magneticflux.rss.namespaces.default.elements.TextInput
+import com.github.magneticflux.rss.namespaces.itunes.elements.ITunesSubCategory
+import com.github.magneticflux.rss.namespaces.itunes.elements.ITunesTopLevelCategory
 import org.hamcrest.CoreMatchers.equalTo
 import org.hamcrest.CoreMatchers.isA
 import org.hamcrest.Description
