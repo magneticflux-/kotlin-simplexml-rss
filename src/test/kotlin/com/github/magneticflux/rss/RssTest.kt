@@ -13,14 +13,9 @@ import com.github.magneticflux.rss.namespaces.standard.elements.Rss
 import com.github.magneticflux.rss.namespaces.standard.elements.Source
 import com.github.magneticflux.rss.namespaces.standard.elements.TextInput
 import org.hamcrest.CoreMatchers.equalTo
-import org.hamcrest.CoreMatchers.isA
-import org.hamcrest.Description
-import org.hamcrest.Matcher
 import org.hamcrest.MatcherAssert.assertThat
 import org.hamcrest.Matchers.hasItem
 import org.hamcrest.Matchers.hasSize
-import org.hamcrest.Matchers.not
-import org.hamcrest.TypeSafeDiagnosingMatcher
 import org.jetbrains.spek.api.Spek
 import org.jetbrains.spek.api.dsl.given
 import org.jetbrains.spek.api.dsl.it
@@ -340,37 +335,3 @@ class RssTest : Spek({
         }
     }
 })
-
-inline fun <reified T : Throwable> throws(): Matcher<() -> Any?> {
-    return throws(isA(T::class.java))
-}
-
-fun throws(matcher: Matcher<out Throwable>): Matcher<() -> Any?> {
-    return object : TypeSafeDiagnosingMatcher<() -> Any?>() {
-        override fun matchesSafely(item: (() -> Any?), mismatchDescription: Description): Boolean {
-            return try {
-                item()
-                mismatchDescription.appendText("did not throw an exception")
-                false
-            } catch (e: Throwable) {
-                val success = matcher.matches(e)
-
-                if (!success) {
-                    mismatchDescription.appendText("was ")
-                    matcher.describeMismatch(e, mismatchDescription)
-                }
-
-                success
-            }
-        }
-
-        override fun describeTo(description: Description) {
-            description.appendText("a function that throws")
-                    .appendDescriptionOf(matcher)
-        }
-    }
-}
-
-private operator fun <T> Matcher<T>.not(): Matcher<T> {
-    return not(this)
-}
