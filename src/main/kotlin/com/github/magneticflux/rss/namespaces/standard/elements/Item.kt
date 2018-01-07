@@ -1,6 +1,5 @@
 package com.github.magneticflux.rss.namespaces.standard.elements
 
-import com.github.magneticflux.rss.DurationTransform
 import com.github.magneticflux.rss.namespaces.itunes.elements.ICommonITunesImage
 import com.github.magneticflux.rss.namespaces.itunes.elements.ICommonITunesTopLevelCategory
 import com.github.magneticflux.rss.namespaces.itunes.elements.IITunesImage
@@ -117,5 +116,11 @@ data class Item(
         else -> false
     }
 
-    override val iTunesDuration: Duration? = if (iTunesDurationRaw == null) null else DurationTransform.read(iTunesDurationRaw)
+    override val iTunesDuration: Duration? = if (iTunesDurationRaw == null) null else {
+        val segments = iTunesDurationRaw.split(':').asReversed()
+        val seconds = segments.getOrNull(0)?.toLongOrNull() ?: 0
+        val minutes = segments.getOrNull(1)?.toLongOrNull() ?: 0
+        val hours = segments.getOrNull(2)?.toLongOrNull() ?: 0
+        Duration.ofSeconds(seconds).plusMinutes(minutes).plusHours(hours)
+    }
 }
