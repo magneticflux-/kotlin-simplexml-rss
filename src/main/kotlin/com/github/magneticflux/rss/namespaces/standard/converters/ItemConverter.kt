@@ -7,7 +7,6 @@ import com.github.magneticflux.rss.createChild
 import com.github.magneticflux.rss.fallbackPersister
 import com.github.magneticflux.rss.fullName
 import com.github.magneticflux.rss.namespaces.itunes.elements.ITUNES_REFERENCE
-import com.github.magneticflux.rss.namespaces.itunes.elements.ITunesDuration
 import com.github.magneticflux.rss.namespaces.itunes.elements.ITunesImage
 import com.github.magneticflux.rss.namespaces.itunes.elements.ITunesTopLevelCategory
 import com.github.magneticflux.rss.namespaces.standard.elements.Category
@@ -42,7 +41,7 @@ object ItemConverter : Converter<Item> {
         var iTunesSubtitle: String? = null
         var iTunesSummary: String? = null
         var iTunesAuthor: String? = null
-        var iTunesDuration: ITunesDuration? = null
+        var iTunesDurationRaw: String? = null
         var iTunesImage: ITunesImage? = null
         var iTunesBlockRaw: String? = null
 
@@ -63,7 +62,7 @@ object ItemConverter : Converter<Item> {
                 "itunes:subtitle" -> iTunesSubtitle = it.value
                 "itunes:summary" -> iTunesSummary = it.value
                 "itunes:author" -> iTunesAuthor = it.value
-                "itunes:duration" -> iTunesDuration = fallbackPersister.read(ITunesDuration::class.java, it)
+                "itunes:duration" -> iTunesDurationRaw = it.value
                 "itunes:image" -> iTunesImage = fallbackPersister.read(ITunesImage::class.java, it)
                 "itunes:block" -> iTunesBlockRaw = it.value
             }
@@ -85,7 +84,7 @@ object ItemConverter : Converter<Item> {
                 iTunesSubtitle,
                 iTunesSummary,
                 iTunesAuthor,
-                iTunesDuration,
+                iTunesDurationRaw,
                 iTunesImage,
                 iTunesBlockRaw
         )
@@ -107,7 +106,7 @@ object ItemConverter : Converter<Item> {
         if (value.iTunesSubtitle != null) node.createChild(ITUNES_REFERENCE, "subtitle", value.iTunesSubtitle)
         if (value.iTunesSummary != null) node.createChild(ITUNES_REFERENCE, "summary", value.iTunesSummary)
         if (value.iTunesAuthor != null) node.createChild(ITUNES_REFERENCE, "author", value.iTunesAuthor)
-        if (value.iTunesDuration != null) fallbackPersister.write(value.iTunesDuration, node)
+        if (value.iTunesDurationRaw != null) node.createChild(ITUNES_REFERENCE, "duration", value.iTunesDurationRaw)
         if (value.iTunesImage != null) fallbackPersister.write(value.iTunesImage, node)
         if (value.iTunesBlockRaw != null) node.createChild(ITUNES_REFERENCE, "block", value.iTunesBlockRaw)
     }

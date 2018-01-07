@@ -1,10 +1,10 @@
 package com.github.magneticflux.rss.namespaces.standard.elements
 
+import com.github.magneticflux.rss.DurationTransform
 import com.github.magneticflux.rss.namespaces.itunes.elements.ICommonITunesImage
 import com.github.magneticflux.rss.namespaces.itunes.elements.ICommonITunesTopLevelCategory
 import com.github.magneticflux.rss.namespaces.itunes.elements.IITunesImage
 import com.github.magneticflux.rss.namespaces.itunes.elements.IITunesTopLevelCategory
-import com.github.magneticflux.rss.namespaces.itunes.elements.ITunesDuration
 import com.github.magneticflux.rss.namespaces.itunes.elements.ITunesExplicitStatus
 import com.github.magneticflux.rss.namespaces.itunes.elements.ITunesImage
 import com.github.magneticflux.rss.namespaces.itunes.elements.ITunesTopLevelCategory
@@ -12,6 +12,7 @@ import com.github.magneticflux.rss.namespaces.itunes.elements.IWritableITunesIma
 import com.github.magneticflux.rss.namespaces.itunes.elements.IWritableITunesTopLevelCategory
 import com.github.magneticflux.rss.namespaces.standard.converters.ItemConverter
 import org.simpleframework.xml.Root
+import org.threeten.bp.Duration
 import org.threeten.bp.ZonedDateTime
 import java.net.URL
 
@@ -35,7 +36,6 @@ interface ICommonItem : HasReadWrite<IItem, IWritableItem> {
     val iTunesSubtitle: String?
     val iTunesSummary: String?
     val iTunesAuthor: String?
-    val iTunesDuration: ITunesDuration?
     val iTunesImage: ICommonITunesImage?
 }
 
@@ -55,6 +55,7 @@ interface IItem : ICommonItem {
     override val iTunesImage: IITunesImage?
     val iTunesExplicit: ITunesExplicitStatus
     val iTunesBlock: Boolean
+    val iTunesDuration: Duration?
 }
 
 /**
@@ -73,6 +74,7 @@ interface IWritableItem : ICommonItem {
     override val iTunesImage: IWritableITunesImage?
     val iTunesExplicitRaw: String?
     val iTunesBlockRaw: String?
+    val iTunesDurationRaw: String?
 }
 
 /**
@@ -99,10 +101,11 @@ data class Item(
         override val iTunesSubtitle: String?,
         override val iTunesSummary: String?,
         override val iTunesAuthor: String?,
-        override val iTunesDuration: ITunesDuration?,
+        override val iTunesDurationRaw: String?,
         override val iTunesImage: ITunesImage?,
         override val iTunesBlockRaw: String?
 ) : IItem, IWritableItem {
+
     override val iTunesExplicit = when (iTunesExplicitRaw?.toLowerCase()) {
         "yes" -> ITunesExplicitStatus.YES
         "clean" -> ITunesExplicitStatus.CLEAN
@@ -113,4 +116,6 @@ data class Item(
         "yes" -> true
         else -> false
     }
+
+    override val iTunesDuration: Duration? = if (iTunesDurationRaw == null) null else DurationTransform.read(iTunesDurationRaw)
 }

@@ -1,10 +1,8 @@
 package com.github.magneticflux.rss
 
-import com.github.magneticflux.rss.namespaces.itunes.converters.ITunesDurationConverter
 import com.github.magneticflux.rss.namespaces.itunes.converters.ITunesImageConverter
 import com.github.magneticflux.rss.namespaces.itunes.converters.ITunesSubCategoryConverter
 import com.github.magneticflux.rss.namespaces.itunes.converters.ITunesTopLevelCategoryConverter
-import com.github.magneticflux.rss.namespaces.itunes.elements.ITunesDuration
 import com.github.magneticflux.rss.namespaces.itunes.elements.ITunesImage
 import com.github.magneticflux.rss.namespaces.itunes.elements.ITunesSubCategory
 import com.github.magneticflux.rss.namespaces.itunes.elements.ITunesTopLevelCategory
@@ -66,7 +64,6 @@ fun createRssStrategy(): Strategy {
                 this.bind(Source::class.java, SourceConverter)
                 this.bind(ITunesTopLevelCategory::class.java, ITunesTopLevelCategoryConverter)
                 this.bind(ITunesSubCategory::class.java, ITunesSubCategoryConverter)
-                this.bind(ITunesDuration::class.java, ITunesDurationConverter)
                 this.bind(ITunesImage::class.java, ITunesImageConverter)
             })
 }
