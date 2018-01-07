@@ -1,7 +1,7 @@
-package com.github.magneticflux.rss.namespaces.default.elements
+package com.github.magneticflux.rss.namespaces.standard.elements
 
-import com.github.magneticflux.rss.namespaces.default.converters.RssFeedConverter
 import com.github.magneticflux.rss.namespaces.itunes.elements.ITUNES_REFERENCE
+import com.github.magneticflux.rss.namespaces.standard.converters.RssFeedConverter
 import org.simpleframework.xml.Namespace
 import org.simpleframework.xml.Root
 

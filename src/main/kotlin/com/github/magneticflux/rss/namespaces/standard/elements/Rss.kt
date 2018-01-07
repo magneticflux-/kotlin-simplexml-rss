@@ -1,12 +1,12 @@
-package com.github.magneticflux.rss.namespaces.default.elements
+package com.github.magneticflux.rss.namespaces.standard.elements
 
-import com.github.magneticflux.rss.namespaces.default.converters.CategoryConverter
-import com.github.magneticflux.rss.namespaces.default.converters.CloudConverter
-import com.github.magneticflux.rss.namespaces.default.converters.EnclosureConverter
-import com.github.magneticflux.rss.namespaces.default.converters.GuidConverter
-import com.github.magneticflux.rss.namespaces.default.converters.ImageConverter
-import com.github.magneticflux.rss.namespaces.default.converters.SourceConverter
-import com.github.magneticflux.rss.namespaces.default.converters.TextInputConverter
+import com.github.magneticflux.rss.namespaces.standard.converters.CategoryConverter
+import com.github.magneticflux.rss.namespaces.standard.converters.CloudConverter
+import com.github.magneticflux.rss.namespaces.standard.converters.EnclosureConverter
+import com.github.magneticflux.rss.namespaces.standard.converters.GuidConverter
+import com.github.magneticflux.rss.namespaces.standard.converters.ImageConverter
+import com.github.magneticflux.rss.namespaces.standard.converters.SourceConverter
+import com.github.magneticflux.rss.namespaces.standard.converters.TextInputConverter
 import org.simpleframework.xml.Root
 import java.net.URL
 

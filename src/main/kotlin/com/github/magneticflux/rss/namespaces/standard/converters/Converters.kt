@@ -1,4 +1,4 @@
-package com.github.magneticflux.rss.namespaces.default.converters
+package com.github.magneticflux.rss.namespaces.standard.converters
 
 import com.github.magneticflux.rss.createRssPersister
 import org.simpleframework.xml.convert.Converter

@@ -1,11 +1,11 @@
-package com.github.magneticflux.rss.namespaces.default.elements
+package com.github.magneticflux.rss.namespaces.standard.elements
 
-import com.github.magneticflux.rss.namespaces.default.converters.ItemConverter
 import com.github.magneticflux.rss.namespaces.itunes.elements.ITunesBlock
 import com.github.magneticflux.rss.namespaces.itunes.elements.ITunesDuration
 import com.github.magneticflux.rss.namespaces.itunes.elements.ITunesExplicitStatus
 import com.github.magneticflux.rss.namespaces.itunes.elements.ITunesImage
 import com.github.magneticflux.rss.namespaces.itunes.elements.ITunesTopLevelCategory
+import com.github.magneticflux.rss.namespaces.standard.converters.ItemConverter
 import org.simpleframework.xml.Root
 import org.threeten.bp.ZonedDateTime
 import java.net.URL

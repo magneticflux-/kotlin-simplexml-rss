@@ -1,13 +1,13 @@
 package com.github.magneticflux.rss.namespaces.itunes.elements
 
-import com.github.magneticflux.rss.namespaces.default.elements.Channel
-import com.github.magneticflux.rss.namespaces.default.elements.Item
 import com.github.magneticflux.rss.namespaces.itunes.converters.ITunesBlockConverter
 import com.github.magneticflux.rss.namespaces.itunes.converters.ITunesCompleteConverter
 import com.github.magneticflux.rss.namespaces.itunes.converters.ITunesDurationConverter
 import com.github.magneticflux.rss.namespaces.itunes.converters.ITunesImageConverter
 import com.github.magneticflux.rss.namespaces.itunes.converters.ITunesSubCategoryConverter
 import com.github.magneticflux.rss.namespaces.itunes.converters.ITunesTopLevelCategoryConverter
+import com.github.magneticflux.rss.namespaces.standard.elements.Channel
+import com.github.magneticflux.rss.namespaces.standard.elements.Item
 import org.simpleframework.xml.Namespace
 import org.simpleframework.xml.Root
 import org.threeten.bp.Duration

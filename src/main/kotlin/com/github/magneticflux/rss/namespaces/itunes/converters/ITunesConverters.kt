@@ -2,15 +2,15 @@ package com.github.magneticflux.rss.namespaces.itunes.converters
 
 import com.github.magneticflux.rss.DurationTransform
 import com.github.magneticflux.rss.URLTransform
-import com.github.magneticflux.rss.namespaces.default.converters.children
-import com.github.magneticflux.rss.namespaces.default.converters.fallbackPersister
-import com.github.magneticflux.rss.namespaces.default.converters.fullName
 import com.github.magneticflux.rss.namespaces.itunes.elements.ITunesBlock
 import com.github.magneticflux.rss.namespaces.itunes.elements.ITunesComplete
 import com.github.magneticflux.rss.namespaces.itunes.elements.ITunesDuration
 import com.github.magneticflux.rss.namespaces.itunes.elements.ITunesImage
 import com.github.magneticflux.rss.namespaces.itunes.elements.ITunesSubCategory
 import com.github.magneticflux.rss.namespaces.itunes.elements.ITunesTopLevelCategory
+import com.github.magneticflux.rss.namespaces.standard.converters.children
+import com.github.magneticflux.rss.namespaces.standard.converters.fallbackPersister
+import com.github.magneticflux.rss.namespaces.standard.converters.fullName
 import org.simpleframework.xml.convert.Converter
 import org.simpleframework.xml.stream.InputNode
 import org.simpleframework.xml.stream.OutputNode

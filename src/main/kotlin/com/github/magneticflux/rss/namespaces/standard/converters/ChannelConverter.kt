@@ -1,19 +1,19 @@
-package com.github.magneticflux.rss.namespaces.default.converters
+package com.github.magneticflux.rss.namespaces.standard.converters
 
 import com.github.magneticflux.rss.DayOfWeekTransform
 import com.github.magneticflux.rss.LocaleLanguageTransform
 import com.github.magneticflux.rss.URLTransform
 import com.github.magneticflux.rss.ZonedDateTimeTransform
-import com.github.magneticflux.rss.namespaces.default.elements.Category
-import com.github.magneticflux.rss.namespaces.default.elements.Channel
-import com.github.magneticflux.rss.namespaces.default.elements.Cloud
-import com.github.magneticflux.rss.namespaces.default.elements.Image
-import com.github.magneticflux.rss.namespaces.default.elements.Item
-import com.github.magneticflux.rss.namespaces.default.elements.TextInput
 import com.github.magneticflux.rss.namespaces.itunes.elements.ITUNES_REFERENCE
 import com.github.magneticflux.rss.namespaces.itunes.elements.ITunesBlock
 import com.github.magneticflux.rss.namespaces.itunes.elements.ITunesImage
 import com.github.magneticflux.rss.namespaces.itunes.elements.ITunesTopLevelCategory
+import com.github.magneticflux.rss.namespaces.standard.elements.Category
+import com.github.magneticflux.rss.namespaces.standard.elements.Channel
+import com.github.magneticflux.rss.namespaces.standard.elements.Cloud
+import com.github.magneticflux.rss.namespaces.standard.elements.Image
+import com.github.magneticflux.rss.namespaces.standard.elements.Item
+import com.github.magneticflux.rss.namespaces.standard.elements.TextInput
 import org.simpleframework.xml.convert.Converter
 import org.simpleframework.xml.stream.InputNode
 import org.simpleframework.xml.stream.OutputNode

@@ -1,7 +1,7 @@
-package com.github.magneticflux.rss.namespaces.default.converters
+package com.github.magneticflux.rss.namespaces.standard.converters
 
 import com.github.magneticflux.rss.URLTransform
-import com.github.magneticflux.rss.namespaces.default.elements.Enclosure
+import com.github.magneticflux.rss.namespaces.standard.elements.Enclosure
 import org.simpleframework.xml.convert.Converter
 import org.simpleframework.xml.stream.InputNode
 import org.simpleframework.xml.stream.OutputNode
