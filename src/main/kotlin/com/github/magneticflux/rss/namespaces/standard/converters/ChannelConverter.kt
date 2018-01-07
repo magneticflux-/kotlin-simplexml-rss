@@ -9,7 +9,6 @@ import com.github.magneticflux.rss.createChild
 import com.github.magneticflux.rss.fallbackPersister
 import com.github.magneticflux.rss.fullName
 import com.github.magneticflux.rss.namespaces.itunes.elements.ITUNES_REFERENCE
-import com.github.magneticflux.rss.namespaces.itunes.elements.ITunesBlock
 import com.github.magneticflux.rss.namespaces.itunes.elements.ITunesImage
 import com.github.magneticflux.rss.namespaces.itunes.elements.ITunesTopLevelCategory
 import com.github.magneticflux.rss.namespaces.standard.elements.Category
@@ -52,13 +51,13 @@ object ChannelConverter : Converter<Channel> {
         var textInput: TextInput? = null
         val items = mutableListOf<Item>()
         val iTunesCategories = mutableListOf<ITunesTopLevelCategory>()
-        var iTunesExplicit: String? = null
+        var iTunesExplicitRaw: String? = null
         var iTunesSubtitle: String? = null
         var iTunesSummary: String? = null
         var iTunesAuthor: String? = null
         var iTunesImage: ITunesImage? = null
-        var iTunesBlock: ITunesBlock? = null
-        var iTunesComplete: String? = null
+        var iTunesBlockRaw: String? = null
+        var iTunesCompleteRaw: String? = null
 
         node.children.forEach {
             when (it.fullName) {
@@ -82,13 +81,13 @@ object ChannelConverter : Converter<Channel> {
                 "textInput" -> textInput = fallbackPersister.read(TextInput::class.java, it)
                 "item" -> items += fallbackPersister.read(Item::class.java, it)
                 "itunes:category" -> iTunesCategories += fallbackPersister.read(ITunesTopLevelCategory::class.java, it)
-                "itunes:explicit" -> iTunesExplicit = it.value
+                "itunes:explicit" -> iTunesExplicitRaw = it.value
                 "itunes:subtitle" -> iTunesSubtitle = it.value
                 "itunes:summary" -> iTunesSummary = it.value
                 "itunes:author" -> iTunesAuthor = it.value
                 "itunes:image" -> iTunesImage = fallbackPersister.read(ITunesImage::class.java, it)
-                "itunes:block" -> iTunesBlock = fallbackPersister.read(ITunesBlock::class.java, it)
-                "itunes:complete" -> iTunesComplete = it.value
+                "itunes:block" -> iTunesBlockRaw = it.value
+                "itunes:complete" -> iTunesCompleteRaw = it.value
             }
         }
 
@@ -113,13 +112,13 @@ object ChannelConverter : Converter<Channel> {
                 textInput,
                 items,
                 iTunesCategories,
-                iTunesExplicit,
+                iTunesExplicitRaw,
                 iTunesSubtitle,
                 iTunesSummary,
                 iTunesAuthor,
                 iTunesImage,
-                iTunesBlock,
-                iTunesComplete
+                iTunesBlockRaw,
+                iTunesCompleteRaw
         )
     }
 
@@ -161,7 +160,7 @@ object ChannelConverter : Converter<Channel> {
         if (value.iTunesSummary != null) node.createChild(ITUNES_REFERENCE, "summary", value.iTunesSummary)
         if (value.iTunesAuthor != null) node.createChild(ITUNES_REFERENCE, "author", value.iTunesAuthor)
         if (value.iTunesImage != null) fallbackPersister.write(value.iTunesImage, node)
-        if (value.iTunesBlock != null) fallbackPersister.write(value.iTunesBlock, node)
+        if (value.iTunesBlockRaw != null) node.createChild(ITUNES_REFERENCE, "block", value.iTunesBlockRaw)
         if (value.iTunesCompleteRaw != null) node.createChild(ITUNES_REFERENCE, "complete", value.iTunesCompleteRaw)
     }
 }

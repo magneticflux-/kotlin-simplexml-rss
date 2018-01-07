@@ -4,7 +4,6 @@ import com.github.magneticflux.rss.namespaces.itunes.elements.ICommonITunesImage
 import com.github.magneticflux.rss.namespaces.itunes.elements.ICommonITunesTopLevelCategory
 import com.github.magneticflux.rss.namespaces.itunes.elements.IITunesImage
 import com.github.magneticflux.rss.namespaces.itunes.elements.IITunesTopLevelCategory
-import com.github.magneticflux.rss.namespaces.itunes.elements.ITunesBlock
 import com.github.magneticflux.rss.namespaces.itunes.elements.ITunesDuration
 import com.github.magneticflux.rss.namespaces.itunes.elements.ITunesExplicitStatus
 import com.github.magneticflux.rss.namespaces.itunes.elements.ITunesImage
@@ -38,7 +37,6 @@ interface ICommonItem : HasReadWrite<IItem, IWritableItem> {
     val iTunesAuthor: String?
     val iTunesDuration: ITunesDuration?
     val iTunesImage: ICommonITunesImage?
-    val iTunesBlock: ITunesBlock?
 }
 
 /**
@@ -56,6 +54,7 @@ interface IItem : ICommonItem {
     override val iTunesCategories: List<IITunesTopLevelCategory>
     override val iTunesImage: IITunesImage?
     val iTunesExplicit: ITunesExplicitStatus
+    val iTunesBlock: Boolean
 }
 
 /**
@@ -73,6 +72,7 @@ interface IWritableItem : ICommonItem {
     override val iTunesCategories: List<IWritableITunesTopLevelCategory>
     override val iTunesImage: IWritableITunesImage?
     val iTunesExplicitRaw: String?
+    val iTunesBlockRaw: String?
 }
 
 /**
@@ -101,12 +101,16 @@ data class Item(
         override val iTunesAuthor: String?,
         override val iTunesDuration: ITunesDuration?,
         override val iTunesImage: ITunesImage?,
-        override val iTunesBlock: ITunesBlock?
+        override val iTunesBlockRaw: String?
 ) : IItem, IWritableItem {
-
     override val iTunesExplicit = when (iTunesExplicitRaw?.toLowerCase()) {
         "yes" -> ITunesExplicitStatus.YES
         "clean" -> ITunesExplicitStatus.CLEAN
         else -> ITunesExplicitStatus.NONE
+    }
+
+    override val iTunesBlock: Boolean = when (iTunesBlockRaw?.toLowerCase()) {
+        "yes" -> true
+        else -> false
     }
 }

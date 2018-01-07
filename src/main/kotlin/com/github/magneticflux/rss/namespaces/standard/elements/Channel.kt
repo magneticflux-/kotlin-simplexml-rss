@@ -4,7 +4,6 @@ import com.github.magneticflux.rss.namespaces.itunes.elements.ICommonITunesImage
 import com.github.magneticflux.rss.namespaces.itunes.elements.ICommonITunesTopLevelCategory
 import com.github.magneticflux.rss.namespaces.itunes.elements.IITunesImage
 import com.github.magneticflux.rss.namespaces.itunes.elements.IITunesTopLevelCategory
-import com.github.magneticflux.rss.namespaces.itunes.elements.ITunesBlock
 import com.github.magneticflux.rss.namespaces.itunes.elements.ITunesExplicitStatus
 import com.github.magneticflux.rss.namespaces.itunes.elements.ITunesImage
 import com.github.magneticflux.rss.namespaces.itunes.elements.ITunesTopLevelCategory
@@ -47,7 +46,6 @@ interface ICommonChannel : HasReadWrite<IChannel, IWritableChannel> {
     val iTunesSummary: String?
     val iTunesAuthor: String?
     val iTunesImage: ICommonITunesImage?
-    val iTunesBlock: ITunesBlock?
 }
 
 /**
@@ -67,6 +65,7 @@ interface IChannel : ICommonChannel {
     override val iTunesImage: IITunesImage?
     val iTunesExplicit: ITunesExplicitStatus
     val iTunesComplete: Boolean
+    val iTunesBlock: Boolean
 }
 
 /**
@@ -86,6 +85,7 @@ interface IWritableChannel : ICommonChannel {
     override val iTunesImage: IWritableITunesImage?
     val iTunesExplicitRaw: String?
     val iTunesCompleteRaw: String?
+    val iTunesBlockRaw: String?
 }
 
 /**
@@ -121,10 +121,9 @@ data class Channel(
         override val iTunesSummary: String?,
         override val iTunesAuthor: String?,
         override val iTunesImage: ITunesImage?,
-        override val iTunesBlock: ITunesBlock?,
+        override val iTunesBlockRaw: String?,
         override val iTunesCompleteRaw: String?
 ) : IChannel, IWritableChannel {
-
     override val iTunesExplicit: ITunesExplicitStatus = when (iTunesExplicitRaw?.toLowerCase()) {
         "yes" -> ITunesExplicitStatus.YES
         "clean" -> ITunesExplicitStatus.CLEAN
@@ -132,6 +131,11 @@ data class Channel(
     }
 
     override val iTunesComplete: Boolean = when (iTunesCompleteRaw?.toLowerCase()) {
+        "yes" -> true
+        else -> false
+    }
+
+    override val iTunesBlock: Boolean = when (iTunesBlockRaw?.toLowerCase()) {
         "yes" -> true
         else -> false
     }
