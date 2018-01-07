@@ -10,7 +10,7 @@ import org.simpleframework.xml.Root
  *
  * @since 1.1.0
  */
-interface IRssFeedCommon {
+interface IRssCommon {
     val version: String
     val channel: IChannelCommon
 }
@@ -20,8 +20,8 @@ interface IRssFeedCommon {
  *
  * @since 1.1.0
  */
-interface IRssFeed : IRssFeedCommon {
-    fun toWritableRssFeed(): IWritableRssFeed
+interface IRss : IRssCommon {
+    fun toWritableRssFeed(): IWritableRss
     override val channel: IChannel
 }
 
@@ -30,8 +30,8 @@ interface IRssFeed : IRssFeedCommon {
  *
  * @since 1.1.0
  */
-interface IWritableRssFeed : IRssFeedCommon {
-    fun toRssFeed(): IRssFeed
+interface IWritableRss : IRssCommon {
+    fun toRssFeed(): IRss
     override val channel: IWritableChannel
 }
 
@@ -44,11 +44,11 @@ interface IWritableRssFeed : IRssFeedCommon {
  */
 @Root(name = "rss", strict = false)
 @Namespace(prefix = "itunes", reference = ITUNES_REFERENCE)
-data class RssFeed(
+data class Rss(
         override val version: String,
         override val channel: Channel
-) : IRssFeed, IWritableRssFeed {
-    override fun toRssFeed(): IRssFeed = this
+) : IRss, IWritableRss {
+    override fun toRssFeed(): IRss = this
 
-    override fun toWritableRssFeed(): IWritableRssFeed = this
+    override fun toWritableRssFeed(): IWritableRss = this
 }

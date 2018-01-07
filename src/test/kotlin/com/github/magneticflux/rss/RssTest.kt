@@ -9,7 +9,7 @@ import com.github.magneticflux.rss.namespaces.standard.elements.Enclosure
 import com.github.magneticflux.rss.namespaces.standard.elements.Guid
 import com.github.magneticflux.rss.namespaces.standard.elements.Image
 import com.github.magneticflux.rss.namespaces.standard.elements.Item
-import com.github.magneticflux.rss.namespaces.standard.elements.RssFeed
+import com.github.magneticflux.rss.namespaces.standard.elements.Rss
 import com.github.magneticflux.rss.namespaces.standard.elements.Source
 import com.github.magneticflux.rss.namespaces.standard.elements.TextInput
 import org.hamcrest.CoreMatchers.equalTo
@@ -37,7 +37,7 @@ class RssTest : Spek({
         val persister = createRssPersister()
 
         given("sample_ffa", { "$it RSS feed" }) {
-            val rssFeed = persister.read(RssFeed::class.java, getSample("$it.xml"))
+            val rssFeed = persister.read(Rss::class.java, getSample("$it.xml"))
 
             it("should have the correct version") {
                 assertThat(rssFeed.version, equalTo("2.0"))
@@ -159,7 +159,7 @@ class RssTest : Spek({
                 val rssText = StringWriter()
                 persister.write(rssFeed, rssText)
 
-                val rereadRssFeed = persister.read(RssFeed::class.java, rssText.toString())
+                val rereadRssFeed = persister.read(Rss::class.java, rssText.toString())
 
                 it("should equal original RSS feed read") {
                     assertThat(rereadRssFeed, equalTo(rssFeed))
@@ -175,7 +175,7 @@ class RssTest : Spek({
             }
 
             given("sample_phs RSS feed") {
-                val samplePHS = persister.read(RssFeed::class.java, getSample("sample_phs.xml"))
+                val samplePHS = persister.read(Rss::class.java, getSample("sample_phs.xml"))
 
                 it("should not be equal to sample_ffa") {
                     assertThat(samplePHS, !equalTo(rssFeed))
@@ -184,13 +184,13 @@ class RssTest : Spek({
         }
 
         given("sample_phs RSS feed") {
-            val samplePHS = persister.read(RssFeed::class.java, getSample("sample_phs.xml"))
+            val samplePHS = persister.read(Rss::class.java, getSample("sample_phs.xml"))
 
             on("feed reread") {
                 val rssText = StringWriter()
                 persister.write(samplePHS, rssText)
 
-                val rereadRssFeed = persister.read(RssFeed::class.java, rssText.buffer.toString())
+                val rereadRssFeed = persister.read(Rss::class.java, rssText.buffer.toString())
 
                 it("should equal original RSS feed read") {
                     assertThat(rereadRssFeed, equalTo(samplePHS))
@@ -207,13 +207,13 @@ class RssTest : Spek({
         }
 
         given("sample_podcast RSS feed") {
-            val samplePodcast = persister.read(RssFeed::class.java, getSample("sample_podcast.xml"))
+            val samplePodcast = persister.read(Rss::class.java, getSample("sample_podcast.xml"))
 
             on("feed reread") {
                 val rssText = StringWriter()
                 persister.write(samplePodcast, rssText)
 
-                val rereadRssFeed = persister.read(RssFeed::class.java, rssText.buffer.toString())
+                val rereadRssFeed = persister.read(Rss::class.java, rssText.buffer.toString())
 
                 it("should equal original RSS feed read") {
                     assertThat(rereadRssFeed, equalTo(samplePodcast))
@@ -230,13 +230,13 @@ class RssTest : Spek({
         }
 
         given("sample_all RSS feed") {
-            val sampleAll = persister.read(RssFeed::class.java, getSample("sample_all.xml"))
+            val sampleAll = persister.read(Rss::class.java, getSample("sample_all.xml"))
 
             on("feed reread") {
                 val rssText = StringWriter()
                 persister.write(sampleAll, rssText)
 
-                val rereadRssFeed = persister.read(RssFeed::class.java, rssText.buffer.toString())
+                val rereadRssFeed = persister.read(Rss::class.java, rssText.buffer.toString())
 
                 it("should equal original RSS feed read") {
                     assertThat(rereadRssFeed, equalTo(sampleAll))
@@ -256,14 +256,14 @@ class RssTest : Spek({
             on("RSS feed read") {
                 it("should throw an exception") {
                     assertThat({
-                        persister.read(RssFeed::class.java, getSample("sample_no_channel.xml"))
+                        persister.read(Rss::class.java, getSample("sample_no_channel.xml"))
                     }, throws<UninitializedPropertyAccessException>())
                 }
             }
         }
 
         given("sample_itunes RSS feed") {
-            val sampleITunes = persister.read(RssFeed::class.java, getSample("sample_itunes.xml"))
+            val sampleITunes = persister.read(Rss::class.java, getSample("sample_itunes.xml"))
 
             it("should have the correct itunes:category elements") {
                 assertThat(sampleITunes.channel.iTunesCategories, equalTo(listOf(
@@ -277,7 +277,7 @@ class RssTest : Spek({
                 val rssText = StringWriter()
                 persister.write(sampleITunes, rssText)
 
-                val rereadRssFeed = persister.read(RssFeed::class.java, rssText.toString())
+                val rereadRssFeed = persister.read(Rss::class.java, rssText.toString())
 
                 it("should equal original RSS feed read") {
                     assertThat(rereadRssFeed, equalTo(sampleITunes))
@@ -294,13 +294,13 @@ class RssTest : Spek({
         }
 
         given("sample_gn", { "$it RSS feed" }) {
-            val rssFeed = persister.read(RssFeed::class.java, getSample("$it.xml"))
+            val rssFeed = persister.read(Rss::class.java, getSample("$it.xml"))
 
             on("feed reread") {
                 val rssText = StringWriter()
                 persister.write(rssFeed, rssText)
 
-                val rereadRssFeed = persister.read(RssFeed::class.java, rssText.toString())
+                val rereadRssFeed = persister.read(Rss::class.java, rssText.toString())
 
                 it("should equal original RSS feed read") {
                     assertThat(rereadRssFeed, equalTo(rssFeed))
@@ -317,13 +317,13 @@ class RssTest : Spek({
         }
 
         given("sample_apple", { "$it RSS feed" }) {
-            val rssFeed = persister.read(RssFeed::class.java, getSample("$it.xml"))
+            val rssFeed = persister.read(Rss::class.java, getSample("$it.xml"))
 
             on("feed reread") {
                 val rssText = StringWriter()
                 persister.write(rssFeed, rssText)
 
-                val rereadRssFeed = persister.read(RssFeed::class.java, rssText.toString())
+                val rereadRssFeed = persister.read(Rss::class.java, rssText.toString())
 
                 it("should equal original RSS feed read") {
                     assertThat(rereadRssFeed, equalTo(rssFeed))
