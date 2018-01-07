@@ -15,7 +15,7 @@ import java.net.URL
  *
  * @since 1.1.0
  */
-interface IItemCommon {
+interface IItemCommon : HasReadWrite<IItem, IWritableItem> {
     val title: String?
     val description: String?
     val link: URL?
@@ -41,7 +41,8 @@ interface IItemCommon {
  * @since 1.1.0
  */
 interface IItem : IItemCommon {
-    fun toWritableItem(): IWritableItem
+    override fun toReadOnly(): IItem = this
+
     val iTunesExplicit: ITunesExplicitStatus
 }
 
@@ -51,7 +52,8 @@ interface IItem : IItemCommon {
  * @since 1.1.0
  */
 interface IWritableItem : IItemCommon {
-    fun toItem(): IItem
+    override fun toWritable(): IWritableItem = this
+
     val iTunesExplicitRaw: String?
 }
 
@@ -83,9 +85,6 @@ data class Item(
         override val iTunesImage: ITunesImage?,
         override val iTunesBlock: ITunesBlock?
 ) : IItem, IWritableItem {
-    override fun toWritableItem(): IWritableItem = this
-
-    override fun toItem(): IItem = this
 
     override val iTunesExplicit = when (iTunesExplicitRaw?.toLowerCase()) {
         "yes" -> ITunesExplicitStatus.YES

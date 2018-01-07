@@ -5,6 +5,36 @@ import org.simpleframework.xml.Root
 import java.net.URL
 
 /**
+ * Properties common to all representations of a `<textInput>` element.
+ *
+ * @since 1.1.0
+ */
+interface ITextInputCommon : HasReadWrite<ITextInput, IWritableTextInput> {
+    val title: String
+    val description: String
+    val name: String
+    val link: URL
+}
+
+/**
+ * The final RSS view of a `<textInput>` element. Defaults are used if applicable.
+ *
+ * @since 1.1.0
+ */
+interface ITextInput : ITextInputCommon {
+    override fun toReadOnly(): ITextInput = this
+}
+
+/**
+ * The literal contents of a `<textInput>` element. Elements with defaults may be omitted or invalid.
+ *
+ * @since 1.1.0
+ */
+interface IWritableTextInput : ITextInputCommon {
+    override fun toWritable(): IWritableTextInput = this
+}
+
+/**
  * This class represents a text input object in a [Channel].
  *
  * @author Mitchell Skaggs
@@ -13,8 +43,8 @@ import java.net.URL
  */
 @Root(name = "textInput", strict = false)
 data class TextInput(
-        val title: String,
-        val description: String,
-        val name: String,
-        val link: URL
-)
+        override val title: String,
+        override val description: String,
+        override val name: String,
+        override val link: URL
+) : ITextInput, IWritableTextInput

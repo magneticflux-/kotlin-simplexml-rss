@@ -8,7 +8,7 @@ import org.simpleframework.xml.Root
  *
  * @since 1.1.0
  */
-interface IGuidCommon {
+interface IGuidCommon : HasReadWrite<IGuid, IWritableGuid> {
     val text: String
 }
 
@@ -18,6 +18,7 @@ interface IGuidCommon {
  * @since 1.1.0
  */
 interface IGuid : IGuidCommon {
+    override fun toReadOnly(): IGuid = this
     val isPermaLink: Boolean
 }
 
@@ -27,6 +28,7 @@ interface IGuid : IGuidCommon {
  * @since 1.1.0
  */
 interface IWritableGuid : IGuidCommon {
+    override fun toWritable(): IWritableGuid = this
     val isPermaLinkRaw: String?
 }
 
@@ -42,6 +44,7 @@ data class Guid(
         override val isPermaLinkRaw: String?,
         override val text: String
 ) : IGuid, IWritableGuid {
+
     override val isPermaLink: Boolean = when (isPermaLinkRaw?.toLowerCase()) {
         "true" -> true
         else -> false

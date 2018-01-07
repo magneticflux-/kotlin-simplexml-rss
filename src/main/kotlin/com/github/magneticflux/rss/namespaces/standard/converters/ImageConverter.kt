@@ -39,7 +39,7 @@ object ImageConverter : Converter<Image> {
         node.getChild("title").value = value.title
         node.getChild("link").value = URLTransform.write(value.link)
         if (value.description != null) node.createChild(name = "description", value = value.description)
-        if (value._width != null) node.createChild(name = "width", value = value._width)
-        if (value._height != null) node.createChild(name = "height", value = value._height)
+        if (value.widthRaw != null) node.createChild(name = "width", value = value.widthRaw)
+        if (value.heightRaw != null) node.createChild(name = "height", value = value.heightRaw)
     }
 }

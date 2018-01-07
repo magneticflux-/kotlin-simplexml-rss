@@ -4,6 +4,34 @@ import com.github.magneticflux.rss.namespaces.standard.converters.CategoryConver
 import org.simpleframework.xml.Root
 
 /**
+ * Properties common to all representations of a `<category>` element.
+ *
+ * @since 1.1.0
+ */
+interface ICategoryCommon : HasReadWrite<ICategory, IWritableCategory> {
+    val domain: String?
+    val text: String
+}
+
+/**
+ * The final RSS view of a `<category>` element. Defaults are used if applicable.
+ *
+ * @since 1.1.0
+ */
+interface ICategory : ICategoryCommon {
+    override fun toReadOnly(): ICategory = this
+}
+
+/**
+ * The literal contents of a `<category>` element. Elements with defaults may be omitted or invalid.
+ *
+ * @since 1.1.0
+ */
+interface IWritableCategory : ICategoryCommon {
+    override fun toWritable(): IWritableCategory = this
+}
+
+/**
  * This class represents a category in either a [Channel] or an [Item].
  *
  * @author Mitchell Skaggs
@@ -12,6 +40,6 @@ import org.simpleframework.xml.Root
  */
 @Root(name = "category", strict = false)
 data class Category(
-        val domain: String? = null,
-        val text: String
-)
+        override val domain: String? = null,
+        override val text: String
+) : ICategory, IWritableCategory

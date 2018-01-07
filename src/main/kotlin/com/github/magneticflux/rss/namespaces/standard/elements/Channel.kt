@@ -16,7 +16,7 @@ import java.util.Locale
  *
  * @since 1.1.0
  */
-interface IChannelCommon {
+interface IChannelCommon : HasReadWrite<IChannel, IWritableChannel> {
     val title: String
     val description: String
     val link: URL
@@ -50,7 +50,8 @@ interface IChannelCommon {
  * @since 1.1.0
  */
 interface IChannel : IChannelCommon {
-    fun toWritableChannel(): IWritableChannel
+    override fun toReadOnly(): IChannel = this
+
     val iTunesExplicit: ITunesExplicitStatus
     val iTunesComplete: Boolean
 }
@@ -61,7 +62,8 @@ interface IChannel : IChannelCommon {
  * @since 1.1.0
  */
 interface IWritableChannel : IChannelCommon {
-    fun toChannel(): IChannel
+    override fun toWritable(): IWritableChannel = this
+
     val iTunesExplicitRaw: String?
     val iTunesCompleteRaw: String?
 }
@@ -102,15 +104,13 @@ data class Channel(
         override val iTunesBlock: ITunesBlock?,
         override val iTunesCompleteRaw: String?
 ) : IChannel, IWritableChannel {
-    override fun toChannel(): IChannel = this
-
-    override fun toWritableChannel(): IWritableChannel = this
 
     override val iTunesExplicit: ITunesExplicitStatus = when (iTunesExplicitRaw?.toLowerCase()) {
         "yes" -> ITunesExplicitStatus.YES
         "clean" -> ITunesExplicitStatus.CLEAN
         else -> ITunesExplicitStatus.NONE
     }
+
     override val iTunesComplete: Boolean = when (iTunesCompleteRaw?.toLowerCase()) {
         "yes" -> true
         else -> false

@@ -5,6 +5,35 @@ import org.simpleframework.xml.Root
 import java.net.URL
 
 /**
+ * Properties common to all representations of an `<enclosure>` element.
+ *
+ * @since 1.1.0
+ */
+interface IEnclosureCommon : HasReadWrite<IEnclosure, IWritableEnclosure> {
+    val url: URL
+    val length: Long
+    val type: String
+}
+
+/**
+ * The final RSS view of an `<enclosure>` element. Defaults are used if applicable.
+ *
+ * @since 1.1.0
+ */
+interface IEnclosure : IEnclosureCommon {
+    override fun toReadOnly(): IEnclosure = this
+}
+
+/**
+ * The literal contents of an `<enclosure>` element. Elements with defaults may be omitted or invalid.
+ *
+ * @since 1.1.0
+ */
+interface IWritableEnclosure : IEnclosureCommon {
+    override fun toWritable(): IWritableEnclosure = this
+}
+
+/**
  * This class represents an enclosure in an [Item].
  *
  * @author Mitchell Skaggs
@@ -13,7 +42,7 @@ import java.net.URL
  */
 @Root(name = "enclosure", strict = false)
 data class Enclosure(
-        val url: URL,
-        val length: Long,
-        val type: String
-)
+        override val url: URL,
+        override val length: Long,
+        override val type: String
+) : IEnclosure, IWritableEnclosure
