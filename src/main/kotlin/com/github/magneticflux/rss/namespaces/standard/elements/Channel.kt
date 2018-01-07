@@ -1,9 +1,12 @@
 package com.github.magneticflux.rss.namespaces.standard.elements
 
+import com.github.magneticflux.rss.namespaces.itunes.elements.ICommonITunesTopLevelCategory
+import com.github.magneticflux.rss.namespaces.itunes.elements.IITunesTopLevelCategory
 import com.github.magneticflux.rss.namespaces.itunes.elements.ITunesBlock
 import com.github.magneticflux.rss.namespaces.itunes.elements.ITunesExplicitStatus
 import com.github.magneticflux.rss.namespaces.itunes.elements.ITunesImage
 import com.github.magneticflux.rss.namespaces.itunes.elements.ITunesTopLevelCategory
+import com.github.magneticflux.rss.namespaces.itunes.elements.IWritableITunesTopLevelCategory
 import com.github.magneticflux.rss.namespaces.standard.converters.ChannelConverter
 import org.simpleframework.xml.Root
 import org.threeten.bp.DayOfWeek
@@ -36,7 +39,7 @@ interface ICommonChannel : HasReadWrite<IChannel, IWritableChannel> {
     val cloud: ICommonCloud?
     val textInput: ICommonTextInput?
     val items: List<ICommonItem>
-    val iTunesCategories: List<ITunesTopLevelCategory>
+    val iTunesCategories: List<ICommonITunesTopLevelCategory>
     val iTunesSubtitle: String?
     val iTunesSummary: String?
     val iTunesAuthor: String?
@@ -57,6 +60,7 @@ interface IChannel : ICommonChannel {
     override val cloud: ICloud?
     override val textInput: ITextInput?
     override val items: List<IItem>
+    override val iTunesCategories: List<IITunesTopLevelCategory>
     val iTunesExplicit: ITunesExplicitStatus
     val iTunesComplete: Boolean
 }
@@ -74,6 +78,7 @@ interface IWritableChannel : ICommonChannel {
     override val cloud: IWritableCloud?
     override val textInput: IWritableTextInput?
     override val items: List<IWritableItem>
+    override val iTunesCategories: List<IWritableITunesTopLevelCategory>
     val iTunesExplicitRaw: String?
     val iTunesCompleteRaw: String?
 }

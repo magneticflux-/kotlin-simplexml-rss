@@ -1,10 +1,13 @@
 package com.github.magneticflux.rss.namespaces.standard.elements
 
+import com.github.magneticflux.rss.namespaces.itunes.elements.ICommonITunesTopLevelCategory
+import com.github.magneticflux.rss.namespaces.itunes.elements.IITunesTopLevelCategory
 import com.github.magneticflux.rss.namespaces.itunes.elements.ITunesBlock
 import com.github.magneticflux.rss.namespaces.itunes.elements.ITunesDuration
 import com.github.magneticflux.rss.namespaces.itunes.elements.ITunesExplicitStatus
 import com.github.magneticflux.rss.namespaces.itunes.elements.ITunesImage
 import com.github.magneticflux.rss.namespaces.itunes.elements.ITunesTopLevelCategory
+import com.github.magneticflux.rss.namespaces.itunes.elements.IWritableITunesTopLevelCategory
 import com.github.magneticflux.rss.namespaces.standard.converters.ItemConverter
 import org.simpleframework.xml.Root
 import org.threeten.bp.ZonedDateTime
@@ -26,7 +29,7 @@ interface ICommonItem : HasReadWrite<IItem, IWritableItem> {
     val guid: ICommonGuid?
     val enclosure: ICommonEnclosure?
     val source: ICommonSource?
-    val iTunesCategories: List<ITunesTopLevelCategory>
+    val iTunesCategories: List<ICommonITunesTopLevelCategory>
     val iTunesSubtitle: String?
     val iTunesSummary: String?
     val iTunesAuthor: String?
@@ -47,6 +50,7 @@ interface IItem : ICommonItem {
     override val guid: IGuid?
     override val enclosure: IEnclosure?
     override val source: ISource?
+    override val iTunesCategories: List<IITunesTopLevelCategory>
     val iTunesExplicit: ITunesExplicitStatus
 }
 
@@ -62,6 +66,7 @@ interface IWritableItem : ICommonItem {
     override val guid: IWritableGuid?
     override val enclosure: IWritableEnclosure?
     override val source: IWritableSource?
+    override val iTunesCategories: List<IWritableITunesTopLevelCategory>
     val iTunesExplicitRaw: String?
 }
 

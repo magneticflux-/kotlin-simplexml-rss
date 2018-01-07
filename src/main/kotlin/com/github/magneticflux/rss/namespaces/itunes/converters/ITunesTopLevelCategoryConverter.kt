@@ -29,7 +29,7 @@ object ITunesTopLevelCategoryConverter : Converter<ITunesTopLevelCategory> {
 
     override fun write(node: OutputNode, value: ITunesTopLevelCategory) {
         node.setAttribute("text", value.text)
-        value.itunesSubCategories.forEach {
+        value.iTunesSubCategories.forEach {
             fallbackPersister.write(it, node)
         }
     }
