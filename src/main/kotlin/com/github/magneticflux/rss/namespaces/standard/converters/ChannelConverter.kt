@@ -4,6 +4,10 @@ import com.github.magneticflux.rss.DayOfWeekTransform
 import com.github.magneticflux.rss.LocaleLanguageTransform
 import com.github.magneticflux.rss.URLTransform
 import com.github.magneticflux.rss.ZonedDateTimeTransform
+import com.github.magneticflux.rss.children
+import com.github.magneticflux.rss.createChild
+import com.github.magneticflux.rss.fallbackPersister
+import com.github.magneticflux.rss.fullName
 import com.github.magneticflux.rss.namespaces.itunes.elements.ITUNES_REFERENCE
 import com.github.magneticflux.rss.namespaces.itunes.elements.ITunesBlock
 import com.github.magneticflux.rss.namespaces.itunes.elements.ITunesImage

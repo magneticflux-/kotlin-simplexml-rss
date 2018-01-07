@@ -1,6 +1,5 @@
-package com.github.magneticflux.rss.namespaces.standard.converters
+package com.github.magneticflux.rss
 
-import com.github.magneticflux.rss.createRssPersister
 import org.simpleframework.xml.convert.Converter
 import org.simpleframework.xml.stream.InputNode
 import org.simpleframework.xml.stream.OutputNode

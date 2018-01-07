@@ -1,6 +1,10 @@
 package com.github.magneticflux.rss.namespaces.standard.converters
 
 import com.github.magneticflux.rss.URLTransform
+import com.github.magneticflux.rss.children
+import com.github.magneticflux.rss.createChild
+import com.github.magneticflux.rss.fallbackPersister
+import com.github.magneticflux.rss.fullName
 import com.github.magneticflux.rss.namespaces.standard.elements.Image
 import org.simpleframework.xml.convert.Converter
 import org.simpleframework.xml.stream.InputNode

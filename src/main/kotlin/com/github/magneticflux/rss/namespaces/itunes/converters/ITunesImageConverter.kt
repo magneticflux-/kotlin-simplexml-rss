@@ -1,8 +1,8 @@
 package com.github.magneticflux.rss.namespaces.itunes.converters
 
 import com.github.magneticflux.rss.URLTransform
+import com.github.magneticflux.rss.fallbackPersister
 import com.github.magneticflux.rss.namespaces.itunes.elements.ITunesImage
-import com.github.magneticflux.rss.namespaces.standard.converters.fallbackPersister
 import org.simpleframework.xml.convert.Converter
 import org.simpleframework.xml.stream.InputNode
 import org.simpleframework.xml.stream.OutputNode
