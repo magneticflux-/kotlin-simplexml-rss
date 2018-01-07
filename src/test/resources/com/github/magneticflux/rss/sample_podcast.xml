@@ -33,7 +33,7 @@
         <description>Example RSS 2.0 code for a XML 1.0 podcast including iTunes proprietary tags.</description>
         <itunes:summary>Example RSS 2.0 code for a XML 1.0 podcast including iTunes proprietary tags.</itunes:summary>
         <itunes:subtitle>A working sample podcast.</itunes:subtitle>
-
+        <itunes:block>no</itunes:block>
         <lastBuildDate>Fri, 18 May 2012 00:00:00 -0500</lastBuildDate> <!-- http://www.timeanddate.com/worldclock/city.html?n=805 - Use 24 hour clock -->
 
         <!-- Always add the newest ITEM to the top of the list -->
