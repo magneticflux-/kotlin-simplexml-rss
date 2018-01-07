@@ -4,17 +4,31 @@ import com.github.magneticflux.rss.namespaces.standard.converters.GuidConverter
 import org.simpleframework.xml.Root
 
 /**
- * The final RSS view of a `<guid>` element. Defaults are used if applicable.
+ * Properties common to all representations of a `<guid>` element.
+ *
+ * @since 1.1.0
  */
-interface IGuid {
-    val isPermaLink: Boolean
+interface IGuidCommon {
     val text: String
 }
 
-abstract class AbstractGuid(
-        override val isPermaLink: Boolean,
-        override val text: String
-) : IGuid
+/**
+ * The final RSS view of a `<guid>` element. Defaults are used if applicable.
+ *
+ * @since 1.1.0
+ */
+interface IGuid : IGuidCommon {
+    val isPermaLink: Boolean
+}
+
+/**
+ * The literal contents of a `<guid>` element. Elements with defaults may be omitted or invalid.
+ *
+ * @since 1.1.0
+ */
+interface IWritableGuid : IGuidCommon {
+    val isPermaLinkRaw: String?
+}
 
 /**
  * This class represents a guid in an [Item].
@@ -25,12 +39,11 @@ abstract class AbstractGuid(
  */
 @Root(name = "guid", strict = false)
 data class Guid(
-        internal val _isPermaLink: String?,
+        override val isPermaLinkRaw: String?,
         override val text: String
-) : AbstractGuid(
-        when (_isPermaLink?.toLowerCase()) {
-            "true" -> true
-            else -> false
-        },
-        text
-)
+) : IGuid, IWritableGuid {
+    override val isPermaLink: Boolean = when (isPermaLinkRaw?.toLowerCase()) {
+        "true" -> true
+        else -> false
+    }
+}

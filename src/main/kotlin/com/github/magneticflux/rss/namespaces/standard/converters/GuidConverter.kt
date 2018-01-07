@@ -18,7 +18,7 @@ object GuidConverter : Converter<Guid> {
     }
 
     override fun write(node: OutputNode, value: Guid) {
-        if (value._isPermaLink != null) node.setAttribute("isPermaLink", value._isPermaLink)
+        if (value.isPermaLinkRaw != null) node.setAttribute("isPermaLink", value.isPermaLinkRaw)
         node.value = value.text
     }
 }
