@@ -8,7 +8,7 @@ import org.simpleframework.xml.Root
  *
  * @since 1.1.0
  */
-interface ICategoryCommon : HasReadWrite<ICategory, IWritableCategory> {
+interface ICommonCategory : HasReadWrite<ICategory, IWritableCategory> {
     val domain: String?
     val text: String
 }
@@ -18,7 +18,7 @@ interface ICategoryCommon : HasReadWrite<ICategory, IWritableCategory> {
  *
  * @since 1.1.0
  */
-interface ICategory : ICategoryCommon {
+interface ICategory : ICommonCategory {
     override fun toReadOnly(): ICategory = this
 }
 
@@ -27,7 +27,7 @@ interface ICategory : ICategoryCommon {
  *
  * @since 1.1.0
  */
-interface IWritableCategory : ICategoryCommon {
+interface IWritableCategory : ICommonCategory {
     override fun toWritable(): IWritableCategory = this
 }
 

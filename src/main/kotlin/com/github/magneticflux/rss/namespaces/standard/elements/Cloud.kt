@@ -8,7 +8,7 @@ import org.simpleframework.xml.Root
  *
  * @since 1.1.0
  */
-interface ICloudCommon : HasReadWrite<ICloud, IWritableCloud> {
+interface ICommonCloud : HasReadWrite<ICloud, IWritableCloud> {
     val domain: String
     val path: String
     val port: Int
@@ -21,7 +21,7 @@ interface ICloudCommon : HasReadWrite<ICloud, IWritableCloud> {
  *
  * @since 1.1.0
  */
-interface ICloud : ICloudCommon {
+interface ICloud : ICommonCloud {
     override fun toReadOnly(): ICloud = this
 }
 
@@ -30,7 +30,7 @@ interface ICloud : ICloudCommon {
  *
  * @since 1.1.0
  */
-interface IWritableCloud : ICloudCommon {
+interface IWritableCloud : ICommonCloud {
     override fun toWritable(): IWritableCloud = this
 }
 

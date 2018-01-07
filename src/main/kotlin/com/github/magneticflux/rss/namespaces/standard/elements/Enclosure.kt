@@ -9,7 +9,7 @@ import java.net.URL
  *
  * @since 1.1.0
  */
-interface IEnclosureCommon : HasReadWrite<IEnclosure, IWritableEnclosure> {
+interface ICommonEnclosure : HasReadWrite<IEnclosure, IWritableEnclosure> {
     val url: URL
     val length: Long
     val type: String
@@ -20,7 +20,7 @@ interface IEnclosureCommon : HasReadWrite<IEnclosure, IWritableEnclosure> {
  *
  * @since 1.1.0
  */
-interface IEnclosure : IEnclosureCommon {
+interface IEnclosure : ICommonEnclosure {
     override fun toReadOnly(): IEnclosure = this
 }
 
@@ -29,7 +29,7 @@ interface IEnclosure : IEnclosureCommon {
  *
  * @since 1.1.0
  */
-interface IWritableEnclosure : IEnclosureCommon {
+interface IWritableEnclosure : ICommonEnclosure {
     override fun toWritable(): IWritableEnclosure = this
 }
 

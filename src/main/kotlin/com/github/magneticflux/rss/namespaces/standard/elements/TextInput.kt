@@ -9,7 +9,7 @@ import java.net.URL
  *
  * @since 1.1.0
  */
-interface ITextInputCommon : HasReadWrite<ITextInput, IWritableTextInput> {
+interface ICommonTextInput : HasReadWrite<ITextInput, IWritableTextInput> {
     val title: String
     val description: String
     val name: String
@@ -21,7 +21,7 @@ interface ITextInputCommon : HasReadWrite<ITextInput, IWritableTextInput> {
  *
  * @since 1.1.0
  */
-interface ITextInput : ITextInputCommon {
+interface ITextInput : ICommonTextInput {
     override fun toReadOnly(): ITextInput = this
 }
 
@@ -30,7 +30,7 @@ interface ITextInput : ITextInputCommon {
  *
  * @since 1.1.0
  */
-interface IWritableTextInput : ITextInputCommon {
+interface IWritableTextInput : ICommonTextInput {
     override fun toWritable(): IWritableTextInput = this
 }
 

@@ -15,17 +15,17 @@ import java.net.URL
  *
  * @since 1.1.0
  */
-interface IItemCommon : HasReadWrite<IItem, IWritableItem> {
+interface ICommonItem : HasReadWrite<IItem, IWritableItem> {
     val title: String?
     val description: String?
     val link: URL?
-    val categories: List<ICategoryCommon>
+    val categories: List<ICommonCategory>
     val comments: URL?
     val pubDate: ZonedDateTime?
     val author: String?
-    val guid: IGuidCommon?
-    val enclosure: IEnclosureCommon?
-    val source: ISourceCommon?
+    val guid: ICommonGuid?
+    val enclosure: ICommonEnclosure?
+    val source: ICommonSource?
     val iTunesCategories: List<ITunesTopLevelCategory>
     val iTunesSubtitle: String?
     val iTunesSummary: String?
@@ -40,7 +40,7 @@ interface IItemCommon : HasReadWrite<IItem, IWritableItem> {
  *
  * @since 1.1.0
  */
-interface IItem : IItemCommon {
+interface IItem : ICommonItem {
     override fun toReadOnly(): IItem = this
 
     override val categories: List<ICategory>
@@ -55,7 +55,7 @@ interface IItem : IItemCommon {
  *
  * @since 1.1.0
  */
-interface IWritableItem : IItemCommon {
+interface IWritableItem : ICommonItem {
     override fun toWritable(): IWritableItem = this
 
     override val categories: List<IWritableCategory>

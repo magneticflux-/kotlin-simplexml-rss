@@ -10,9 +10,9 @@ import org.simpleframework.xml.Root
  *
  * @since 1.1.0
  */
-interface IRssCommon : HasReadWrite<IRss, IWritableRss> {
+interface ICommonRss : HasReadWrite<IRss, IWritableRss> {
     val version: String
-    val channel: IChannelCommon
+    val channel: ICommonChannel
 }
 
 /**
@@ -20,7 +20,7 @@ interface IRssCommon : HasReadWrite<IRss, IWritableRss> {
  *
  * @since 1.1.0
  */
-interface IRss : IRssCommon {
+interface IRss : ICommonRss {
     override fun toReadOnly(): IRss = this
 
     override val channel: IChannel
@@ -31,7 +31,7 @@ interface IRss : IRssCommon {
  *
  * @since 1.1.0
  */
-interface IWritableRss : IRssCommon {
+interface IWritableRss : ICommonRss {
     override fun toWritable(): IWritableRss = this
 
     override val channel: IWritableChannel

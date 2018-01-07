@@ -9,7 +9,7 @@ import java.net.URL
  *
  * @since 1.1.0
  */
-interface IImageCommon : HasReadWrite<IImage, IWritableImage> {
+interface ICommonImage : HasReadWrite<IImage, IWritableImage> {
     val url: URL
     val title: String
     val link: URL
@@ -21,7 +21,7 @@ interface IImageCommon : HasReadWrite<IImage, IWritableImage> {
  *
  * @since 1.1.0
  */
-interface IImage : IImageCommon {
+interface IImage : ICommonImage {
     override fun toReadOnly(): IImage = this
 
     val width: Int
@@ -33,7 +33,7 @@ interface IImage : IImageCommon {
  *
  * @since 1.1.0
  */
-interface IWritableImage : IImageCommon {
+interface IWritableImage : ICommonImage {
     override fun toWritable(): IWritableImage = this
 
     val widthRaw: String?

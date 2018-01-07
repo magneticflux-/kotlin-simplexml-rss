@@ -16,26 +16,26 @@ import java.util.Locale
  *
  * @since 1.1.0
  */
-interface IChannelCommon : HasReadWrite<IChannel, IWritableChannel> {
+interface ICommonChannel : HasReadWrite<IChannel, IWritableChannel> {
     val title: String
     val description: String
     val link: URL
-    val categories: List<ICategoryCommon>
+    val categories: List<ICommonCategory>
     val copyright: String?
     val docs: URL?
     val language: Locale?
     val webMaster: String?
     val managingEditor: String?
     val generator: String?
-    val image: IImageCommon?
+    val image: ICommonImage?
     val lastBuildDate: ZonedDateTime?
     val pubDate: ZonedDateTime?
     val ttl: Int?
     val skipDays: List<DayOfWeek>
     val skipHours: List<Int>
-    val cloud: ICloudCommon?
-    val textInput: ITextInputCommon?
-    val items: List<IItemCommon>
+    val cloud: ICommonCloud?
+    val textInput: ICommonTextInput?
+    val items: List<ICommonItem>
     val iTunesCategories: List<ITunesTopLevelCategory>
     val iTunesSubtitle: String?
     val iTunesSummary: String?
@@ -49,7 +49,7 @@ interface IChannelCommon : HasReadWrite<IChannel, IWritableChannel> {
  *
  * @since 1.1.0
  */
-interface IChannel : IChannelCommon {
+interface IChannel : ICommonChannel {
     override fun toReadOnly(): IChannel = this
 
     override val categories: List<ICategory>
@@ -66,7 +66,7 @@ interface IChannel : IChannelCommon {
  *
  * @since 1.1.0
  */
-interface IWritableChannel : IChannelCommon {
+interface IWritableChannel : ICommonChannel {
     override fun toWritable(): IWritableChannel = this
 
     override val categories: List<IWritableCategory>

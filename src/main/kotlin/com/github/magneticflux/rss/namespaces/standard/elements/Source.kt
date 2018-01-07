@@ -9,7 +9,7 @@ import java.net.URL
  *
  * @since 1.1.0
  */
-interface ISourceCommon : HasReadWrite<ISource, IWritableSource> {
+interface ICommonSource : HasReadWrite<ISource, IWritableSource> {
     val url: URL
     val text: String?
 }
@@ -19,7 +19,7 @@ interface ISourceCommon : HasReadWrite<ISource, IWritableSource> {
  *
  * @since 1.1.0
  */
-interface ISource : ISourceCommon {
+interface ISource : ICommonSource {
     override fun toReadOnly(): ISource = this
 }
 
@@ -28,7 +28,7 @@ interface ISource : ISourceCommon {
  *
  * @since 1.1.0
  */
-interface IWritableSource : ISourceCommon {
+interface IWritableSource : ICommonSource {
     override fun toWritable(): IWritableSource = this
 }
 
