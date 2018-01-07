@@ -20,22 +20,22 @@ interface IChannelCommon : HasReadWrite<IChannel, IWritableChannel> {
     val title: String
     val description: String
     val link: URL
-    val categories: List<Category>
+    val categories: List<ICategoryCommon>
     val copyright: String?
     val docs: URL?
     val language: Locale?
     val webMaster: String?
     val managingEditor: String?
     val generator: String?
-    val image: Image?
+    val image: IImageCommon?
     val lastBuildDate: ZonedDateTime?
     val pubDate: ZonedDateTime?
     val ttl: Int?
     val skipDays: List<DayOfWeek>
     val skipHours: List<Int>
-    val cloud: Cloud?
-    val textInput: TextInput?
-    val items: List<Item>
+    val cloud: ICloudCommon?
+    val textInput: ITextInputCommon?
+    val items: List<IItemCommon>
     val iTunesCategories: List<ITunesTopLevelCategory>
     val iTunesSubtitle: String?
     val iTunesSummary: String?
@@ -52,6 +52,11 @@ interface IChannelCommon : HasReadWrite<IChannel, IWritableChannel> {
 interface IChannel : IChannelCommon {
     override fun toReadOnly(): IChannel = this
 
+    override val categories: List<ICategory>
+    override val image: IImage?
+    override val cloud: ICloud?
+    override val textInput: ITextInput?
+    override val items: List<IItem>
     val iTunesExplicit: ITunesExplicitStatus
     val iTunesComplete: Boolean
 }
@@ -64,6 +69,11 @@ interface IChannel : IChannelCommon {
 interface IWritableChannel : IChannelCommon {
     override fun toWritable(): IWritableChannel = this
 
+    override val categories: List<IWritableCategory>
+    override val image: IWritableImage?
+    override val cloud: IWritableCloud?
+    override val textInput: IWritableTextInput?
+    override val items: List<IWritableItem>
     val iTunesExplicitRaw: String?
     val iTunesCompleteRaw: String?
 }

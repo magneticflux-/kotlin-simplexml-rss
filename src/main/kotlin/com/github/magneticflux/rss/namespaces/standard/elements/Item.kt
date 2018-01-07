@@ -19,13 +19,13 @@ interface IItemCommon : HasReadWrite<IItem, IWritableItem> {
     val title: String?
     val description: String?
     val link: URL?
-    val categories: List<Category>
+    val categories: List<ICategoryCommon>
     val comments: URL?
     val pubDate: ZonedDateTime?
     val author: String?
-    val guid: Guid?
-    val enclosure: Enclosure?
-    val source: Source?
+    val guid: IGuidCommon?
+    val enclosure: IEnclosureCommon?
+    val source: ISourceCommon?
     val iTunesCategories: List<ITunesTopLevelCategory>
     val iTunesSubtitle: String?
     val iTunesSummary: String?
@@ -43,6 +43,10 @@ interface IItemCommon : HasReadWrite<IItem, IWritableItem> {
 interface IItem : IItemCommon {
     override fun toReadOnly(): IItem = this
 
+    override val categories: List<ICategory>
+    override val guid: IGuid?
+    override val enclosure: IEnclosure?
+    override val source: ISource?
     val iTunesExplicit: ITunesExplicitStatus
 }
 
@@ -54,6 +58,10 @@ interface IItem : IItemCommon {
 interface IWritableItem : IItemCommon {
     override fun toWritable(): IWritableItem = this
 
+    override val categories: List<IWritableCategory>
+    override val guid: IWritableGuid?
+    override val enclosure: IWritableEnclosure?
+    override val source: IWritableSource?
     val iTunesExplicitRaw: String?
 }
 
