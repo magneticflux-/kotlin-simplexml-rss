@@ -1,8 +1,7 @@
 package com.github.magneticflux.rss
 
-import com.natpryce.hamkrest.assertion.assertThat
-import com.natpryce.hamkrest.equalTo
-import com.natpryce.hamkrest.throws
+import org.hamcrest.MatcherAssert.assertThat
+import org.hamcrest.Matchers.equalTo
 import org.jetbrains.spek.api.Spek
 import org.jetbrains.spek.api.dsl.given
 import org.jetbrains.spek.api.dsl.it
@@ -138,16 +137,14 @@ class TransformersTest : Spek({
         }
     }
 
-    given("url of 'https://play.google.com/test/test.html'") {
-        val input = "https://play.google.com/test/test.html"
-
+    given("https://play.google.com/test/test.html", { "url of $it" }) {
         given("a read url") {
-            val transform = URLTransform.read(input)
+            val transform = URLTransform.read(it)
 
             given("a rewritten url") {
                 val written = URLTransform.write(transform)
                 it("should be equal to the original") {
-                    assertThat(input, equalTo(written))
+                    assertThat(it, equalTo(written))
                 }
             }
 
@@ -165,56 +162,6 @@ class TransformersTest : Spek({
             }
             it("should have a file of 'test/test.html'") {
                 assertThat(transform.path, equalTo("/test/test.html"))
-            }
-        }
-    }
-
-    given("10:11:12", { "duration of '$it'" }) {
-        given("a parsed Duration") {
-            val duration = DurationTransform.read(it)
-
-            it("should be 36672 seconds long") {
-                assertThat(duration.seconds, equalTo(36672L))
-            }
-        }
-    }
-
-    given("11:12", { "duration of '$it'" }) {
-        given("a parsed Duration") {
-            val duration = DurationTransform.read(it)
-
-            it("should be 672 seconds long") {
-                assertThat(duration.seconds, equalTo(672L))
-            }
-        }
-    }
-
-    given("12", { "duration of '$it'" }) {
-        given("a parsed Duration") {
-            val duration = DurationTransform.read(it)
-
-            it("should be 12 seconds long") {
-                assertThat(duration.seconds, equalTo(12L))
-            }
-        }
-    }
-
-    given("", { "duration of '$it'" }) {
-        given("a parsed Duration") {
-            val duration = DurationTransform.read(it)
-
-            it("should be 0 seconds long") {
-                assertThat(duration.seconds, equalTo(0L))
-            }
-        }
-    }
-
-    given("ab:cd:ef", { "duration of '$it'" }) {
-        given("a parsed Duration") {
-            val duration = DurationTransform.read(it)
-
-            it("should be 0 seconds long") {
-                assertThat(duration.seconds, equalTo(0L))
             }
         }
     }

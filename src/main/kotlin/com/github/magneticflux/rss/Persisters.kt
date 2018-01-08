@@ -1,25 +1,31 @@
 package com.github.magneticflux.rss
 
-import com.github.magneticflux.rss.itunes.ITunesAuthor
-import com.github.magneticflux.rss.itunes.ITunesAuthorConverter
-import com.github.magneticflux.rss.itunes.ITunesBlock
-import com.github.magneticflux.rss.itunes.ITunesBlockConverter
-import com.github.magneticflux.rss.itunes.ITunesComplete
-import com.github.magneticflux.rss.itunes.ITunesCompleteConverter
-import com.github.magneticflux.rss.itunes.ITunesDuration
-import com.github.magneticflux.rss.itunes.ITunesDurationConverter
-import com.github.magneticflux.rss.itunes.ITunesExplicit
-import com.github.magneticflux.rss.itunes.ITunesExplicitConverter
-import com.github.magneticflux.rss.itunes.ITunesImage
-import com.github.magneticflux.rss.itunes.ITunesImageConverter
-import com.github.magneticflux.rss.itunes.ITunesSubCategory
-import com.github.magneticflux.rss.itunes.ITunesSubCategoryConverter
-import com.github.magneticflux.rss.itunes.ITunesSubtitle
-import com.github.magneticflux.rss.itunes.ITunesSubtitleConverter
-import com.github.magneticflux.rss.itunes.ITunesSummary
-import com.github.magneticflux.rss.itunes.ITunesSummaryConverter
-import com.github.magneticflux.rss.itunes.ITunesTopLevelCategory
-import com.github.magneticflux.rss.itunes.ITunesTopLevelCategoryConverter
+import com.github.magneticflux.rss.namespaces.itunes.converters.ITunesImageConverter
+import com.github.magneticflux.rss.namespaces.itunes.converters.ITunesSubCategoryConverter
+import com.github.magneticflux.rss.namespaces.itunes.converters.ITunesTopLevelCategoryConverter
+import com.github.magneticflux.rss.namespaces.itunes.elements.ITunesImage
+import com.github.magneticflux.rss.namespaces.itunes.elements.ITunesSubCategory
+import com.github.magneticflux.rss.namespaces.itunes.elements.ITunesTopLevelCategory
+import com.github.magneticflux.rss.namespaces.standard.converters.CategoryConverter
+import com.github.magneticflux.rss.namespaces.standard.converters.ChannelConverter
+import com.github.magneticflux.rss.namespaces.standard.converters.CloudConverter
+import com.github.magneticflux.rss.namespaces.standard.converters.EnclosureConverter
+import com.github.magneticflux.rss.namespaces.standard.converters.GuidConverter
+import com.github.magneticflux.rss.namespaces.standard.converters.ImageConverter
+import com.github.magneticflux.rss.namespaces.standard.converters.ItemConverter
+import com.github.magneticflux.rss.namespaces.standard.converters.RssConverter
+import com.github.magneticflux.rss.namespaces.standard.converters.SourceConverter
+import com.github.magneticflux.rss.namespaces.standard.converters.TextInputConverter
+import com.github.magneticflux.rss.namespaces.standard.elements.Category
+import com.github.magneticflux.rss.namespaces.standard.elements.Channel
+import com.github.magneticflux.rss.namespaces.standard.elements.Cloud
+import com.github.magneticflux.rss.namespaces.standard.elements.Enclosure
+import com.github.magneticflux.rss.namespaces.standard.elements.Guid
+import com.github.magneticflux.rss.namespaces.standard.elements.Image
+import com.github.magneticflux.rss.namespaces.standard.elements.Item
+import com.github.magneticflux.rss.namespaces.standard.elements.Rss
+import com.github.magneticflux.rss.namespaces.standard.elements.Source
+import com.github.magneticflux.rss.namespaces.standard.elements.TextInput
 import org.simpleframework.xml.convert.Registry
 import org.simpleframework.xml.convert.RegistryStrategy
 import org.simpleframework.xml.core.Persister
@@ -46,7 +52,7 @@ fun createRssPersister(): Persister = Persister(createRssStrategy(), createRssMa
 fun createRssStrategy(): Strategy {
     return RegistryStrategy(
             Registry().apply {
-                this.bind(RssFeed::class.java, RssFeedConverter)
+                this.bind(Rss::class.java, RssConverter)
                 this.bind(Channel::class.java, ChannelConverter)
                 this.bind(Item::class.java, ItemConverter)
                 this.bind(Category::class.java, CategoryConverter)
@@ -58,14 +64,7 @@ fun createRssStrategy(): Strategy {
                 this.bind(Source::class.java, SourceConverter)
                 this.bind(ITunesTopLevelCategory::class.java, ITunesTopLevelCategoryConverter)
                 this.bind(ITunesSubCategory::class.java, ITunesSubCategoryConverter)
-                this.bind(ITunesExplicit::class.java, ITunesExplicitConverter)
-                this.bind(ITunesSubtitle::class.java, ITunesSubtitleConverter)
-                this.bind(ITunesSummary::class.java, ITunesSummaryConverter)
-                this.bind(ITunesAuthor::class.java, ITunesAuthorConverter)
-                this.bind(ITunesDuration::class.java, ITunesDurationConverter)
                 this.bind(ITunesImage::class.java, ITunesImageConverter)
-                this.bind(ITunesBlock::class.java, ITunesBlockConverter)
-                this.bind(ITunesComplete::class.java, ITunesCompleteConverter)
             })
 }
 
