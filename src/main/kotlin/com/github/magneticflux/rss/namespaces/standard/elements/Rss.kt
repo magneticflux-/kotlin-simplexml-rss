@@ -1,7 +1,7 @@
 package com.github.magneticflux.rss.namespaces.standard.elements
 
 import com.github.magneticflux.rss.namespaces.itunes.elements.ITUNES_REFERENCE
-import com.github.magneticflux.rss.namespaces.standard.converters.RssFeedConverter
+import com.github.magneticflux.rss.namespaces.standard.converters.RssConverter
 import org.simpleframework.xml.Namespace
 import org.simpleframework.xml.Root
 
@@ -42,7 +42,7 @@ interface IWritableRss : ICommonRss {
  *
  * @author Mitchell Skaggs
  * @since 1.0.0
- * @see RssFeedConverter
+ * @see RssConverter
  */
 @Root(name = "rss", strict = false)
 @Namespace(prefix = "itunes", reference = ITUNES_REFERENCE)

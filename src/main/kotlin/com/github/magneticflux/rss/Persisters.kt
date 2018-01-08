@@ -13,7 +13,7 @@ import com.github.magneticflux.rss.namespaces.standard.converters.EnclosureConve
 import com.github.magneticflux.rss.namespaces.standard.converters.GuidConverter
 import com.github.magneticflux.rss.namespaces.standard.converters.ImageConverter
 import com.github.magneticflux.rss.namespaces.standard.converters.ItemConverter
-import com.github.magneticflux.rss.namespaces.standard.converters.RssFeedConverter
+import com.github.magneticflux.rss.namespaces.standard.converters.RssConverter
 import com.github.magneticflux.rss.namespaces.standard.converters.SourceConverter
 import com.github.magneticflux.rss.namespaces.standard.converters.TextInputConverter
 import com.github.magneticflux.rss.namespaces.standard.elements.Category
@@ -52,7 +52,7 @@ fun createRssPersister(): Persister = Persister(createRssStrategy(), createRssMa
 fun createRssStrategy(): Strategy {
     return RegistryStrategy(
             Registry().apply {
-                this.bind(Rss::class.java, RssFeedConverter)
+                this.bind(Rss::class.java, RssConverter)
                 this.bind(Channel::class.java, ChannelConverter)
                 this.bind(Item::class.java, ItemConverter)
                 this.bind(Category::class.java, CategoryConverter)

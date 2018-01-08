@@ -14,6 +14,7 @@ import com.github.magneticflux.rss.namespaces.itunes.elements.ITunesTopLevelCate
 import com.github.magneticflux.rss.namespaces.standard.elements.Category
 import com.github.magneticflux.rss.namespaces.standard.elements.Channel
 import com.github.magneticflux.rss.namespaces.standard.elements.Cloud
+import com.github.magneticflux.rss.namespaces.standard.elements.ICommonChannel
 import com.github.magneticflux.rss.namespaces.standard.elements.Image
 import com.github.magneticflux.rss.namespaces.standard.elements.Item
 import com.github.magneticflux.rss.namespaces.standard.elements.TextInput
@@ -29,8 +30,8 @@ import java.util.Locale
  * @author Mitchell Skaggs
  * @since 1.0.1
  */
-object ChannelConverter : Converter<Channel> {
-    override fun read(node: InputNode): Channel {
+object ChannelConverter : Converter<ICommonChannel> {
+    override fun read(node: InputNode): ICommonChannel {
         lateinit var title: String
         lateinit var description: String
         lateinit var link: URL
@@ -122,45 +123,49 @@ object ChannelConverter : Converter<Channel> {
         )
     }
 
-    override fun write(node: OutputNode, value: Channel) {
-        node.getChild("title").value = value.title
-        node.getChild("description").value = value.description
-        node.getChild("link").value = URLTransform.write(value.link)
-        value.categories.forEach { fallbackPersister.write(it, node) }
-        if (value.copyright != null) node.getChild("copyright").value = value.copyright
-        if (value.docs != null) node.getChild("docs").value = URLTransform.write(value.docs)
-        if (value.language != null) node.getChild("language").value = LocaleLanguageTransform.write(value.language)
-        if (value.webMaster != null) node.getChild("webMaster").value = value.webMaster
-        if (value.managingEditor != null) node.getChild("managingEditor").value = value.managingEditor
-        if (value.generator != null) node.getChild("generator").value = value.generator
-        if (value.image != null) fallbackPersister.write(value.image, node)
-        if (value.lastBuildDate != null) node.getChild("lastBuildDate").value = ZonedDateTimeTransform.write(value.lastBuildDate)
-        if (value.pubDate != null) node.getChild("pubDate").value = ZonedDateTimeTransform.write(value.pubDate)
-        if (value.ttl != null) node.getChild("ttl").value = value.ttl.toString()
-        if (value.skipDays.isNotEmpty()) node.getChild("skipDays").also { skipDaysNode ->
-            value.skipDays.forEach {
-                skipDaysNode.getChild("day").value = DayOfWeekTransform.write(it)
+    override fun write(node: OutputNode, value: ICommonChannel) {
+        val writable = value.toWritable()
+
+        node.getChild("title").value = writable.title
+        node.getChild("description").value = writable.description
+        node.getChild("link").value = URLTransform.write(writable.link)
+        writable.categories.forEach { fallbackPersister.write(it, node) }
+        writable.copyright?.let { node.getChild("copyright").value = it }
+        writable.docs?.let { node.getChild("docs").value = URLTransform.write(it) }
+        writable.language?.let { node.getChild("language").value = LocaleLanguageTransform.write(it) }
+        writable.webMaster?.let { node.getChild("webMaster").value = it }
+        writable.managingEditor?.let { node.getChild("managingEditor").value = it }
+        writable.generator?.let { node.getChild("generator").value = it }
+        writable.image?.let { fallbackPersister.write(it, node) }
+        writable.lastBuildDate?.let { node.getChild("lastBuildDate").value = ZonedDateTimeTransform.write(it) }
+        writable.pubDate?.let { node.getChild("pubDate").value = ZonedDateTimeTransform.write(it) }
+        writable.ttl?.let { node.getChild("ttl").value = it.toString() }
+        if (writable.skipDays.isNotEmpty())
+            node.getChild("skipDays").also { skipDaysNode ->
+                writable.skipDays.forEach {
+                    skipDaysNode.getChild("day").value = DayOfWeekTransform.write(it)
+                }
             }
-        }
-        if (value.skipHours.isNotEmpty()) node.getChild("skipHours").also { skipHoursNode ->
-            value.skipHours.forEach {
-                skipHoursNode.getChild("hour").value = it.toString()
+        if (writable.skipHours.isNotEmpty())
+            node.getChild("skipHours").also { skipHoursNode ->
+                writable.skipHours.forEach {
+                    skipHoursNode.getChild("hour").value = it.toString()
+                }
             }
-        }
-        if (value.cloud != null) fallbackPersister.write(value.cloud, node)
-        if (value.textInput != null) fallbackPersister.write(value.textInput, node)
-        value.items.forEach {
+        writable.cloud?.let { fallbackPersister.write(it, node) }
+        writable.textInput?.let { fallbackPersister.write(it, node) }
+        writable.items.forEach {
             fallbackPersister.write(it, node)
         }
-        value.iTunesCategories.forEach {
+        writable.iTunesCategories.forEach {
             fallbackPersister.write(it, node)
         }
-        if (value.iTunesExplicitRaw != null) node.createChild(ITUNES_REFERENCE, "explicit", value.iTunesExplicitRaw)
-        if (value.iTunesSubtitle != null) node.createChild(ITUNES_REFERENCE, "subtitle", value.iTunesSubtitle)
-        if (value.iTunesSummary != null) node.createChild(ITUNES_REFERENCE, "summary", value.iTunesSummary)
-        if (value.iTunesAuthor != null) node.createChild(ITUNES_REFERENCE, "author", value.iTunesAuthor)
-        if (value.iTunesImage != null) fallbackPersister.write(value.iTunesImage, node)
-        if (value.iTunesBlockRaw != null) node.createChild(ITUNES_REFERENCE, "block", value.iTunesBlockRaw)
-        if (value.iTunesCompleteRaw != null) node.createChild(ITUNES_REFERENCE, "complete", value.iTunesCompleteRaw)
+        writable.iTunesExplicitRaw?.let { node.createChild(ITUNES_REFERENCE, "explicit", it) }
+        writable.iTunesSubtitle?.let { node.createChild(ITUNES_REFERENCE, "subtitle", it) }
+        writable.iTunesSummary?.let { node.createChild(ITUNES_REFERENCE, "summary", it) }
+        writable.iTunesAuthor?.let { node.createChild(ITUNES_REFERENCE, "author", it) }
+        writable.iTunesImage?.let { fallbackPersister.write(it, node) }
+        writable.iTunesBlockRaw?.let { node.createChild(ITUNES_REFERENCE, "block", it) }
+        writable.iTunesCompleteRaw?.let { node.createChild(ITUNES_REFERENCE, "complete", it) }
     }
 }

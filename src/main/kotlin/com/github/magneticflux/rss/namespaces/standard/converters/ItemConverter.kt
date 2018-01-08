@@ -12,6 +12,7 @@ import com.github.magneticflux.rss.namespaces.itunes.elements.ITunesTopLevelCate
 import com.github.magneticflux.rss.namespaces.standard.elements.Category
 import com.github.magneticflux.rss.namespaces.standard.elements.Enclosure
 import com.github.magneticflux.rss.namespaces.standard.elements.Guid
+import com.github.magneticflux.rss.namespaces.standard.elements.ICommonItem
 import com.github.magneticflux.rss.namespaces.standard.elements.Item
 import com.github.magneticflux.rss.namespaces.standard.elements.Source
 import org.simpleframework.xml.convert.Converter
@@ -24,8 +25,8 @@ import java.net.URL
  * @author Mitchell Skaggs
  * @since 1.0.1
  */
-object ItemConverter : Converter<Item> {
-    override fun read(node: InputNode): Item {
+object ItemConverter : Converter<ICommonItem> {
+    override fun read(node: InputNode): ICommonItem {
         var title: String? = null
         var description: String? = null
         var link: URL? = null
@@ -90,24 +91,26 @@ object ItemConverter : Converter<Item> {
         )
     }
 
-    override fun write(node: OutputNode, value: Item) {
-        if (value.title != null) node.createChild(name = "title", value = value.title)
-        if (value.description != null) node.createChild(name = "description", value = value.description)
-        if (value.link != null) node.createChild(name = "link", value = URLTransform.write(value.link))
-        value.categories.forEach { fallbackPersister.write(it, node) }
-        if (value.comments != null) node.createChild(name = "comments", value = URLTransform.write(value.comments))
-        if (value.pubDate != null) node.createChild(name = "pubDate", value = ZonedDateTimeTransform.write(value.pubDate))
-        if (value.author != null) node.createChild(name = "author", value = value.author)
-        if (value.guid != null) fallbackPersister.write(value.guid, node)
-        if (value.enclosure != null) fallbackPersister.write(value.enclosure, node)
-        if (value.source != null) fallbackPersister.write(value.source, node)
-        value.iTunesCategories.forEach { fallbackPersister.write(it, node) }
-        if (value.iTunesExplicitRaw != null) node.createChild(ITUNES_REFERENCE, "explicit", value.iTunesExplicitRaw)
-        if (value.iTunesSubtitle != null) node.createChild(ITUNES_REFERENCE, "subtitle", value.iTunesSubtitle)
-        if (value.iTunesSummary != null) node.createChild(ITUNES_REFERENCE, "summary", value.iTunesSummary)
-        if (value.iTunesAuthor != null) node.createChild(ITUNES_REFERENCE, "author", value.iTunesAuthor)
-        if (value.iTunesDurationRaw != null) node.createChild(ITUNES_REFERENCE, "duration", value.iTunesDurationRaw)
-        if (value.iTunesImage != null) fallbackPersister.write(value.iTunesImage, node)
-        if (value.iTunesBlockRaw != null) node.createChild(ITUNES_REFERENCE, "block", value.iTunesBlockRaw)
+    override fun write(node: OutputNode, value: ICommonItem) {
+        val writable = value.toWritable()
+
+        writable.title?.let { node.createChild(name = "title", value = it) }
+        writable.description?.let { node.createChild(name = "description", value = it) }
+        writable.link?.let { node.createChild(name = "link", value = URLTransform.write(it)) }
+        writable.categories.forEach { fallbackPersister.write(it, node) }
+        writable.comments?.let { node.createChild(name = "comments", value = URLTransform.write(it)) }
+        writable.pubDate?.let { node.createChild(name = "pubDate", value = ZonedDateTimeTransform.write(it)) }
+        writable.author?.let { node.createChild(name = "author", value = it) }
+        writable.guid?.let { fallbackPersister.write(it, node) }
+        writable.enclosure?.let { fallbackPersister.write(it, node) }
+        writable.source?.let { fallbackPersister.write(it, node) }
+        writable.iTunesCategories.forEach { fallbackPersister.write(it, node) }
+        writable.iTunesExplicitRaw?.let { node.createChild(ITUNES_REFERENCE, "explicit", it) }
+        writable.iTunesSubtitle?.let { node.createChild(ITUNES_REFERENCE, "subtitle", it) }
+        writable.iTunesSummary?.let { node.createChild(ITUNES_REFERENCE, "summary", it) }
+        writable.iTunesAuthor?.let { node.createChild(ITUNES_REFERENCE, "author", it) }
+        writable.iTunesDurationRaw?.let { node.createChild(ITUNES_REFERENCE, "duration", it) }
+        writable.iTunesImage?.let { fallbackPersister.write(it, node) }
+        writable.iTunesBlockRaw?.let { node.createChild(ITUNES_REFERENCE, "block", it) }
     }
 }

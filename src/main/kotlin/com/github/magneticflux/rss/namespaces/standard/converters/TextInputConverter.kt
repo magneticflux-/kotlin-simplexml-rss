@@ -4,6 +4,7 @@ import com.github.magneticflux.rss.URLTransform
 import com.github.magneticflux.rss.children
 import com.github.magneticflux.rss.fallbackPersister
 import com.github.magneticflux.rss.fullName
+import com.github.magneticflux.rss.namespaces.standard.elements.ICommonTextInput
 import com.github.magneticflux.rss.namespaces.standard.elements.TextInput
 import org.simpleframework.xml.convert.Converter
 import org.simpleframework.xml.stream.InputNode
@@ -14,8 +15,8 @@ import java.net.URL
  * @author Mitchell Skaggs
  * @since 1.0.4
  */
-object TextInputConverter : Converter<TextInput> {
-    override fun read(node: InputNode): TextInput {
+object TextInputConverter : Converter<ICommonTextInput> {
+    override fun read(node: InputNode): ICommonTextInput {
         lateinit var title: String
         lateinit var description: String
         lateinit var name: String
@@ -33,10 +34,12 @@ object TextInputConverter : Converter<TextInput> {
         return TextInput(title, description, name, link)
     }
 
-    override fun write(node: OutputNode, value: TextInput) {
-        node.getChild("title").value = value.title
-        node.getChild("description").value = value.description
-        node.getChild("name").value = value.name
-        node.getChild("link").value = URLTransform.write(value.link)
+    override fun write(node: OutputNode, value: ICommonTextInput) {
+        val writable = value.toWritable()
+
+        node.getChild("title").value = writable.title
+        node.getChild("description").value = writable.description
+        node.getChild("name").value = writable.name
+        node.getChild("link").value = URLTransform.write(writable.link)
     }
 }
