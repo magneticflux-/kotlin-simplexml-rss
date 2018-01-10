@@ -24,11 +24,11 @@ dependencies {
 ```
 1. Get a `Persister`
 ```Kotlin
-val persister = createDefaultPersister()
+val persister = createRssPersister()
 ```
 2. Read the input
 ```Kotlin
-val rssFeed = persister.read(RssFeed::class.java, input)
+val rssFeed = persister.read(Rss::class.java, input)
 ```
 3. ???
 ```
