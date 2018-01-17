@@ -36,6 +36,9 @@ internal fun OutputNode.createChild(reference: String = "", name: String, value:
     child.reference = reference
 }
 
+/**
+ * An iterator that iterates over children of an [InputNode].
+ */
 private class InputNodeChildIterator(val rootNode: InputNode) : AbstractIterator<InputNode>() {
     override fun computeNext() {
         val next = rootNode.next
