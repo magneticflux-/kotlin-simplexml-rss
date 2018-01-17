@@ -43,8 +43,8 @@ interface IWritableTextInput : ICommonTextInput {
  */
 @Root(name = "textInput", strict = false)
 data class TextInput(
-        override val title: String,
-        override val description: String,
-        override val name: String,
-        override val link: URL
+    override val title: String,
+    override val description: String,
+    override val name: String,
+    override val link: URL
 ) : ITextInput, IWritableTextInput

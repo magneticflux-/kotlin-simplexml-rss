@@ -45,5 +45,5 @@ interface IWritableITunesImage : ICommonITunesImage {
 @Root(name = "image")
 @Namespace(reference = ITUNES_REFERENCE)
 data class ITunesImage(
-        override val href: URL
+    override val href: URL
 ) : IITunesImage, IWritableITunesImage

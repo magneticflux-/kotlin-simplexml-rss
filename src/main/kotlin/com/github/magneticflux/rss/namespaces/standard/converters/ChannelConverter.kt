@@ -63,7 +63,8 @@ object ChannelConverter : Converter<ICommonChannel> {
         node.children.forEach {
             when (it.fullName) {
                 "title" -> title = it.value.orEmpty() // Element is there, but an empty String
-                "description" -> description = it.value.orEmpty() // Element is there, but an empty String
+                "description" -> description =
+                        it.value.orEmpty() // Element is there, but an empty String
                 "link" -> link = fallbackPersister.read(URL::class.java, it)
                 "category" -> categories += fallbackPersister.read(Category::class.java, it)
                 "copyright" -> copyright = it.value
@@ -73,7 +74,8 @@ object ChannelConverter : Converter<ICommonChannel> {
                 "managingEditor" -> managingEditor = it.value
                 "generator" -> generator = it.value
                 "image" -> image = fallbackPersister.read(Image::class.java, it)
-                "lastBuildDate" -> lastBuildDate = fallbackPersister.read(ZonedDateTime::class.java, it)
+                "lastBuildDate" -> lastBuildDate =
+                        fallbackPersister.read(ZonedDateTime::class.java, it)
                 "pubDate" -> pubDate = fallbackPersister.read(ZonedDateTime::class.java, it)
                 "ttl" -> ttl = it.value.toInt()
                 "day" -> skipDays += fallbackPersister.read(DayOfWeek::class.java, it)
@@ -81,7 +83,10 @@ object ChannelConverter : Converter<ICommonChannel> {
                 "cloud" -> cloud = fallbackPersister.read(Cloud::class.java, it)
                 "textInput" -> textInput = fallbackPersister.read(TextInput::class.java, it)
                 "item" -> items += fallbackPersister.read(Item::class.java, it)
-                "itunes:category" -> iTunesCategories += fallbackPersister.read(ITunesTopLevelCategory::class.java, it)
+                "itunes:category" -> iTunesCategories += fallbackPersister.read(
+                    ITunesTopLevelCategory::class.java,
+                    it
+                )
                 "itunes:explicit" -> iTunesExplicitRaw = it.value
                 "itunes:subtitle" -> iTunesSubtitle = it.value
                 "itunes:summary" -> iTunesSummary = it.value
@@ -93,33 +98,33 @@ object ChannelConverter : Converter<ICommonChannel> {
         }
 
         return Channel(
-                title,
-                description,
-                link,
-                categories,
-                copyright,
-                docs,
-                language,
-                webMaster,
-                managingEditor,
-                generator,
-                image,
-                lastBuildDate,
-                pubDate,
-                ttl,
-                skipDays,
-                skipHours,
-                cloud,
-                textInput,
-                items,
-                iTunesCategories,
-                iTunesExplicitRaw,
-                iTunesSubtitle,
-                iTunesSummary,
-                iTunesAuthor,
-                iTunesImage,
-                iTunesBlockRaw,
-                iTunesCompleteRaw
+            title,
+            description,
+            link,
+            categories,
+            copyright,
+            docs,
+            language,
+            webMaster,
+            managingEditor,
+            generator,
+            image,
+            lastBuildDate,
+            pubDate,
+            ttl,
+            skipDays,
+            skipHours,
+            cloud,
+            textInput,
+            items,
+            iTunesCategories,
+            iTunesExplicitRaw,
+            iTunesSubtitle,
+            iTunesSummary,
+            iTunesAuthor,
+            iTunesImage,
+            iTunesBlockRaw,
+            iTunesCompleteRaw
         )
     }
 
@@ -132,12 +137,16 @@ object ChannelConverter : Converter<ICommonChannel> {
         writable.categories.forEach { fallbackPersister.write(it, node) }
         writable.copyright?.let { node.getChild("copyright").value = it }
         writable.docs?.let { node.getChild("docs").value = URLTransform.write(it) }
-        writable.language?.let { node.getChild("language").value = LocaleLanguageTransform.write(it) }
+        writable.language?.let {
+            node.getChild("language").value = LocaleLanguageTransform.write(it)
+        }
         writable.webMaster?.let { node.getChild("webMaster").value = it }
         writable.managingEditor?.let { node.getChild("managingEditor").value = it }
         writable.generator?.let { node.getChild("generator").value = it }
         writable.image?.let { fallbackPersister.write(it, node) }
-        writable.lastBuildDate?.let { node.getChild("lastBuildDate").value = ZonedDateTimeTransform.write(it) }
+        writable.lastBuildDate?.let {
+            node.getChild("lastBuildDate").value = ZonedDateTimeTransform.write(it)
+        }
         writable.pubDate?.let { node.getChild("pubDate").value = ZonedDateTimeTransform.write(it) }
         writable.ttl?.let { node.getChild("ttl").value = it.toString() }
         if (writable.skipDays.isNotEmpty())

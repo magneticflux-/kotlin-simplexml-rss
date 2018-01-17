@@ -43,16 +43,30 @@ class RssTest : Spek({
             }
 
             it("should have the correct description") {
-                assertThat(rssFeed.channel.description, equalTo("RSS is a fascinating technology. The uses for RSS are expanding daily. Take a closer look at how various industries are using the benefits of RSS in their businesses."))
+                assertThat(
+                    rssFeed.channel.description,
+                    equalTo("RSS is a fascinating technology. The uses for RSS are expanding daily. Take a closer look at how various industries are using the benefits of RSS in their businesses.")
+                )
             }
 
             it("should have the correct link") {
-                assertThat(rssFeed.channel.link, equalTo(URL("http://www.feedforall.com/industry-solutions.htm")))
+                assertThat(
+                    rssFeed.channel.link,
+                    equalTo(URL("http://www.feedforall.com/industry-solutions.htm"))
+                )
             }
 
             it("should have the correct categories") {
                 assertThat(rssFeed.channel.categories, hasSize(1))
-                assertThat(rssFeed.channel.categories, hasItem(Category("www.dmoz.com", "Computers/Software/Internet/Site Management/Content Management")))
+                assertThat(
+                    rssFeed.channel.categories,
+                    hasItem(
+                        Category(
+                            "www.dmoz.com",
+                            "Computers/Software/Internet/Site Management/Content Management"
+                        )
+                    )
+                )
             }
 
             it("should have the correct copyright") {
@@ -60,7 +74,10 @@ class RssTest : Spek({
             }
 
             it("should have the correct docs") {
-                assertThat(rssFeed.channel.docs, equalTo(URL("http://blogs.law.harvard.edu/tech/rss")))
+                assertThat(
+                    rssFeed.channel.docs,
+                    equalTo(URL("http://blogs.law.harvard.edu/tech/rss"))
+                )
             }
 
             it("should have the correct language") {
@@ -80,17 +97,32 @@ class RssTest : Spek({
             }
 
             it("should have the correct image") {
-                assertThat(rssFeed.channel.image, equalTo(
-                        Image(URL("http://www.feedforall.com/ffalogo48x48.gif"), "FeedForAll Sample Feed", URL("http://www.feedforall.com/industry-solutions.htm"), "FeedForAll Sample Feed", "48", "48")
-                ))
+                assertThat(
+                    rssFeed.channel.image, equalTo(
+                        Image(
+                            URL("http://www.feedforall.com/ffalogo48x48.gif"),
+                            "FeedForAll Sample Feed",
+                            URL("http://www.feedforall.com/industry-solutions.htm"),
+                            "FeedForAll Sample Feed",
+                            "48",
+                            "48"
+                        )
+                    )
+                )
             }
 
             it("should have the correct lastBuildDate") {
-                assertThat(rssFeed.channel.lastBuildDate, equalTo(ZonedDateTime.from(DateTimeFormatter.RFC_1123_DATE_TIME.parse("Tue, 19 Oct 2004 13:39:14 -0400"))))
+                assertThat(
+                    rssFeed.channel.lastBuildDate,
+                    equalTo(ZonedDateTime.from(DateTimeFormatter.RFC_1123_DATE_TIME.parse("Tue, 19 Oct 2004 13:39:14 -0400")))
+                )
             }
 
             it("should have the correct pubDate") {
-                assertThat(rssFeed.channel.pubDate, equalTo(ZonedDateTime.from(DateTimeFormatter.RFC_1123_DATE_TIME.parse("Tue, 19 Oct 2004 13:38:55 -0400"))))
+                assertThat(
+                    rssFeed.channel.pubDate,
+                    equalTo(ZonedDateTime.from(DateTimeFormatter.RFC_1123_DATE_TIME.parse("Tue, 19 Oct 2004 13:38:55 -0400")))
+                )
             }
 
             it("should have the correct ttl") {
@@ -109,45 +141,66 @@ class RssTest : Spek({
             }
 
             it("should have the correct cloud") {
-                assertThat(rssFeed.channel.cloud, equalTo(
-                        Cloud("rpc.sys.com",
-                                "/RPC2",
-                                80,
-                                "xml-rpc",
-                                "myCloud.rssPleaseNotify")
-                ))
+                assertThat(
+                    rssFeed.channel.cloud, equalTo(
+                        Cloud(
+                            "rpc.sys.com",
+                            "/RPC2",
+                            80,
+                            "xml-rpc",
+                            "myCloud.rssPleaseNotify"
+                        )
+                    )
+                )
             }
 
             it("should have the correct textInput") {
-                assertThat(rssFeed.channel.textInput, equalTo(
-                        TextInput("TextInput Inquiry",
-                                "Your aggregator supports the textInput element. What software are you using?",
-                                "query",
-                                URL("http://www.cadenhead.org/textinput.php"))
-                ))
+                assertThat(
+                    rssFeed.channel.textInput, equalTo(
+                        TextInput(
+                            "TextInput Inquiry",
+                            "Your aggregator supports the textInput element. What software are you using?",
+                            "query",
+                            URL("http://www.cadenhead.org/textinput.php")
+                        )
+                    )
+                )
             }
 
             it("should contain the correct items") {
-                assertThat(rssFeed.channel.items, hasItem(Item(
-                        "RSS Solutions for Restaurants",
-                        "<b>FeedForAll </b>helps Restaurant's communicate with customers. Let your customers know the latest specials or events.<br> <br> RSS feed uses include:<br> <i><font color=\"#FF0000\">Daily Specials <br> Entertainment <br> Calendar of Events </i></font>",
-                        URL("http://www.feedforall.com/restaurant.htm"),
-                        listOf(Category("www.dmoz.com", "Computers/Software/Internet/Site Management/Content Management")),
-                        URL("http://www.feedforall.com/forum"),
-                        ZonedDateTime.from(DateTimeFormatter.RFC_1123_DATE_TIME.parse("Tue, 19 Oct 2004 11:09:11 -0400")),
-                        "lawyer@boyer.net (Lawyer Boyer)",
-                        Guid(true.toString(), "http://inessential.com/2002/09/01.php#a2"),
-                        Enclosure(URL("http://www.scripting.com/mp3s/weatherReportSuite.mp3"), 12216320, "audio/mpeg"),
-                        Source(URL("http://www.tomalak.org/links2.xml"), "Tomalak's Realm"),
-                        emptyList(),
-                        null,
-                        null,
-                        null,
-                        null,
-                        null,
-                        null,
-                        null
-                )))
+                assertThat(
+                    rssFeed.channel.items, hasItem(
+                        Item(
+                            "RSS Solutions for Restaurants",
+                            "<b>FeedForAll </b>helps Restaurant's communicate with customers. Let your customers know the latest specials or events.<br> <br> RSS feed uses include:<br> <i><font color=\"#FF0000\">Daily Specials <br> Entertainment <br> Calendar of Events </i></font>",
+                            URL("http://www.feedforall.com/restaurant.htm"),
+                            listOf(
+                                Category(
+                                    "www.dmoz.com",
+                                    "Computers/Software/Internet/Site Management/Content Management"
+                                )
+                            ),
+                            URL("http://www.feedforall.com/forum"),
+                            ZonedDateTime.from(DateTimeFormatter.RFC_1123_DATE_TIME.parse("Tue, 19 Oct 2004 11:09:11 -0400")),
+                            "lawyer@boyer.net (Lawyer Boyer)",
+                            Guid(true.toString(), "http://inessential.com/2002/09/01.php#a2"),
+                            Enclosure(
+                                URL("http://www.scripting.com/mp3s/weatherReportSuite.mp3"),
+                                12216320,
+                                "audio/mpeg"
+                            ),
+                            Source(URL("http://www.tomalak.org/links2.xml"), "Tomalak's Realm"),
+                            emptyList(),
+                            null,
+                            null,
+                            null,
+                            null,
+                            null,
+                            null,
+                            null
+                        )
+                    )
+                )
             }
 
             on("feed reread") {
@@ -261,11 +314,17 @@ class RssTest : Spek({
             val sampleITunes = persister.read(Rss::class.java, getSample("sample_itunes.xml"))
 
             it("should have the correct itunes:category elements") {
-                assertThat(sampleITunes.channel.iTunesCategories, equalTo(listOf(
-                        ITunesTopLevelCategory("Technology", listOf(
-                                ITunesSubCategory("Information Technology")
-                        ))
-                )))
+                assertThat(
+                    sampleITunes.channel.iTunesCategories, equalTo(
+                        listOf(
+                            ITunesTopLevelCategory(
+                                "Technology", listOf(
+                                    ITunesSubCategory("Information Technology")
+                                )
+                            )
+                        )
+                    )
+                )
             }
 
             on("feed reread") {

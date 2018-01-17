@@ -12,7 +12,8 @@ import org.simpleframework.xml.Root
  *
  * @since 1.1.0
  */
-interface ICommonITunesTopLevelCategory : HasReadWrite<IITunesTopLevelCategory, IWritableITunesTopLevelCategory> {
+interface ICommonITunesTopLevelCategory :
+    HasReadWrite<IITunesTopLevelCategory, IWritableITunesTopLevelCategory> {
     val text: String
     val iTunesSubCategories: List<ICommonITunesSubCategory>
 }
@@ -49,6 +50,6 @@ interface IWritableITunesTopLevelCategory : ICommonITunesTopLevelCategory {
 @Root(name = "category")
 @Namespace(reference = ITUNES_REFERENCE)
 data class ITunesTopLevelCategory(
-        override val text: String,
-        override val iTunesSubCategories: List<ITunesSubCategory>
+    override val text: String,
+    override val iTunesSubCategories: List<ITunesSubCategory>
 ) : IITunesTopLevelCategory, IWritableITunesTopLevelCategory

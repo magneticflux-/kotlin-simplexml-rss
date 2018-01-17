@@ -49,12 +49,12 @@ interface IWritableImage : ICommonImage {
  */
 @Root(name = "image", strict = false)
 data class Image(
-        override val url: URL,
-        override val title: String,
-        override val link: URL,
-        override val description: String?,
-        override val widthRaw: String?,
-        override val heightRaw: String?
+    override val url: URL,
+    override val title: String,
+    override val link: URL,
+    override val description: String?,
+    override val widthRaw: String?,
+    override val heightRaw: String?
 ) : IImage, IWritableImage {
     override val width: Int = widthRaw?.toInt() ?: 88
     override val height: Int = heightRaw?.toInt() ?: 31

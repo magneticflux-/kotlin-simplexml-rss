@@ -31,7 +31,7 @@ internal fun throws(matcher: Matcher<out Throwable>): Matcher<() -> Any?> {
 
         override fun describeTo(description: Description) {
             description.appendText("a function that throws")
-                    .appendDescriptionOf(matcher)
+                .appendDescriptionOf(matcher)
         }
     }
 }

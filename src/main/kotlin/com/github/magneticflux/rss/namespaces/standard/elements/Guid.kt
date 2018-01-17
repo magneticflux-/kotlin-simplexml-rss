@@ -41,8 +41,8 @@ interface IWritableGuid : ICommonGuid {
  */
 @Root(name = "guid", strict = false)
 data class Guid(
-        override val isPermaLinkRaw: String?,
-        override val text: String
+    override val isPermaLinkRaw: String?,
+    override val text: String
 ) : IGuid, IWritableGuid {
 
     override val isPermaLink: Boolean = when (isPermaLinkRaw?.toLowerCase()) {

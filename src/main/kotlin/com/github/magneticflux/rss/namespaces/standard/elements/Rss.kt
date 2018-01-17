@@ -47,6 +47,6 @@ interface IWritableRss : ICommonRss {
 @Root(name = "rss", strict = false)
 @Namespace(prefix = "itunes", reference = ITUNES_REFERENCE)
 data class Rss(
-        override val version: String,
-        override val channel: Channel
+    override val version: String,
+    override val channel: Channel
 ) : IRss, IWritableRss

@@ -40,6 +40,6 @@ interface IWritableCategory : ICommonCategory {
  */
 @Root(name = "category", strict = false)
 data class Category(
-        override val domain: String? = null,
-        override val text: String
+    override val domain: String? = null,
+    override val text: String
 ) : ICategory, IWritableCategory

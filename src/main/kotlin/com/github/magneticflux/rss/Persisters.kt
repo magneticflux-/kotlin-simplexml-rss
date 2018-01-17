@@ -51,21 +51,21 @@ fun createRssPersister(): Persister = Persister(createRssStrategy(), createRssMa
  */
 fun createRssStrategy(): Strategy {
     return RegistryStrategy(
-            Registry().apply {
-                this.bind(Rss::class.java, RssConverter)
-                this.bind(Channel::class.java, ChannelConverter)
-                this.bind(Item::class.java, ItemConverter)
-                this.bind(Category::class.java, CategoryConverter)
-                this.bind(Image::class.java, ImageConverter)
-                this.bind(Cloud::class.java, CloudConverter)
-                this.bind(TextInput::class.java, TextInputConverter)
-                this.bind(Enclosure::class.java, EnclosureConverter)
-                this.bind(Guid::class.java, GuidConverter)
-                this.bind(Source::class.java, SourceConverter)
-                this.bind(ITunesTopLevelCategory::class.java, ITunesTopLevelCategoryConverter)
-                this.bind(ITunesSubCategory::class.java, ITunesSubCategoryConverter)
-                this.bind(ITunesImage::class.java, ITunesImageConverter)
-            })
+        Registry().apply {
+            this.bind(Rss::class.java, RssConverter)
+            this.bind(Channel::class.java, ChannelConverter)
+            this.bind(Item::class.java, ItemConverter)
+            this.bind(Category::class.java, CategoryConverter)
+            this.bind(Image::class.java, ImageConverter)
+            this.bind(Cloud::class.java, CloudConverter)
+            this.bind(TextInput::class.java, TextInputConverter)
+            this.bind(Enclosure::class.java, EnclosureConverter)
+            this.bind(Guid::class.java, GuidConverter)
+            this.bind(Source::class.java, SourceConverter)
+            this.bind(ITunesTopLevelCategory::class.java, ITunesTopLevelCategoryConverter)
+            this.bind(ITunesSubCategory::class.java, ITunesSubCategoryConverter)
+            this.bind(ITunesImage::class.java, ITunesImageConverter)
+        })
 }
 
 /**

@@ -85,24 +85,24 @@ interface IWritableItem : ICommonItem {
  */
 @Root(name = "item", strict = false)
 data class Item(
-        override val title: String?,
-        override val description: String?,
-        override val link: URL?,
-        override val categories: List<Category>,
-        override val comments: URL?,
-        override val pubDate: ZonedDateTime?,
-        override val author: String?,
-        override val guid: Guid?,
-        override val enclosure: Enclosure?,
-        override val source: Source?,
-        override val iTunesCategories: List<ITunesTopLevelCategory>,
-        override val iTunesExplicitRaw: String?,
-        override val iTunesSubtitle: String?,
-        override val iTunesSummary: String?,
-        override val iTunesAuthor: String?,
-        override val iTunesDurationRaw: String?,
-        override val iTunesImage: ITunesImage?,
-        override val iTunesBlockRaw: String?
+    override val title: String?,
+    override val description: String?,
+    override val link: URL?,
+    override val categories: List<Category>,
+    override val comments: URL?,
+    override val pubDate: ZonedDateTime?,
+    override val author: String?,
+    override val guid: Guid?,
+    override val enclosure: Enclosure?,
+    override val source: Source?,
+    override val iTunesCategories: List<ITunesTopLevelCategory>,
+    override val iTunesExplicitRaw: String?,
+    override val iTunesSubtitle: String?,
+    override val iTunesSummary: String?,
+    override val iTunesAuthor: String?,
+    override val iTunesDurationRaw: String?,
+    override val iTunesImage: ITunesImage?,
+    override val iTunesBlockRaw: String?
 ) : IItem, IWritableItem {
 
     override val iTunesExplicit = when (iTunesExplicitRaw?.toLowerCase()) {

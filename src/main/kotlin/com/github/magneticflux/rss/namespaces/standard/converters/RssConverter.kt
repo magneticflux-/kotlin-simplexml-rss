@@ -29,8 +29,9 @@ object RssConverter : Converter<ICommonRss> {
         }
 
         return Rss(
-                version,
-                channel)
+            version,
+            channel
+        )
     }
 
     override fun write(node: OutputNode, value: ICommonRss) {

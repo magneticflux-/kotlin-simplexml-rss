@@ -41,6 +41,6 @@ interface IWritableSource : ICommonSource {
  */
 @Root(name = "source", strict = false)
 data class Source(
-        override val url: URL,
-        override val text: String? = null
+    override val url: URL,
+    override val text: String? = null
 ) : ISource, IWritableSource

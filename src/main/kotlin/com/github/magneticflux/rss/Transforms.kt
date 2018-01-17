@@ -34,8 +34,8 @@ object DayOfWeekTransform : Transform<DayOfWeek> {
     }
 
     private val FORMATTER: DateTimeFormatter = DateTimeFormatterBuilder()
-            .appendText(ChronoField.DAY_OF_WEEK, TextStyle.FULL)
-            .toFormatter(Locale.US)
+        .appendText(ChronoField.DAY_OF_WEEK, TextStyle.FULL)
+        .toFormatter(Locale.US)
 }
 
 /**

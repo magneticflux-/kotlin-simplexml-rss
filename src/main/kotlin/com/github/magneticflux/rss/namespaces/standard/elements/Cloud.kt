@@ -43,9 +43,9 @@ interface IWritableCloud : ICommonCloud {
  */
 @Root(name = "cloud", strict = false)
 data class Cloud(
-        override val domain: String,
-        override val path: String,
-        override val port: Int,
-        override val protocol: String,
-        override val registerProcedure: String
+    override val domain: String,
+    override val path: String,
+    override val port: Int,
+    override val protocol: String,
+    override val registerProcedure: String
 ) : ICloud, IWritableCloud

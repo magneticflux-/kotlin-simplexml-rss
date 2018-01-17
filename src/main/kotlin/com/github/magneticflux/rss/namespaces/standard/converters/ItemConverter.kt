@@ -58,7 +58,10 @@ object ItemConverter : Converter<ICommonItem> {
                 "guid" -> guid = fallbackPersister.read(Guid::class.java, it)
                 "enclosure" -> enclosure = fallbackPersister.read(Enclosure::class.java, it)
                 "source" -> source = fallbackPersister.read(Source::class.java, it)
-                "itunes:category" -> iTunesCategories += fallbackPersister.read(ITunesTopLevelCategory::class.java, it)
+                "itunes:category" -> iTunesCategories += fallbackPersister.read(
+                    ITunesTopLevelCategory::class.java,
+                    it
+                )
                 "itunes:explicit" -> iTunesExplicitRaw = it.value
                 "itunes:subtitle" -> iTunesSubtitle = it.value
                 "itunes:summary" -> iTunesSummary = it.value
@@ -70,24 +73,24 @@ object ItemConverter : Converter<ICommonItem> {
         }
 
         return Item(
-                title,
-                description,
-                link,
-                categories,
-                comments,
-                pubDate,
-                author,
-                guid,
-                enclosure,
-                source,
-                iTunesCategories,
-                iTunesExplicitRaw,
-                iTunesSubtitle,
-                iTunesSummary,
-                iTunesAuthor,
-                iTunesDurationRaw,
-                iTunesImage,
-                iTunesBlockRaw
+            title,
+            description,
+            link,
+            categories,
+            comments,
+            pubDate,
+            author,
+            guid,
+            enclosure,
+            source,
+            iTunesCategories,
+            iTunesExplicitRaw,
+            iTunesSubtitle,
+            iTunesSummary,
+            iTunesAuthor,
+            iTunesDurationRaw,
+            iTunesImage,
+            iTunesBlockRaw
         )
     }
 
@@ -98,8 +101,18 @@ object ItemConverter : Converter<ICommonItem> {
         writable.description?.let { node.createChild(name = "description", value = it) }
         writable.link?.let { node.createChild(name = "link", value = URLTransform.write(it)) }
         writable.categories.forEach { fallbackPersister.write(it, node) }
-        writable.comments?.let { node.createChild(name = "comments", value = URLTransform.write(it)) }
-        writable.pubDate?.let { node.createChild(name = "pubDate", value = ZonedDateTimeTransform.write(it)) }
+        writable.comments?.let {
+            node.createChild(
+                name = "comments",
+                value = URLTransform.write(it)
+            )
+        }
+        writable.pubDate?.let {
+            node.createChild(
+                name = "pubDate",
+                value = ZonedDateTimeTransform.write(it)
+            )
+        }
         writable.author?.let { node.createChild(name = "author", value = it) }
         writable.guid?.let { fallbackPersister.write(it, node) }
         writable.enclosure?.let { fallbackPersister.write(it, node) }

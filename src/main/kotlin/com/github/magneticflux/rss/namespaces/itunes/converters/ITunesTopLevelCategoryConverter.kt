@@ -21,7 +21,10 @@ object ITunesTopLevelCategoryConverter : Converter<ICommonITunesTopLevelCategory
 
         node.children.forEach {
             when (it.fullName) {
-                "itunes:category" -> subCategories += fallbackPersister.read(ITunesSubCategory::class.java, it)
+                "itunes:category" -> subCategories += fallbackPersister.read(
+                    ITunesSubCategory::class.java,
+                    it
+                )
             }
         }
 

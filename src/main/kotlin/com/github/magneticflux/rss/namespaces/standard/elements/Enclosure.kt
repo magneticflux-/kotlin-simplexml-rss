@@ -42,7 +42,7 @@ interface IWritableEnclosure : ICommonEnclosure {
  */
 @Root(name = "enclosure", strict = false)
 data class Enclosure(
-        override val url: URL,
-        override val length: Long,
-        override val type: String
+    override val url: URL,
+    override val length: Long,
+    override val type: String
 ) : IEnclosure, IWritableEnclosure

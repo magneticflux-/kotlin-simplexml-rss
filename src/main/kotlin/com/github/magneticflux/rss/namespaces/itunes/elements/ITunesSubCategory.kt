@@ -42,5 +42,5 @@ interface IWritableITunesSubCategory : ICommonITunesSubCategory {
 @Root(name = "category")
 @Namespace(reference = ITUNES_REFERENCE)
 data class ITunesSubCategory(
-        override val text: String
+    override val text: String
 ) : IITunesSubCategory, IWritableITunesSubCategory
