@@ -1,5 +1,5 @@
 buildscript {
-    ext.kotlin_version = '1.2.20-eap-71'
+    ext.kotlin_version = '1.2.20'
     ext.spek_version = '1.1.5'
 
     repositories {
@@ -18,7 +18,7 @@ plugins {
     id 'jacoco'
     id 'maven-publish'
     id 'com.jfrog.bintray' version '1.8.0'
-    id 'org.shipkit.java' version '1.0.5'
+    id 'org.shipkit.java' version '1.0.7'
     id 'com.diffplug.gradle.spotless' version '3.8.0'
     id 'com.github.ben-manes.versions' version '0.17.0'
 }
