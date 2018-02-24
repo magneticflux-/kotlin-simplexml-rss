@@ -44,7 +44,6 @@ private class InputNodeChildIterator(val rootNode: InputNode) : AbstractIterator
         val next = rootNode.next
         if (next != null)
             setNext(next)
-        else
-            done()
+        else done()
     }
 }

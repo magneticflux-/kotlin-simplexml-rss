@@ -82,7 +82,6 @@ object URLTransform : Transform<URL> {
     override fun write(value: URL): String {
         return if (value.authority == null)
             value.file
-        else
-            value.toExternalForm()
+        else value.toExternalForm()
     }
 }
