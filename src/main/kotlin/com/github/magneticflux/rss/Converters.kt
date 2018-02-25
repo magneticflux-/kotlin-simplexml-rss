@@ -16,7 +16,7 @@ internal val InputNode.fullName: String
     get() {
         val prefix = this.prefix
         val name = this.name
-        return if (prefix.isNullOrEmpty()) name else "$prefix:$name"
+        return if (prefix.isEmpty()) name else "$prefix:$name"
     }
 
 /**
@@ -44,7 +44,6 @@ private class InputNodeChildIterator(val rootNode: InputNode) : AbstractIterator
         val next = rootNode.next
         if (next != null)
             setNext(next)
-        else
-            done()
+        else done()
     }
 }

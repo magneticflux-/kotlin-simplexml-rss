@@ -1,0 +1,3 @@
+moduleName=persister-module
+moduleVersion=1.0
+extensionClasses=com.github.magneticflux.rss.PersisterUtilsKt
