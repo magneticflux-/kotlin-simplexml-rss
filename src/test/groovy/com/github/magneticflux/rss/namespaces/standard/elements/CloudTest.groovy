@@ -4,16 +4,15 @@ import com.github.magneticflux.rss.PersisterSpecification
 import org.codehaus.groovy.runtime.StringBufferWriter
 import spock.lang.Unroll
 
-class CategoryTest extends PersisterSpecification {
-
+class CloudTest extends PersisterSpecification {
 	@Unroll
-	def 'category  #object read/write'() {
+	def 'cloud #object read/write'() {
 
 		when: 'the object is written to XML'
 		def output = new StringBuffer()
 		persister.write(object, new StringBufferWriter(output))
 		and: 'the XML is read to an object'
-		def input = persister.read(Category, xml)
+		def input = persister.read(Cloud, xml)
 
 		then: 'the output XML equals the given XML'
 		output.toString() == xml
@@ -22,9 +21,8 @@ class CategoryTest extends PersisterSpecification {
 
 		where:
 
-		domain       | text       | xml
-		'testDomain' | 'testText' | """<category domain="$domain">$text</category>"""
-		null         | 'testText' | """<category>$text</category>"""
-		object = new Category(domain, text)
+		domain       | path       | port | protocol       | registerProcedure       | xml
+		'testDomain' | 'testPath' | 8080 | 'testProtocol' | 'testRegisterProcedure' | """<cloud domain="$domain" path="$path" port="$port" protocol="$protocol" registerProcedure="$registerProcedure"/>"""
+		object = new Cloud(domain, path, port, protocol, registerProcedure)
 	}
 }
