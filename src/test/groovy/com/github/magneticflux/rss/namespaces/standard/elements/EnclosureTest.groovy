@@ -7,17 +7,11 @@ class EnclosureTest extends PersisterSpecification {
 	@Unroll
 	def 'enclosure #object read/write'() {
 
-		when: 'the object is written to XML'
-		def output = persister.write(object)
+		expect: 'the output XML equals the given XML'
+		persister.write(object) == xml
 
-		then: 'the output XML equals the given XML'
-		output == xml
-
-		when: 'the XML is read to an object'
-		def input = persister.read(Enclosure, xml)
-
-		then: 'the input object equals the given object'
-		input == object
+		and: 'the input object equals the given object'
+		persister.read(Enclosure, xml) == object
 
 		where:
 		url                              | length | type       | xml
