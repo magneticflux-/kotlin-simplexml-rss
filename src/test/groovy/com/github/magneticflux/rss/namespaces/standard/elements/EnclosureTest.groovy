@@ -4,10 +4,9 @@ import com.github.magneticflux.rss.PersisterSpecification
 import org.codehaus.groovy.runtime.StringBufferWriter
 import spock.lang.Unroll
 
-class CategoryTest extends PersisterSpecification {
-
+class EnclosureTest extends PersisterSpecification {
 	@Unroll
-	def 'category  #object read/write'() {
+	def 'enclosure #object read/write'() {
 
 		when: 'the object is written to XML'
 		def output = new StringBuffer()
@@ -17,15 +16,14 @@ class CategoryTest extends PersisterSpecification {
 		output.toString() == xml
 
 		when: 'the XML is read to an object'
-		def input = persister.read(Category, xml)
+		def input = persister.read(Enclosure, xml)
 
 		then: 'the input object equals the given object'
 		input == object
 
 		where:
-		domain       | text       | xml
-		'testDomain' | 'testText' | """<category domain="$domain">$text</category>"""
-		null         | 'testText' | """<category>$text</category>"""
-		object = new Category(domain, text)
+		url                              | length | type       | xml
+		'http://www.example.com'.toURL() | 1000   | 'testType' | """<enclosure url="$url" length="$length" type="$type"/>"""
+		object = new Enclosure(url, length, type)
 	}
 }
