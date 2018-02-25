@@ -14,8 +14,16 @@ internal val fallbackPersister = createRssPersister()
  */
 internal val InputNode.fullName: String
     get() {
-        val prefix = this.prefix
+        var prefix = this.prefix
         val name = this.name
+
+        if (prefix.isEmpty())
+            prefix = when (this.reference) {
+                "http://www.w3.org/1999/xhtml" -> "xhtml"
+                "http://www.w3.org/2005/Atom" -> "atom"
+                else -> prefix
+            }
+
         return if (prefix.isEmpty()) name else "$prefix:$name"
     }
 

@@ -1,5 +1,9 @@
 package com.github.magneticflux.rss
 
+import com.github.magneticflux.rss.namespaces.atom.converters.AtomAuthorConverter
+import com.github.magneticflux.rss.namespaces.atom.converters.AtomFeedConverter
+import com.github.magneticflux.rss.namespaces.atom.elements.AtomAuthor
+import com.github.magneticflux.rss.namespaces.atom.elements.AtomFeed
 import com.github.magneticflux.rss.namespaces.itunes.converters.ITunesImageConverter
 import com.github.magneticflux.rss.namespaces.itunes.converters.ITunesSubCategoryConverter
 import com.github.magneticflux.rss.namespaces.itunes.converters.ITunesTopLevelCategoryConverter
@@ -62,9 +66,13 @@ fun createRssStrategy(): Strategy {
             this.bind(Enclosure::class.java, EnclosureConverter)
             this.bind(Guid::class.java, GuidConverter)
             this.bind(Source::class.java, SourceConverter)
+
             this.bind(ITunesTopLevelCategory::class.java, ITunesTopLevelCategoryConverter)
             this.bind(ITunesSubCategory::class.java, ITunesSubCategoryConverter)
             this.bind(ITunesImage::class.java, ITunesImageConverter)
+
+            this.bind(AtomFeed::class.java, AtomFeedConverter)
+            this.bind(AtomAuthor::class.java, AtomAuthorConverter)
         })
 }
 
