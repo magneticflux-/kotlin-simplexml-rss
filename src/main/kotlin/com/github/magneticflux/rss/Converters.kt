@@ -16,7 +16,7 @@ internal val InputNode.fullName: String
     get() {
         val prefix = this.prefix
         val name = this.name
-        return if (prefix.isNullOrEmpty()) name else "$prefix:$name"
+        return if (prefix.isEmpty()) name else "$prefix:$name"
     }
 
 /**
