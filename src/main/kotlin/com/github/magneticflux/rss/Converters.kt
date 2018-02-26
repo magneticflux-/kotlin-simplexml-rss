@@ -11,16 +11,8 @@ import org.simpleframework.xml.stream.OutputNode
 internal val fallbackPersister = createRssPersister()
 
 /**
- * Gets the prefix + name or just name if prefix is null.
+ * Gets a corresponding [Namespace] or `null` if none are found.
  */
-@Deprecated("Instead check the namespace enum and the name separately")
-internal val InputNode.fullName: String
-    get() {
-        val prefix = this.prefix
-        val name = this.name
-        return if (prefix.isEmpty()) name else "$prefix:$name"
-    }
-
 internal val InputNode.namespace: Namespace?
     get() {
         return when (reference.toLowerCase()) {
