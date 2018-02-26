@@ -6,7 +6,7 @@ import com.github.magneticflux.rss.children
 import com.github.magneticflux.rss.createChild
 import com.github.magneticflux.rss.fallbackPersister
 import com.github.magneticflux.rss.fullName
-import com.github.magneticflux.rss.namespaces.itunes.elements.ITUNES_REFERENCE
+import com.github.magneticflux.rss.namespaces.Namespace
 import com.github.magneticflux.rss.namespaces.itunes.elements.ITunesImage
 import com.github.magneticflux.rss.namespaces.itunes.elements.ITunesTopLevelCategory
 import com.github.magneticflux.rss.namespaces.standard.elements.Category
@@ -118,12 +118,30 @@ object ItemConverter : Converter<ICommonItem> {
         writable.enclosure?.let { fallbackPersister.write(it, node) }
         writable.source?.let { fallbackPersister.write(it, node) }
         writable.iTunesCategories.forEach { fallbackPersister.write(it, node) }
-        writable.iTunesExplicitRaw?.let { node.createChild(ITUNES_REFERENCE, "explicit", it) }
-        writable.iTunesSubtitle?.let { node.createChild(ITUNES_REFERENCE, "subtitle", it) }
-        writable.iTunesSummary?.let { node.createChild(ITUNES_REFERENCE, "summary", it) }
-        writable.iTunesAuthor?.let { node.createChild(ITUNES_REFERENCE, "author", it) }
-        writable.iTunesDurationRaw?.let { node.createChild(ITUNES_REFERENCE, "duration", it) }
+        writable.iTunesExplicitRaw?.let {
+            node.createChild(
+                Namespace.ITUNES.reference,
+                "explicit",
+                it
+            )
+        }
+        writable.iTunesSubtitle?.let {
+            node.createChild(
+                Namespace.ITUNES.reference,
+                "subtitle",
+                it
+            )
+        }
+        writable.iTunesSummary?.let { node.createChild(Namespace.ITUNES.reference, "summary", it) }
+        writable.iTunesAuthor?.let { node.createChild(Namespace.ITUNES.reference, "author", it) }
+        writable.iTunesDurationRaw?.let {
+            node.createChild(
+                Namespace.ITUNES.reference,
+                "duration",
+                it
+            )
+        }
         writable.iTunesImage?.let { fallbackPersister.write(it, node) }
-        writable.iTunesBlockRaw?.let { node.createChild(ITUNES_REFERENCE, "block", it) }
+        writable.iTunesBlockRaw?.let { node.createChild(Namespace.ITUNES.reference, "block", it) }
     }
 }
