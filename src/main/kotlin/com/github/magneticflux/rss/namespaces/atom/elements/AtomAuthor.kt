@@ -1,5 +1,6 @@
 package com.github.magneticflux.rss.namespaces.atom.elements
 
+import com.github.magneticflux.rss.namespaces.Namespace.ATOM
 import com.github.magneticflux.rss.namespaces.atom.converters.AtomAuthorConverter
 import com.github.magneticflux.rss.namespaces.standard.elements.HasReadWrite
 import org.simpleframework.xml.Namespace
@@ -42,7 +43,7 @@ interface IWritableAtomPerson : ICommonAtomPerson {
  * @see AtomAuthorConverter
  */
 @Root(name = "author")
-@Namespace(reference = ATOM_REFERENCE)
+@Namespace(reference = ATOM.reference)
 data class AtomAuthor(
     override val name: String,
     override val uri: String?,

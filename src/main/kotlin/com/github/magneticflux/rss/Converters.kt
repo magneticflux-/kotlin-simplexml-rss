@@ -1,5 +1,6 @@
 package com.github.magneticflux.rss
 
+import com.github.magneticflux.rss.namespaces.Namespace
 import org.simpleframework.xml.convert.Converter
 import org.simpleframework.xml.stream.InputNode
 import org.simpleframework.xml.stream.OutputNode
@@ -10,21 +11,16 @@ import org.simpleframework.xml.stream.OutputNode
 internal val fallbackPersister = createRssPersister()
 
 /**
- * Gets the prefix + name or just name if prefix is null.
+ * Gets a corresponding [Namespace] or `null` if none are found.
  */
-internal val InputNode.fullName: String
+internal val InputNode.namespace: Namespace?
     get() {
-        var prefix = this.prefix
-        val name = this.name
-
-        if (prefix.isEmpty())
-            prefix = when (this.reference) {
-                "http://www.w3.org/1999/xhtml" -> "xhtml"
-                "http://www.w3.org/2005/Atom" -> "atom"
-                else -> prefix
-            }
-
-        return if (prefix.isEmpty()) name else "$prefix:$name"
+        return when (reference.toLowerCase()) {
+            Namespace.DEFAULT.reference -> Namespace.DEFAULT
+            Namespace.ITUNES.reference -> Namespace.ITUNES
+            Namespace.ATOM.reference -> Namespace.ATOM
+            else -> null
+        }
     }
 
 /**

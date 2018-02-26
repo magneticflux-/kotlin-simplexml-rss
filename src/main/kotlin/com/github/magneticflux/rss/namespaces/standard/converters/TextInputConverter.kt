@@ -3,7 +3,8 @@ package com.github.magneticflux.rss.namespaces.standard.converters
 import com.github.magneticflux.rss.URLTransform
 import com.github.magneticflux.rss.children
 import com.github.magneticflux.rss.fallbackPersister
-import com.github.magneticflux.rss.fullName
+import com.github.magneticflux.rss.namespace
+import com.github.magneticflux.rss.namespaces.Namespace
 import com.github.magneticflux.rss.namespaces.standard.elements.ICommonTextInput
 import com.github.magneticflux.rss.namespaces.standard.elements.TextInput
 import org.simpleframework.xml.convert.Converter
@@ -23,11 +24,16 @@ object TextInputConverter : Converter<ICommonTextInput> {
         lateinit var link: URL
 
         node.children.forEach {
-            when (it.fullName) {
-                "title" -> title = fallbackPersister.read(String::class.java, it)
-                "description" -> description = fallbackPersister.read(String::class.java, it)
-                "name" -> name = fallbackPersister.read(String::class.java, it)
-                "link" -> link = fallbackPersister.read(URL::class.java, it)
+            when (it.namespace) {
+                Namespace.DEFAULT -> {
+                    when (it.name) {
+                        "title" -> title = fallbackPersister.read(String::class.java, it)
+                        "description" -> description =
+                                fallbackPersister.read(String::class.java, it)
+                        "name" -> name = fallbackPersister.read(String::class.java, it)
+                        "link" -> link = fallbackPersister.read(URL::class.java, it)
+                    }
+                }
             }
         }
 

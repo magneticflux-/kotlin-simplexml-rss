@@ -2,7 +2,8 @@ package com.github.magneticflux.rss.namespaces.atom.converters
 
 import com.github.magneticflux.rss.children
 import com.github.magneticflux.rss.fallbackPersister
-import com.github.magneticflux.rss.fullName
+import com.github.magneticflux.rss.namespace
+import com.github.magneticflux.rss.namespaces.Namespace
 import com.github.magneticflux.rss.namespaces.atom.elements.AtomAuthor
 import com.github.magneticflux.rss.namespaces.atom.elements.AtomFeed
 import org.simpleframework.xml.convert.Converter
@@ -18,8 +19,12 @@ object AtomFeedConverter : Converter<AtomFeed> {
         var author: AtomAuthor? = null
 
         node.children.forEach {
-            when (it.fullName) {
-                "atom:author" -> author = fallbackPersister.read(AtomAuthor::class.java, it)
+            when (it.namespace) {
+                Namespace.ATOM -> {
+                    when (it.name) {
+                        "author" -> author = fallbackPersister.read(AtomAuthor::class.java, it)
+                    }
+                }
             }
         }
 

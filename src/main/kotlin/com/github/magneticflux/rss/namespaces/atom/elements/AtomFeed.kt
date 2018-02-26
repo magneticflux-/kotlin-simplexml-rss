@@ -1,5 +1,6 @@
 package com.github.magneticflux.rss.namespaces.atom.elements
 
+import com.github.magneticflux.rss.namespaces.Namespace.ATOM
 import com.github.magneticflux.rss.namespaces.atom.converters.AtomFeedConverter
 import com.github.magneticflux.rss.namespaces.standard.elements.HasReadWrite
 import org.simpleframework.xml.Namespace
@@ -40,7 +41,7 @@ interface IWritableAtomFeed : ICommonAtomFeed {
  * @see AtomFeedConverter
  */
 @Root(name = "feed")
-@Namespace(reference = ATOM_REFERENCE)
+@Namespace(reference = ATOM.reference)
 data class AtomFeed(
     override val author: AtomAuthor?
 ) : IAtomFeed, IWritableAtomFeed
