@@ -11,11 +11,7 @@ import org.simpleframework.xml.Root
  *
  * @since 1.2.0
  */
-interface ICommonAtomPerson : HasReadWrite<IAtomPerson, IWritableAtomPerson> {
-    val name: String
-    val uri: String?
-    val email: String?
-}
+interface ICommonAtomPerson : HasReadWrite<IAtomPerson, IWritableAtomPerson>, AtomPersonConstruct
 
 /**
  * The final RSS view of a `<person>` element. Defaults are used if applicable.
@@ -45,6 +41,8 @@ interface IWritableAtomPerson : ICommonAtomPerson {
 @Root(name = "author")
 @Namespace(reference = ATOM.reference)
 data class AtomAuthor(
+    override val base: String?,
+    override val lang: String?,
     override val name: String,
     override val uri: String?,
     override val email: String?

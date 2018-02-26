@@ -1,5 +1,6 @@
 package com.github.magneticflux.rss.namespaces.atom.converters
 
+import com.github.magneticflux.rss.allAttributes
 import com.github.magneticflux.rss.children
 import com.github.magneticflux.rss.createChild
 import com.github.magneticflux.rss.namespace
@@ -15,9 +16,23 @@ import org.simpleframework.xml.stream.OutputNode
  */
 object AtomAuthorConverter : Converter<AtomAuthor> {
     override fun read(node: InputNode): AtomAuthor {
+        var base: String? = null
+        var lang: String? = null
+
         lateinit var name: String
         var uri: String? = null
         var email: String? = null
+
+        node.allAttributes.forEach {
+            when (it.namespace) {
+                Namespace.XML -> {
+                    when (it.name) {
+                        "base" -> base = it.value
+                        "lang" -> lang = it.value
+                    }
+                }
+            }
+        }
 
         node.children.forEach {
             when (it.namespace) {
@@ -31,7 +46,7 @@ object AtomAuthorConverter : Converter<AtomAuthor> {
             }
         }
 
-        return AtomAuthor(name, uri, email)
+        return AtomAuthor(base, lang, name, uri, email)
     }
 
     override fun write(node: OutputNode, value: AtomAuthor) {

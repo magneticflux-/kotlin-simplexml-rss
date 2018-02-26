@@ -2,6 +2,7 @@ package com.github.magneticflux.rss
 
 import org.simpleframework.xml.transform.Transform
 import org.threeten.bp.DayOfWeek
+import org.threeten.bp.Instant
 import org.threeten.bp.ZonedDateTime
 import org.threeten.bp.format.DateTimeFormatter
 import org.threeten.bp.format.DateTimeFormatterBuilder
@@ -49,6 +50,20 @@ object ZonedDateTimeTransform : Transform<ZonedDateTime> {
 
     override fun write(value: ZonedDateTime): String {
         return DateTimeFormatter.RFC_1123_DATE_TIME.format(value)
+    }
+}
+
+/**
+ * @author Mitchell Skaggs
+ * @since 1.2.0
+ */
+object ISODateTimeTransform : Transform<Instant> {
+    override fun write(value: Instant): String {
+        return DateTimeFormatter.ISO_OFFSET_DATE_TIME.format(value)
+    }
+
+    override fun read(value: String): Instant {
+        return Instant.FROM.queryFrom(DateTimeFormatter.ISO_OFFSET_DATE_TIME.parse(value))
     }
 }
 

@@ -11,8 +11,8 @@ import org.simpleframework.xml.Root
  *
  * @since 1.2.0
  */
-interface ICommonAtomFeed : HasReadWrite<IAtomFeed, IWritableAtomFeed> {
-    val author: AtomAuthor?
+interface ICommonAtomFeed : HasReadWrite<IAtomFeed, IWritableAtomFeed>, AtomCommonAttributes {
+    val author: List<AtomAuthor>
 }
 
 /**
@@ -43,5 +43,7 @@ interface IWritableAtomFeed : ICommonAtomFeed {
 @Root(name = "feed")
 @Namespace(reference = ATOM.reference)
 data class AtomFeed(
-    override val author: AtomAuthor?
+    override val base: String?,
+    override val lang: String?,
+    override val author: List<AtomAuthor>
 ) : IAtomFeed, IWritableAtomFeed

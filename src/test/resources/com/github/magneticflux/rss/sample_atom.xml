@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<feed xmlns="http://www.w3.org/2005/Atom">
+<feed xmlns="http://www.w3.org/2005/Atom" xml:base="http://diveintomark.org/" xml:lang="en">
     <author>
         <name>Mark Pilgrim</name>
         <uri>http://example.org/</uri>

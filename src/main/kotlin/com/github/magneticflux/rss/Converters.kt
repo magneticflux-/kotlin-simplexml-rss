@@ -1,6 +1,10 @@
 package com.github.magneticflux.rss
 
 import com.github.magneticflux.rss.namespaces.Namespace
+import com.github.magneticflux.rss.namespaces.Namespace.ATOM
+import com.github.magneticflux.rss.namespaces.Namespace.DEFAULT
+import com.github.magneticflux.rss.namespaces.Namespace.ITUNES
+import com.github.magneticflux.rss.namespaces.Namespace.XML
 import org.simpleframework.xml.convert.Converter
 import org.simpleframework.xml.stream.InputNode
 import org.simpleframework.xml.stream.OutputNode
@@ -15,10 +19,11 @@ internal val fallbackPersister = createRssPersister()
  */
 internal val InputNode.namespace: Namespace?
     get() {
-        return when (reference.toLowerCase()) {
-            Namespace.DEFAULT.reference -> Namespace.DEFAULT
-            Namespace.ITUNES.reference -> Namespace.ITUNES
-            Namespace.ATOM.reference -> Namespace.ATOM
+        return when {
+            reference.equals(DEFAULT.reference, true) -> DEFAULT
+            reference.equals(ITUNES.reference, true) -> ITUNES
+            reference.equals(ATOM.reference, true) -> ATOM
+            reference.equals(XML.reference, true) -> XML
             else -> null
         }
     }
@@ -30,6 +35,13 @@ internal val InputNode.children: Iterator<InputNode>
     get() {
         return InputNodeChildIterator(this)
     }
+/**
+ * Creates an iterator over an InputNode's attributes.
+ */
+internal val InputNode.allAttributes: Iterator<InputNode>
+    get() {
+        return this.attributes.asSequence().map { this.attributes[it] }.iterator()
+    }
 
 /**
  * Create a child node containing only the given String with the specified namespace.
@@ -38,6 +50,21 @@ internal fun OutputNode.createChild(reference: String = "", name: String, value:
     val child = this.getChild(name)
     child.value = value
     child.reference = reference
+}
+
+/**
+ * Create a child node containing only the given String with the specified namespace.
+ */
+internal fun OutputNode.createAttribute(
+    reference: String = "",
+    name: String,
+    value: String,
+    prefix: String? = null
+) {
+    val child = this.setAttribute(name, value)
+    child.reference = reference
+    if (prefix != null)
+        child.namespaces.setReference(reference, prefix)
 }
 
 /**

@@ -16,4 +16,8 @@ sealed class Namespace {
     object ATOM : Namespace() {
         const val reference: String = "http://www.w3.org/2005/Atom"
     }
+
+    object XML : Namespace() {
+        const val reference: String = "http://www.w3.org/XML/1998/namespace"
+    }
 }
