@@ -1,6 +1,6 @@
 package com.github.magneticflux.rss.namespaces.standard.elements
 
-import com.github.magneticflux.rss.namespaces.itunes.elements.ITUNES_REFERENCE
+import com.github.magneticflux.rss.namespaces.Namespace.ITUNES
 import com.github.magneticflux.rss.namespaces.standard.converters.RssConverter
 import org.simpleframework.xml.Namespace
 import org.simpleframework.xml.Root
@@ -45,7 +45,7 @@ interface IWritableRss : ICommonRss {
  * @see RssConverter
  */
 @Root(name = "rss", strict = false)
-@Namespace(prefix = "itunes", reference = ITUNES_REFERENCE)
+@Namespace(prefix = "itunes", reference = ITUNES.reference)
 data class Rss(
     override val version: String,
     override val channel: Channel

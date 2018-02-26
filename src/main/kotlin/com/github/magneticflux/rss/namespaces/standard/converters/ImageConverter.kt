@@ -4,7 +4,8 @@ import com.github.magneticflux.rss.URLTransform
 import com.github.magneticflux.rss.children
 import com.github.magneticflux.rss.createChild
 import com.github.magneticflux.rss.fallbackPersister
-import com.github.magneticflux.rss.fullName
+import com.github.magneticflux.rss.namespace
+import com.github.magneticflux.rss.namespaces.Namespace
 import com.github.magneticflux.rss.namespaces.standard.elements.ICommonImage
 import com.github.magneticflux.rss.namespaces.standard.elements.Image
 import org.simpleframework.xml.convert.Converter
@@ -26,13 +27,18 @@ object ImageConverter : Converter<ICommonImage> {
         var height: String? = null
 
         node.children.forEach {
-            when (it.fullName) {
-                "url" -> url = fallbackPersister.read(URL::class.java, it)
-                "title" -> title = fallbackPersister.read(String::class.java, it)
-                "link" -> link = fallbackPersister.read(URL::class.java, it)
-                "description" -> description = fallbackPersister.read(String::class.java, it)
-                "width" -> width = it.value
-                "height" -> height = it.value
+            when (it.namespace) {
+                Namespace.DEFAULT -> {
+                    when (it.name) {
+                        "url" -> url = fallbackPersister.read(URL::class.java, it)
+                        "title" -> title = fallbackPersister.read(String::class.java, it)
+                        "link" -> link = fallbackPersister.read(URL::class.java, it)
+                        "description" -> description =
+                                fallbackPersister.read(String::class.java, it)
+                        "width" -> width = it.value
+                        "height" -> height = it.value
+                    }
+                }
             }
         }
 

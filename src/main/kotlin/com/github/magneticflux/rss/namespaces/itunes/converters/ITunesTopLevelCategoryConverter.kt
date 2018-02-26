@@ -2,7 +2,8 @@ package com.github.magneticflux.rss.namespaces.itunes.converters
 
 import com.github.magneticflux.rss.children
 import com.github.magneticflux.rss.fallbackPersister
-import com.github.magneticflux.rss.fullName
+import com.github.magneticflux.rss.namespace
+import com.github.magneticflux.rss.namespaces.Namespace
 import com.github.magneticflux.rss.namespaces.itunes.elements.ICommonITunesTopLevelCategory
 import com.github.magneticflux.rss.namespaces.itunes.elements.ITunesSubCategory
 import com.github.magneticflux.rss.namespaces.itunes.elements.ITunesTopLevelCategory
@@ -20,11 +21,15 @@ object ITunesTopLevelCategoryConverter : Converter<ICommonITunesTopLevelCategory
         val subCategories = mutableListOf<ITunesSubCategory>()
 
         node.children.forEach {
-            when (it.fullName) {
-                "itunes:category" -> subCategories += fallbackPersister.read(
-                    ITunesSubCategory::class.java,
-                    it
-                )
+            when (it.namespace) {
+                Namespace.ITUNES -> {
+                    when (it.name) {
+                        "category" -> subCategories += fallbackPersister.read(
+                            ITunesSubCategory::class.java,
+                            it
+                        )
+                    }
+                }
             }
         }
 

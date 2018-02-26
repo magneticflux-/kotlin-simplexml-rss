@@ -1,5 +1,6 @@
 package com.github.magneticflux.rss.namespaces.itunes.elements
 
+import com.github.magneticflux.rss.namespaces.Namespace.ITUNES
 import com.github.magneticflux.rss.namespaces.itunes.converters.ITunesSubCategoryConverter
 import com.github.magneticflux.rss.namespaces.standard.elements.HasReadWrite
 import org.simpleframework.xml.Namespace
@@ -40,7 +41,7 @@ interface IWritableITunesSubCategory : ICommonITunesSubCategory {
  * @see ITunesSubCategoryConverter
  */
 @Root(name = "category")
-@Namespace(reference = ITUNES_REFERENCE)
+@Namespace(reference = ITUNES.reference)
 data class ITunesSubCategory(
     override val text: String
 ) : IITunesSubCategory, IWritableITunesSubCategory

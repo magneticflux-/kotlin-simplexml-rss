@@ -5,8 +5,8 @@ import com.github.magneticflux.rss.ZonedDateTimeTransform
 import com.github.magneticflux.rss.children
 import com.github.magneticflux.rss.createChild
 import com.github.magneticflux.rss.fallbackPersister
-import com.github.magneticflux.rss.fullName
-import com.github.magneticflux.rss.namespaces.itunes.elements.ITUNES_REFERENCE
+import com.github.magneticflux.rss.namespace
+import com.github.magneticflux.rss.namespaces.Namespace
 import com.github.magneticflux.rss.namespaces.itunes.elements.ITunesImage
 import com.github.magneticflux.rss.namespaces.itunes.elements.ITunesTopLevelCategory
 import com.github.magneticflux.rss.namespaces.standard.elements.Category
@@ -47,28 +47,36 @@ object ItemConverter : Converter<ICommonItem> {
         var iTunesBlockRaw: String? = null
 
         node.children.forEach {
-            when (it.fullName) {
-                "title" -> title = it.value
-                "description" -> description = it.value
-                "link" -> link = fallbackPersister.read(URL::class.java, it)
-                "category" -> categories += fallbackPersister.read(Category::class.java, it)
-                "comments" -> comments = fallbackPersister.read(URL::class.java, it)
-                "pubDate" -> pubDate = fallbackPersister.read(ZonedDateTime::class.java, it)
-                "author" -> author = it.value
-                "guid" -> guid = fallbackPersister.read(Guid::class.java, it)
-                "enclosure" -> enclosure = fallbackPersister.read(Enclosure::class.java, it)
-                "source" -> source = fallbackPersister.read(Source::class.java, it)
-                "itunes:category" -> iTunesCategories += fallbackPersister.read(
-                    ITunesTopLevelCategory::class.java,
-                    it
-                )
-                "itunes:explicit" -> iTunesExplicitRaw = it.value
-                "itunes:subtitle" -> iTunesSubtitle = it.value
-                "itunes:summary" -> iTunesSummary = it.value
-                "itunes:author" -> iTunesAuthor = it.value
-                "itunes:duration" -> iTunesDurationRaw = it.value
-                "itunes:image" -> iTunesImage = fallbackPersister.read(ITunesImage::class.java, it)
-                "itunes:block" -> iTunesBlockRaw = it.value
+            when (it.namespace) {
+                Namespace.DEFAULT -> {
+                    when (it.name) {
+                        "title" -> title = it.value
+                        "description" -> description = it.value
+                        "link" -> link = fallbackPersister.read(URL::class.java, it)
+                        "category" -> categories += fallbackPersister.read(Category::class.java, it)
+                        "comments" -> comments = fallbackPersister.read(URL::class.java, it)
+                        "pubDate" -> pubDate = fallbackPersister.read(ZonedDateTime::class.java, it)
+                        "author" -> author = it.value
+                        "guid" -> guid = fallbackPersister.read(Guid::class.java, it)
+                        "enclosure" -> enclosure = fallbackPersister.read(Enclosure::class.java, it)
+                        "source" -> source = fallbackPersister.read(Source::class.java, it)
+                    }
+                }
+                Namespace.ITUNES -> {
+                    when (it.name) {
+                        "category" -> iTunesCategories += fallbackPersister.read(
+                            ITunesTopLevelCategory::class.java,
+                            it
+                        )
+                        "explicit" -> iTunesExplicitRaw = it.value
+                        "subtitle" -> iTunesSubtitle = it.value
+                        "summary" -> iTunesSummary = it.value
+                        "author" -> iTunesAuthor = it.value
+                        "duration" -> iTunesDurationRaw = it.value
+                        "image" -> iTunesImage = fallbackPersister.read(ITunesImage::class.java, it)
+                        "block" -> iTunesBlockRaw = it.value
+                    }
+                }
             }
         }
 
@@ -118,12 +126,30 @@ object ItemConverter : Converter<ICommonItem> {
         writable.enclosure?.let { fallbackPersister.write(it, node) }
         writable.source?.let { fallbackPersister.write(it, node) }
         writable.iTunesCategories.forEach { fallbackPersister.write(it, node) }
-        writable.iTunesExplicitRaw?.let { node.createChild(ITUNES_REFERENCE, "explicit", it) }
-        writable.iTunesSubtitle?.let { node.createChild(ITUNES_REFERENCE, "subtitle", it) }
-        writable.iTunesSummary?.let { node.createChild(ITUNES_REFERENCE, "summary", it) }
-        writable.iTunesAuthor?.let { node.createChild(ITUNES_REFERENCE, "author", it) }
-        writable.iTunesDurationRaw?.let { node.createChild(ITUNES_REFERENCE, "duration", it) }
+        writable.iTunesExplicitRaw?.let {
+            node.createChild(
+                Namespace.ITUNES.reference,
+                "explicit",
+                it
+            )
+        }
+        writable.iTunesSubtitle?.let {
+            node.createChild(
+                Namespace.ITUNES.reference,
+                "subtitle",
+                it
+            )
+        }
+        writable.iTunesSummary?.let { node.createChild(Namespace.ITUNES.reference, "summary", it) }
+        writable.iTunesAuthor?.let { node.createChild(Namespace.ITUNES.reference, "author", it) }
+        writable.iTunesDurationRaw?.let {
+            node.createChild(
+                Namespace.ITUNES.reference,
+                "duration",
+                it
+            )
+        }
         writable.iTunesImage?.let { fallbackPersister.write(it, node) }
-        writable.iTunesBlockRaw?.let { node.createChild(ITUNES_REFERENCE, "block", it) }
+        writable.iTunesBlockRaw?.let { node.createChild(Namespace.ITUNES.reference, "block", it) }
     }
 }
