@@ -1,5 +1,6 @@
 package com.github.magneticflux.rss.namespaces.itunes.elements
 
+import com.github.magneticflux.rss.namespaces.Namespace.ITUNES
 import com.github.magneticflux.rss.namespaces.itunes.converters.ITunesTopLevelCategoryConverter
 import com.github.magneticflux.rss.namespaces.standard.elements.Channel
 import com.github.magneticflux.rss.namespaces.standard.elements.HasReadWrite
@@ -48,7 +49,7 @@ interface IWritableITunesTopLevelCategory : ICommonITunesTopLevelCategory {
  * @see ITunesTopLevelCategoryConverter
  */
 @Root(name = "category")
-@Namespace(reference = ITUNES_REFERENCE)
+@Namespace(reference = ITUNES.reference)
 data class ITunesTopLevelCategory(
     override val text: String,
     override val iTunesSubCategories: List<ITunesSubCategory>

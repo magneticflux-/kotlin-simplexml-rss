@@ -7,8 +7,8 @@ import com.github.magneticflux.rss.ZonedDateTimeTransform
 import com.github.magneticflux.rss.children
 import com.github.magneticflux.rss.createChild
 import com.github.magneticflux.rss.fallbackPersister
-import com.github.magneticflux.rss.fullName
-import com.github.magneticflux.rss.namespaces.itunes.elements.ITUNES_REFERENCE
+import com.github.magneticflux.rss.namespace
+import com.github.magneticflux.rss.namespaces.Namespace
 import com.github.magneticflux.rss.namespaces.itunes.elements.ITunesImage
 import com.github.magneticflux.rss.namespaces.itunes.elements.ITunesTopLevelCategory
 import com.github.magneticflux.rss.namespaces.standard.elements.Category
@@ -61,39 +61,46 @@ object ChannelConverter : Converter<ICommonChannel> {
         var iTunesCompleteRaw: String? = null
 
         node.children.forEach {
-            when (it.fullName) {
-                "title" -> title = it.value.orEmpty() // Element is there, but an empty String
-                "description" -> description =
-                        it.value.orEmpty() // Element is there, but an empty String
-                "link" -> link = fallbackPersister.read(URL::class.java, it)
-                "category" -> categories += fallbackPersister.read(Category::class.java, it)
-                "copyright" -> copyright = it.value
-                "docs" -> docs = fallbackPersister.read(URL::class.java, it)
-                "language" -> language = fallbackPersister.read(Locale::class.java, it)
-                "webMaster" -> webMaster = it.value
-                "managingEditor" -> managingEditor = it.value
-                "generator" -> generator = it.value
-                "image" -> image = fallbackPersister.read(Image::class.java, it)
-                "lastBuildDate" -> lastBuildDate =
-                        fallbackPersister.read(ZonedDateTime::class.java, it)
-                "pubDate" -> pubDate = fallbackPersister.read(ZonedDateTime::class.java, it)
-                "ttl" -> ttl = it.value.toInt()
-                "day" -> skipDays += fallbackPersister.read(DayOfWeek::class.java, it)
-                "hour" -> skipHours += it.value.toInt()
-                "cloud" -> cloud = fallbackPersister.read(Cloud::class.java, it)
-                "textInput" -> textInput = fallbackPersister.read(TextInput::class.java, it)
-                "item" -> items += fallbackPersister.read(Item::class.java, it)
-                "itunes:category" -> iTunesCategories += fallbackPersister.read(
-                    ITunesTopLevelCategory::class.java,
-                    it
-                )
-                "itunes:explicit" -> iTunesExplicitRaw = it.value
-                "itunes:subtitle" -> iTunesSubtitle = it.value
-                "itunes:summary" -> iTunesSummary = it.value
-                "itunes:author" -> iTunesAuthor = it.value
-                "itunes:image" -> iTunesImage = fallbackPersister.read(ITunesImage::class.java, it)
-                "itunes:block" -> iTunesBlockRaw = it.value
-                "itunes:complete" -> iTunesCompleteRaw = it.value
+            when (it.namespace) {
+                Namespace.DEFAULT -> {
+                    when (it.name) {
+                        "title" -> title = it.value.orEmpty()
+                        "description" -> description = it.value.orEmpty()
+                        "link" -> link = fallbackPersister.read(URL::class.java, it)
+                        "category" -> categories += fallbackPersister.read(Category::class.java, it)
+                        "copyright" -> copyright = it.value
+                        "docs" -> docs = fallbackPersister.read(URL::class.java, it)
+                        "language" -> language = fallbackPersister.read(Locale::class.java, it)
+                        "webMaster" -> webMaster = it.value
+                        "managingEditor" -> managingEditor = it.value
+                        "generator" -> generator = it.value
+                        "image" -> image = fallbackPersister.read(Image::class.java, it)
+                        "lastBuildDate" -> lastBuildDate =
+                                fallbackPersister.read(ZonedDateTime::class.java, it)
+                        "pubDate" -> pubDate = fallbackPersister.read(ZonedDateTime::class.java, it)
+                        "ttl" -> ttl = it.value.toInt()
+                        "day" -> skipDays += fallbackPersister.read(DayOfWeek::class.java, it)
+                        "hour" -> skipHours += it.value.toInt()
+                        "cloud" -> cloud = fallbackPersister.read(Cloud::class.java, it)
+                        "textInput" -> textInput = fallbackPersister.read(TextInput::class.java, it)
+                        "item" -> items += fallbackPersister.read(Item::class.java, it)
+                    }
+                }
+                Namespace.ITUNES -> {
+                    when (it.name) {
+                        "category" -> iTunesCategories += fallbackPersister.read(
+                            ITunesTopLevelCategory::class.java,
+                            it
+                        )
+                        "explicit" -> iTunesExplicitRaw = it.value
+                        "subtitle" -> iTunesSubtitle = it.value
+                        "summary" -> iTunesSummary = it.value
+                        "author" -> iTunesAuthor = it.value
+                        "image" -> iTunesImage = fallbackPersister.read(ITunesImage::class.java, it)
+                        "block" -> iTunesBlockRaw = it.value
+                        "complete" -> iTunesCompleteRaw = it.value
+                    }
+                }
             }
         }
 
@@ -169,12 +176,30 @@ object ChannelConverter : Converter<ICommonChannel> {
         writable.iTunesCategories.forEach {
             fallbackPersister.write(it, node)
         }
-        writable.iTunesExplicitRaw?.let { node.createChild(ITUNES_REFERENCE, "explicit", it) }
-        writable.iTunesSubtitle?.let { node.createChild(ITUNES_REFERENCE, "subtitle", it) }
-        writable.iTunesSummary?.let { node.createChild(ITUNES_REFERENCE, "summary", it) }
-        writable.iTunesAuthor?.let { node.createChild(ITUNES_REFERENCE, "author", it) }
+        writable.iTunesExplicitRaw?.let {
+            node.createChild(
+                Namespace.ITUNES.reference,
+                "explicit",
+                it
+            )
+        }
+        writable.iTunesSubtitle?.let {
+            node.createChild(
+                Namespace.ITUNES.reference,
+                "subtitle",
+                it
+            )
+        }
+        writable.iTunesSummary?.let { node.createChild(Namespace.ITUNES.reference, "summary", it) }
+        writable.iTunesAuthor?.let { node.createChild(Namespace.ITUNES.reference, "author", it) }
         writable.iTunesImage?.let { fallbackPersister.write(it, node) }
-        writable.iTunesBlockRaw?.let { node.createChild(ITUNES_REFERENCE, "block", it) }
-        writable.iTunesCompleteRaw?.let { node.createChild(ITUNES_REFERENCE, "complete", it) }
+        writable.iTunesBlockRaw?.let { node.createChild(Namespace.ITUNES.reference, "block", it) }
+        writable.iTunesCompleteRaw?.let {
+            node.createChild(
+                Namespace.ITUNES.reference,
+                "complete",
+                it
+            )
+        }
     }
 }

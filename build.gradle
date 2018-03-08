@@ -1,109 +1,107 @@
 buildscript {
-    ext.kotlin_version = '1.2.20'
-    ext.spek_version = '1.1.5'
+	ext.kotlin_version = '1.2.30'
+	ext.spek_version = '1.1.5'
 
-    repositories {
-        jcenter()
-        maven { url 'https://dl.bintray.com/kotlin/kotlin-eap' }
-    }
-    dependencies {
-        classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
-        classpath "org.jetbrains.dokka:dokka-gradle-plugin:0.9.16-eap-2"
-        classpath 'org.junit.platform:junit-platform-gradle-plugin:1.1.0-M1'
-    }
+	repositories { jcenter() }
+	dependencies {
+		classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
+		classpath "org.jetbrains.dokka:dokka-gradle-plugin:0.9.16"
+		classpath 'org.junit.platform:junit-platform-gradle-plugin:1.1.0'
+	}
 }
 
 plugins {
-    id 'java-library'
-    id 'jacoco'
-    id 'maven-publish'
-    id 'com.jfrog.bintray' version '1.8.0'
-    id 'org.shipkit.java' version '1.0.7'
-    id 'com.diffplug.gradle.spotless' version '3.8.0'
-    id 'com.github.ben-manes.versions' version '0.17.0'
+	id 'java-library'
+	id 'jacoco'
+	id 'maven-publish'
+	id 'groovy'
+	id 'com.jfrog.bintray' version '1.8.0'
+	id 'org.shipkit.java' version '2.0.7'
+	id 'com.diffplug.gradle.spotless' version '3.10.0'
+	id 'com.github.ben-manes.versions' version '0.17.0'
 }
 
 apply plugin: 'kotlin'
 apply plugin: 'org.jetbrains.dokka'
-apply plugin: 'org.junit.platform.gradle.plugin'
 
 group 'com.github.magneticflux'
 
 repositories {
-    jcenter()
-    maven { url 'https://dl.bintray.com/kotlin/kotlin-eap' }
-    maven { url 'http://dl.bintray.com/jetbrains/spek' }
+	jcenter()
+	maven { url 'http://dl.bintray.com/jetbrains/spek' }
 }
 
-junitPlatform {
-    filters {
-        engines {
-            include 'spek'
-        }
-    }
+compileJava {
+	sourceCompatibility = JavaVersion.VERSION_1_7
+	targetCompatibility = JavaVersion.VERSION_1_7
+}
+
+test {
+	useJUnitPlatform { includeEngines 'spek', 'junit-vintage' }
 }
 
 publishing {
-    publications {
-        myPublication(MavenPublication) {
-            from components.java
-            //noinspection GroovyAssignabilityCheck
-            artifact sourcesJar
-            //noinspection GroovyAssignabilityCheck
-            artifact dokkaJavadocJar
-        }
-    }
+	publications {
+		myPublication(MavenPublication) {
+			from components.java
+			//noinspection GroovyAssignabilityCheck
+			artifact sourcesJar
+			//noinspection GroovyAssignabilityCheck
+			artifact dokkaJavadocJar
+		}
+	}
 }
 
 dokka {
-    outputFormat = 'javadoc'
-    jdkVersion = 7
-    impliedPlatforms = ["JVM"]
+	outputFormat = 'javadoc'
+	jdkVersion = 7
+	impliedPlatforms = ["JVM"]
 }
 
 task dokkaJavadocJar(type: Jar, dependsOn: dokka) {
-    classifier = 'javadoc'
-    from dokka.outputDirectory
+	classifier = 'javadoc'
+	//noinspection GroovyAssignabilityCheck
+	from dokka.outputDirectory
 }
 
 spotless {
-    kotlin {
-        ktlint('0.14.0')
-    }
+	kotlin { ktlint('0.15.1') }
+
+	groovy { greclipse() }
+
+	groovyGradle { greclipse() }
 }
 
 dependencies {
-    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
+	implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
 
-    api 'org.simpleframework:simple-xml:2.7.1'
-    api 'org.threeten:threetenbp:1.3.6'
+	api 'org.simpleframework:simple-xml:2.7.1'
+	api 'org.threeten:threetenbp:1.3.6'
 
-    testImplementation 'org.hamcrest:java-hamcrest:2.0.0.0'
-    testImplementation "org.jetbrains.spek:spek-api:$spek_version"
-    testImplementation "org.jetbrains.kotlin:kotlin-reflect:$kotlin_version"
-    testRuntimeOnly "org.jetbrains.spek:spek-junit-platform-engine:$spek_version"
-}
+	// Tests
+	testImplementation 'org.hamcrest:java-hamcrest:2.0.0.0'
 
-jacoco {
-    applyTo junitPlatformTest
-}
+	// Spock
+	testImplementation 'org.codehaus.groovy:groovy-all:2.4.13'
+	testImplementation "org.spockframework:spock-core:1.1-groovy-2.4"
+	testImplementation 'org.junit.jupiter:junit-jupiter-api:5.1.0'
+	testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.1.0'
+	testRuntimeOnly 'org.junit.vintage:junit-vintage-engine:5.1.0'
+	testCompileOnly 'junit:junit:4.12'
 
-junitPlatformTest {
-    jacoco {
-        destinationFile = file("$buildDir/jacoco/test.exec")
-    }
+	// Spek
+	testImplementation "org.jetbrains.spek:spek-api:$spek_version"
+	testImplementation "org.jetbrains.kotlin:kotlin-reflect:$kotlin_version"
+	testRuntimeOnly "org.jetbrains.spek:spek-junit-platform-engine:$spek_version"
 }
 
 jacocoTestReport {
-    executionData junitPlatformTest
-    sourceSets sourceSets.main
-    dependsOn(junitPlatformTest)
+	sourceSets sourceSets.main
+	dependsOn test
 
-    reports {
-        //noinspection GroovyAssignabilityCheck
-        xml {
-            enabled true
-        }
-    }
+	reports {
+		//noinspection GroovyAssignabilityCheck
+		xml { enabled true }
+	}
 }
 check.dependsOn(jacocoTestReport)
