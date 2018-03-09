@@ -73,11 +73,21 @@ object ISODateTimeTransform : Transform<Instant> {
  */
 object LocaleLanguageTransform : Transform<Locale> {
     override fun read(value: String): Locale {
-        return Locale.forLanguageTag(value)
+        return try {
+            Locale.forLanguageTag(value)
+        } catch (e: NoSuchMethodError) {
+            // Fall back to assuming a simple language tag. It's not the best, but forLanguageTag isn't supported below JDK7 and is required.
+            Locale(value)
+        }
     }
 
     override fun write(value: Locale): String {
-        return value.toLanguageTag()
+        return try {
+            value.toLanguageTag()
+        } catch (e: NoSuchMethodError) {
+            // Fall back to assuming a simple language tag. It's not the best, but toLanguageTag isn't supported below JDK7 and is required.
+            value.toString()
+        }
     }
 }
 

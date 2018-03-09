@@ -1,5 +1,5 @@
 buildscript {
-	ext.kotlin_version = '1.2.21'
+	ext.kotlin_version = '1.2.30'
 	ext.spek_version = '1.1.5'
 
 	repositories { jcenter() }
@@ -16,7 +16,7 @@ plugins {
 	id 'maven-publish'
 	id 'groovy'
 	id 'com.jfrog.bintray' version '1.8.0'
-	id 'org.shipkit.java' version '2.0.2'
+	id 'org.shipkit.java' version '2.0.7'
 	id 'com.diffplug.gradle.spotless' version '3.10.0'
 	id 'com.github.ben-manes.versions' version '0.17.0'
 }
@@ -29,6 +29,11 @@ group 'com.github.magneticflux'
 repositories {
 	jcenter()
 	maven { url 'http://dl.bintray.com/jetbrains/spek' }
+}
+
+compileJava {
+	sourceCompatibility = JavaVersion.VERSION_1_7
+	targetCompatibility = JavaVersion.VERSION_1_7
 }
 
 test {
