@@ -7,28 +7,29 @@ import org.simpleframework.xml.Namespace
 import org.simpleframework.xml.Root
 
 /**
- * Properties common to all representations of an `<author>` element.
+ * Properties common to all representations of a `<contributor>` element.
  *
  * @since 1.2.0
  */
-interface ICommonAtomAuthor : HasReadWrite<IAtomAuthor, IWritableAtomAuthor>, AtomPersonConstruct
+interface ICommonAtomContributor : HasReadWrite<IAtomContributor, IWritableAtomContributor>,
+    AtomPersonConstruct
 
 /**
- * The final RSS view of an `<author>` element. Defaults are used if applicable.
+ * The final RSS view of a `<contributor>` element. Defaults are used if applicable.
  *
  * @since 1.2.0
  */
-interface IAtomAuthor : ICommonAtomAuthor {
-    override fun toReadOnly(): IAtomAuthor = this
+interface IAtomContributor : ICommonAtomContributor {
+    override fun toReadOnly(): IAtomContributor = this
 }
 
 /**
- * The literal contents of an `<author>` element. Elements with defaults may be omitted or invalid.
+ * The literal contents of a `<contributor>` element. Elements with defaults may be omitted or invalid.
  *
  * @since 1.2.0
  */
-interface IWritableAtomAuthor : ICommonAtomAuthor {
-    override fun toWritable(): IWritableAtomAuthor = this
+interface IWritableAtomContributor : ICommonAtomContributor {
+    override fun toWritable(): IWritableAtomContributor = this
 }
 
 /**
@@ -38,12 +39,12 @@ interface IWritableAtomAuthor : ICommonAtomAuthor {
  * @since 1.2.0
  * @see AtomAuthorConverter
  */
-@Root(name = "author")
+@Root(name = "contributor")
 @Namespace(reference = ATOM.reference)
-data class AtomAuthor(
+data class AtomContributor(
     override val base: String?,
     override val lang: String?,
     override val name: String,
     override val uri: String?,
     override val email: String?
-) : IAtomAuthor, IWritableAtomAuthor
+) : IAtomContributor, IWritableAtomContributor

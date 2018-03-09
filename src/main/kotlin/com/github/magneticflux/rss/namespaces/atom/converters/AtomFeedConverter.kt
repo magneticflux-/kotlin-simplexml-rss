@@ -7,6 +7,7 @@ import com.github.magneticflux.rss.fallbackPersister
 import com.github.magneticflux.rss.namespace
 import com.github.magneticflux.rss.namespaces.Namespace
 import com.github.magneticflux.rss.namespaces.atom.elements.AtomAuthor
+import com.github.magneticflux.rss.namespaces.atom.elements.AtomContributor
 import com.github.magneticflux.rss.namespaces.atom.elements.AtomFeed
 import org.simpleframework.xml.convert.Converter
 import org.simpleframework.xml.stream.InputNode
@@ -21,7 +22,8 @@ object AtomFeedConverter : Converter<AtomFeed> {
         var xmlBase: String? = null
         var xmlLang: String? = null
 
-        val author: MutableList<AtomAuthor> = mutableListOf()
+        val authors: MutableList<AtomAuthor> = mutableListOf()
+        val contributors: MutableList<AtomContributor> = mutableListOf()
 
         node.allAttributes.forEach {
             when (it.namespace) {
@@ -38,13 +40,17 @@ object AtomFeedConverter : Converter<AtomFeed> {
             when (it.namespace) {
                 Namespace.ATOM -> {
                     when (it.name) {
-                        "author" -> author += fallbackPersister.read(AtomAuthor::class.java, it)
+                        "author" -> authors += fallbackPersister.read(AtomAuthor::class.java, it)
+                        "contributor" -> contributors += fallbackPersister.read(
+                            AtomContributor::class.java,
+                            it
+                        )
                     }
                 }
             }
         }
 
-        return AtomFeed(xmlBase, xmlLang, author)
+        return AtomFeed(xmlBase, xmlLang, authors)
     }
 
     override fun write(node: OutputNode, value: AtomFeed) {
