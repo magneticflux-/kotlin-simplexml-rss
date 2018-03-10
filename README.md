@@ -66,6 +66,11 @@ dependencies {
 }
 ```
 
+# Media
+
+## Gource Visualization
+[![Gource visualization](https://img.youtube.com/vi/X-T4jbDyRrQ/0.jpg)](https://www.youtube.com/watch?v=X-T4jbDyRrQ)
+
 ---
 
 Copyright 2017 Mitchell Skaggs
