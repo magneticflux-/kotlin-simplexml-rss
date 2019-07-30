@@ -16,4 +16,11 @@ sealed class Namespace {
     object ATOM : Namespace() {
         const val reference: String = "http://www.w3.org/2005/Atom"
     }
+
+    /**
+     * "Note that unlike all other XML namespaces, both the name and the prefix are specified; i.e., if you want XML 1.0 processors to recognize this namespace, you must use the reserved prefix `xml:`."
+     */
+    object XML : Namespace() {
+        const val reference: String = "http://www.w3.org/XML/1998/namespace"
+    }
 }

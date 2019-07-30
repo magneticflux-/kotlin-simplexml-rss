@@ -42,7 +42,7 @@ test {
 
 publishing {
 	publications {
-		myPublication(MavenPublication) {
+		kotlinSimpleXmlRss(MavenPublication) {
 			from components.java
 			//noinspection GroovyAssignabilityCheck
 			artifact sourcesJar

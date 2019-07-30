@@ -15,7 +15,7 @@ allprojects {
             user = 'magneticflux'
             key = System.getenv("BINTRAY_API_KEY")
 
-            publications = ['myPublication']
+            publications = ['kotlinSimpleXmlRss']
 
             pkg {
                 repo = 'kotlin-simplexml-rss'

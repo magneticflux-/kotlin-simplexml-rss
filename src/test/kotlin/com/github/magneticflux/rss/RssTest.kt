@@ -1,6 +1,7 @@
 package com.github.magneticflux.rss
 
 import com.github.magneticflux.rss.SampleUtils.getSample
+import com.github.magneticflux.rss.namespaces.atom.elements.AtomFeed
 import com.github.magneticflux.rss.namespaces.itunes.elements.ITunesSubCategory
 import com.github.magneticflux.rss.namespaces.itunes.elements.ITunesTopLevelCategory
 import com.github.magneticflux.rss.namespaces.standard.elements.Category
@@ -378,6 +379,30 @@ class RssTest : Spek({
                 persister.write(rssFeed, rssText)
 
                 val rereadRssFeed = persister.read(Rss::class.java, rssText.toString())
+
+                it("should equal original RSS feed read") {
+                    assertThat(rereadRssFeed, equalTo(rssFeed))
+                }
+
+                it("should have the same hashCode as original RSS feed read") {
+                    assertThat(rereadRssFeed.hashCode(), equalTo(rssFeed.hashCode()))
+                }
+
+                it("should have the same String representation as original RSS feed read") {
+                    assertThat(rereadRssFeed.toString(), equalTo(rssFeed.toString()))
+                }
+            }
+        }
+
+        given("sample_atom", { "$it RSS feed" }) {
+            val rssFeed = persister.read(AtomFeed::class.java, getSample("$it.xml"))
+
+            on("feed reread") {
+                val rssText = persister.write(rssFeed)
+
+                println(rssText)
+
+                val rereadRssFeed = persister.read(AtomFeed::class.java, rssText)
 
                 it("should equal original RSS feed read") {
                     assertThat(rereadRssFeed, equalTo(rssFeed))
